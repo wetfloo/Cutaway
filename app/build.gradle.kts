@@ -1,6 +1,8 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("cutaway.android.application")
     id("cutaway.android.hilt")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -30,6 +32,7 @@ dependencies {
     implementation(project(":communication"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
+    implementation(project(":feature:user_profile"))
     implementation(project(":wiring"))
 
     implementation(libs.androidx.core)

@@ -17,7 +17,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Cutaway"
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         tools:targetApi="33">
 
         <activity
