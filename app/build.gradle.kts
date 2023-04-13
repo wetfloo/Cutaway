@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("cutaway.android.application")
     id("cutaway.android.hilt")
