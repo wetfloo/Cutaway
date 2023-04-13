@@ -28,11 +28,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":communication"))
     implementation(project(":core:common"))
     implementation(project(":core:ui"))
-    implementation(project(":feature:user_profile"))
-    implementation(project(":wiring"))
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activity)

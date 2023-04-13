@@ -17,9 +17,7 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Cutaway"
 include(":app")
-include(":communication")
 include(":core:common")
 include(":core:common_impl")
 include(":core:ui")
-include(":wiring")
 include(":feature:user_profile")
