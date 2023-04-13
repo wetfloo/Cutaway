@@ -29,6 +29,7 @@ android {
 
 dependencies {
     implementation(project(":core:common"))
+    implementation(project(":core:common_impl"))
     implementation(project(":core:ui"))
 
     implementation(libs.androidx.core)
@@ -41,8 +42,6 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
-
-    implementation(libs.appyx.core)
 
     // Detect memory leaks
     debugImplementation(libs.square.leakcanary)

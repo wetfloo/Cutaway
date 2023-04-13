@@ -1,21 +1,11 @@
 package io.wetfloo.cutaway
 
 import android.os.Bundle
-import androidx.activity.compose.setContent
-import com.bumble.appyx.core.integration.NodeHost
-import com.bumble.appyx.core.integrationpoint.NodeActivity
-import io.wetfloo.cutaway.core.ui.compose.core.AppTheme
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : NodeActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            AppTheme {
-                NodeHost(
-                    integrationPoint = appyxIntegrationPoint,
-                    factory = ::RootNode,
-                )
-            }
-        }
+        setContentView(R.layout.activity_main)
     }
 }
