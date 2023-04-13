@@ -23,6 +23,9 @@ media3 = "1.0.0"
 
 mockk = "1.13.3"
 
+# Third party navigation
+simple-stack = "2.7.0"
+simple-stack-extensions = "2.3.0"
 appyx = "1.2.0"
 
 
@@ -109,6 +112,15 @@ appyx-testing-ui = { module = "com.bumble.appyx:testing-ui", version.ref = "appy
 appyx-testing-unit = { module = "com.bumble.appyx:testing-unit-common", version.ref = "appyx" }
 # Test rules and utility classes for unit testing using JUnit4
 appyx-testing-junit4 = { module = "com.bumble.appyx:testing-ui", version.ref = "appyx" }
+
+# Simple stack
+simple-stack = { module = "com.github.Zhuinden:simple-stack", version.ref = "simple-stack" }
+simple-stack-extensions-core = { module = "com.github.Zhuinden.simple-stack-extensions:core-ktx", version.ref = "simple-stack-extensions" }
+simple-stack-extensions-fragments = { module = "com.github.Zhuinden.simple-stack-extensions:fragments", version.ref = "simple-stack-extensions" }
+simple-stack-extensions-fragments-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:fragments-ktx", version.ref = "simple-stack-extensions" }
+simple-stack-extensions-navigator-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:navigator-ktx", version.ref = "simple-stack-extensions" }
+simple-stack-extensions-services = { module = "com.github.Zhuinden.simple-stack-extensions:services", version.ref = "simple-stack-extensions" }
+simple-stack-extensions-services-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:services-ktx", version.ref = "simple-stack-extensions" }
 
 # Desugaring
 core-desugaring = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.3" }
