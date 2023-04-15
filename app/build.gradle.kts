@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
 
+    implementation(libs.viewBindingDelegate)
+
     // Detect memory leaks
     debugImplementation(libs.square.leakcanary)
 }
