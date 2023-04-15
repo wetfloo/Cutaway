@@ -193,3 +193,5 @@ kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 
 # Parcelize
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+
+android-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "androidx-navigation" }

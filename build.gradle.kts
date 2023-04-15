@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.kotlinx.serialization) apply false
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.kotlin.ksp) apply false
+    alias(libs.plugins.android.safeargs) apply false
 
     alias(libs.plugins.benmanes.versions) apply true
 }

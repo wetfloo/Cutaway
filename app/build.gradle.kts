@@ -2,6 +2,7 @@ plugins {
     id("cutaway.android.application")
     id("cutaway.android.hilt")
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.android.safeargs)
 }
 
 android {
@@ -36,6 +37,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.material.material)
     implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.navigation)
 
     implementation(libs.compose.material3)
     implementation(libs.compose.icons)
