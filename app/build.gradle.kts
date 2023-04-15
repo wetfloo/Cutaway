@@ -25,6 +25,11 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding = true
+        compose = true
+    }
+
     namespace = "io.wetfloo.cutaway"
 }
 
