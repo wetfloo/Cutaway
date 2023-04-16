@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph"
+    app:startDestination="@id/authFragment">
 
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="io.wetfloo.cutaway.ui.feature.auth.AuthFragment"
+        android:label="AuthFragment" />
 </navigation>

@@ -1,16 +1,18 @@
-package io.wetfloo.cutaway.feature.profile
+package io.wetfloo.cutaway.ui.feature.profile
 
+import android.os.Bundle
+import android.view.View
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.platform.ComposeView
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
 
 @AndroidEntryPoint
 class ProfileFragment : ComposeFragment() {
-    override fun ComposeView.compose() {
-        setContent {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        drawContent {
             Box(
                 contentAlignment = Alignment.Center,
             ) {

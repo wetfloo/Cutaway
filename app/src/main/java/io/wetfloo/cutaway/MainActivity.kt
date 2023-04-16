@@ -3,7 +3,9 @@ package io.wetfloo.cutaway
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +25,8 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.graph)
 
+        navGraph.setStartDestination(R.id.authFragment)
 
         navController.graph = navGraph
     }
-
-
 }
