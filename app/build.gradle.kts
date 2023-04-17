@@ -53,6 +53,9 @@ dependencies {
 
     implementation(libs.viewBindingDelegate)
 
+    implementation(libs.coil)
+    implementation(libs.coil.compose)
+
     // Detect memory leaks
     debugImplementation(libs.square.leakcanary)
 }
