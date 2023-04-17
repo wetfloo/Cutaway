@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.material.material)
     implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.lifecycleCompose)
     implementation(libs.bundles.navigation)
 
     implementation(libs.compose.material3)
