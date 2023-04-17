@@ -53,6 +53,8 @@ dependencies {
 
     implementation(libs.viewBindingDelegate)
 
+    implementation(libs.result)
+
     implementation(libs.coil)
     implementation(libs.coil.compose)
 
