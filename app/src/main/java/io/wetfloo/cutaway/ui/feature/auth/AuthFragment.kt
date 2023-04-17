@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
 import kotlinx.coroutines.delay
@@ -14,6 +15,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthFragment : ComposeFragment() {
+    private val viewModel: AuthViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawContent {
