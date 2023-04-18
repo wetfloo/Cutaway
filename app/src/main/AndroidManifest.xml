@@ -20,6 +20,11 @@
         android:theme="@style/Theme.Material3.DayNight.NoActionBar"
         tools:targetApi="33">
 
+        <!-- Preinstall google's barcode module on app install -->
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode_ui" />
+
         <activity
             android:name="io.wetfloo.cutaway.MainActivity"
             android:exported="true"

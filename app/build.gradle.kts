@@ -55,6 +55,8 @@ dependencies {
 
     implementation(libs.result)
 
+    implementation(libs.gms.scanner)
+
     implementation(libs.coil)
     implementation(libs.coil.compose)
 

@@ -136,6 +136,9 @@ viewBindingDelegate = { module = "com.github.kirich1409:viewbindingpropertydeleg
 
 result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.17" }
 
+# GMS
+gms-scanner = { module = "com.google.android.gms:play-services-code-scanner", version = "16.0.0" }
+
 # -- Networking stuff --
 # OkHttp
 square-okhttp = { module = "com.squareup.okhttp3:okhttp", version = "5.0.0-alpha.10" }
