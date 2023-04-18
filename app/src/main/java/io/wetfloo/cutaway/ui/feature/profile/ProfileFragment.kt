@@ -20,10 +20,15 @@ class ProfileFragment : ComposeFragment() {
             }
 
             ProfileScreen(
-                imageUrl = "",
+                imageUrl = RICKROLL_URL,
                 navController = navController,
                 onEvent = {},
             )
         }
+    }
+
+    companion object {
+        private const val RICKROLL_URL =
+            "https://www.icegif.com/wp-content/uploads/rick-roll-icegif-5.gif"
     }
 }
