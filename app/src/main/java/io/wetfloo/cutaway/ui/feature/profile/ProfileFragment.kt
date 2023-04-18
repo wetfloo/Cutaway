@@ -22,6 +22,7 @@ class ProfileFragment : ComposeFragment() {
             ProfileScreen(
                 imageUrl = "",
                 navController = navController,
+                onEvent = {},
             )
         }
     }
