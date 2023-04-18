@@ -2,6 +2,7 @@ package io.wetfloo.cutaway.ui.feature.qr
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.remember
@@ -24,10 +25,13 @@ class QrFragment : ComposeFragment() {
             }
             HostScaffold(
                 navController = navController,
+                modifier = Modifier
+                    .fillMaxSize(),
                 title = stringResource(R.string.qr_scanner_destination_name),
             ) { scaffoldPaddingValues ->
                 QrScreen(
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(scaffoldPaddingValues),
                 )
             }
