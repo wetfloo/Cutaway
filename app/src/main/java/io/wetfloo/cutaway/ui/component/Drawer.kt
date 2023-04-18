@@ -1,33 +1,65 @@
 package io.wetfloo.cutaway.ui.component
 
+import androidx.annotation.IdRes
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Drawer(
     modifier: Modifier = Modifier,
     items: List<DrawerMenuItem>,
+    navController: NavController,
+    drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
-        modifier = modifier,
+        modifier = modifier
+            .fillMaxSize(),
         content = content,
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                items.forEach { (text, isActive, action) ->
+                val activeDestinationId = remember {
+                    navController.currentDestination?.id
+                }
+                val coroutineScope = rememberCoroutineScope()
+
+                items.forEach { (destinationId, textId) ->
+                    val isCurrentlyActive = remember {
+                        destinationId == activeDestinationId
+                    }
+
                     NavigationDrawerItem(
                         label = {
-                            Text(text)
+                            Text(stringResource(textId))
                         },
-                        selected = isActive,
-                        onClick = action,
+                        selected = isCurrentlyActive,
+                        onClick = {
+                            coroutineScope.launch {
+                                drawerState.close()
+
+                                if (!isCurrentlyActive) {
+                                    navController.navigate(destinationId)
+                                }
+                            }
+                        },
                     )
                 }
             }
@@ -37,7 +69,6 @@ fun Drawer(
 
 @Immutable
 data class DrawerMenuItem(
-    val text: String,
-    val isActive: Boolean = false,
-    val action: () -> Unit,
+    @IdRes val destinationId: Int,
+    @StringRes val text: Int,
 )

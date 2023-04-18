@@ -8,4 +8,8 @@
         android:id="@+id/authFragment"
         android:name="io.wetfloo.cutaway.ui.feature.auth.AuthFragment"
         android:label="AuthFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="io.wetfloo.cutaway.ui.feature.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>

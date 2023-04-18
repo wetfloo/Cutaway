@@ -7,5 +7,6 @@
     <string name="log_in">Log in</string>
 
     <!-- Profile -->
+    <string name="profile_destination_name">Profile</string>
     <string name="profile_image_description">User\'s profile picture</string>
 </resources>
