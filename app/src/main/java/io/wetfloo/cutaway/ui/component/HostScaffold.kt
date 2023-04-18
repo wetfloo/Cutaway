@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.navOptions
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +38,17 @@ fun HostScaffold(
                 drawerState.close()
 
                 if (destinationId != activeDestinationId) {
-                    navController.navigate(destinationId)
+                    navController.navigate(
+                        resId = destinationId,
+                        args = null,
+                        navOptions = navOptions {
+                            if (activeDestinationId != null) {
+                                popUpTo(activeDestinationId) {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                    )
                 }
             }
         },
