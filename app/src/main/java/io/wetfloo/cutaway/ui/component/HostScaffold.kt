@@ -54,7 +54,7 @@ fun HostScaffold(
                     }
                 },
             )
-        }
+        },
     ) { paddingValues ->
         content(paddingValues)
     }
