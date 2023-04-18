@@ -42,20 +42,19 @@ fun HostScaffold(
             }
         },
     ) {
-
-    }
-    Scaffold(
-        topBar = {
-            HostTopAppBar(
-                text = title,
-                onMenuClick = {
-                    coroutineScope.launch {
-                        drawerState.open()
-                    }
-                },
-            )
-        },
-    ) { paddingValues ->
-        content(paddingValues)
+        Scaffold(
+            topBar = {
+                HostTopAppBar(
+                    text = title,
+                    onMenuClick = {
+                        coroutineScope.launch {
+                            drawerState.open()
+                        }
+                    },
+                )
+            },
+        ) { paddingValues ->
+            content(paddingValues)
+        }
     }
 }
