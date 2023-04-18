@@ -38,6 +38,6 @@ fun Drawer(
 @Immutable
 data class DrawerMenuItem(
     val text: String,
-    val isActive: Boolean,
+    val isActive: Boolean = false,
     val action: () -> Unit,
 )
