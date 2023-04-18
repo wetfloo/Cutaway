@@ -5,6 +5,7 @@ import android.view.View
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,9 +25,12 @@ class ProfileFragment : ComposeFragment() {
         drawContent {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
             val coroutineScope = rememberCoroutineScope()
+            val navController = remember {
+                findNavController()
+            }
             Drawer(
                 items = destinations,
-                navController = findNavController(),
+                navController = navController,
                 drawerState = drawerState,
             ) {
                 ProfileScreen("") {
