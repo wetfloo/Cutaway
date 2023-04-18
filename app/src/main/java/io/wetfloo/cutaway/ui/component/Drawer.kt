@@ -18,13 +18,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import io.wetfloo.cutaway.ui.destinations
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Drawer(
     modifier: Modifier = Modifier,
-    items: List<DrawerMenuItem>,
     navController: NavController,
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     content: @Composable () -> Unit,
@@ -41,7 +41,7 @@ fun Drawer(
                 }
                 val coroutineScope = rememberCoroutineScope()
 
-                items.forEach { (destinationId, textId) ->
+                destinations.forEach { (destinationId, textId) ->
                     val isCurrentlyActive = remember {
                         destinationId == activeDestinationId
                     }

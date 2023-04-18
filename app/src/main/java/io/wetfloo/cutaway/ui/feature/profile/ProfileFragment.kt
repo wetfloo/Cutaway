@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
 import io.wetfloo.cutaway.ui.component.Drawer
-import io.wetfloo.cutaway.ui.destinations
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +28,6 @@ class ProfileFragment : ComposeFragment() {
                 findNavController()
             }
             Drawer(
-                items = destinations,
                 navController = navController,
                 drawerState = drawerState,
             ) {

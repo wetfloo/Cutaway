@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Cutaway</string>
 
+    <!-- Host drawer -->
+    <string name="host_drawer_menu_description">Drawer menu</string>
+
     <!-- Auth -->
     <string name="login">Login</string>
     <string name="password">Password</string>
