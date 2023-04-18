@@ -6,23 +6,35 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileImage
 
 @Composable
 fun ProfileScreen(
     imageUrl: String,
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    HostScaffold(
         modifier = modifier
-            .fillMaxSize()
-            .padding(
-                horizontal = dimensionResource(R.dimen.default_padding_horizontal),
-            ),
-    ) {
-        ProfileImage(
-            imageData = imageUrl,
-        )
+            .fillMaxSize(),
+        navController = navController,
+        title = stringResource(R.string.profile_destination_name),
+    ) { scaffoldPaddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(scaffoldPaddingValues)
+                .padding(
+                    horizontal = dimensionResource(R.dimen.default_padding_horizontal),
+                ),
+        ) {
+            ProfileImage(
+                imageData = imageUrl,
+            )
+        }
     }
 }

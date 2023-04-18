@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.component
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,6 +18,7 @@ import io.wetfloo.cutaway.R
 fun HostTopAppBar(
     text: String,
     onMenuClick: () -> Unit,
+    actions: @Composable RowScope.() -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
@@ -31,6 +33,7 @@ fun HostTopAppBar(
                     contentDescription = stringResource(R.string.host_drawer_menu_description),
                 )
             }
-        }
+        },
+        actions = actions,
     )
 }
