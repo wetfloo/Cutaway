@@ -12,4 +12,8 @@
         android:id="@+id/profileFragment"
         android:name="io.wetfloo.cutaway.ui.feature.profile.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/qrFragment"
+        android:name="io.wetfloo.cutaway.ui.feature.qr.QrFragment"
+        android:label="QrFragment" />
 </navigation>

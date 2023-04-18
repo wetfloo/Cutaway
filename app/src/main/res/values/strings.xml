@@ -12,4 +12,7 @@
     <!-- Profile -->
     <string name="profile_destination_name">Profile</string>
     <string name="profile_image_description">User\'s profile picture</string>
+
+    <!-- QR -->
+    <string name="qr_scanner_destination_name">QR code scanner</string>
 </resources>

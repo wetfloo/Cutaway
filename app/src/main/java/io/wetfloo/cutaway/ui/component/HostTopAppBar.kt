@@ -16,8 +16,8 @@ import io.wetfloo.cutaway.R
 @Composable
 fun HostTopAppBar(
     text: String,
-    modifier: Modifier = Modifier,
     onMenuClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         modifier = modifier,
