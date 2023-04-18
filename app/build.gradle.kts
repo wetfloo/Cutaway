@@ -61,6 +61,7 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.coil.compose)
+    implementation(libs.coil.gif)
 
     // Detect memory leaks
     debugImplementation(libs.square.leakcanary)
