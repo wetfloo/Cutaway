@@ -57,6 +57,8 @@ dependencies {
 
     implementation(libs.gms.scanner)
 
+    implementation(libs.bundles.camerax)
+
     implementation(libs.coil)
     implementation(libs.coil.compose)
 

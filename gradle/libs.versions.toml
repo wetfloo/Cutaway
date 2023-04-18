@@ -21,6 +21,8 @@ compose-compiler = "1.4.5"
 
 media3 = "1.0.0"
 
+camerax = "1.1.0-beta01"
+
 mockk = "1.13.3"
 
 # Third party navigation
@@ -139,6 +141,14 @@ result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1
 # GMS
 gms-scanner = { module = "com.google.android.gms:play-services-code-scanner", version = "16.0.0" }
 
+# CameraX
+camera-core = { module = "androidx.camera:camera-core", version.ref = "camerax" }
+camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+camerax-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
+camerax-video = { module = "androidx.camera:camera-video", version.ref = "camerax" }
+camerax-view = { module = "androidx.camera:camera-view", version.ref = "camerax" }
+camerax-extensions = { module = "androidx.camera:camera-extensions", version.ref = "camerax" }
+
 # -- Networking stuff --
 # OkHttp
 square-okhttp = { module = "com.squareup.okhttp3:okhttp", version = "5.0.0-alpha.10" }
@@ -173,6 +183,7 @@ lifecycleCompose = ["androidx-lifecycle-viewmodel-compose", "androidx-lifecycle-
 room = ["room-room", "room-ktx"]
 ktor = ["ktor-core", "ktor-cio", "ktor-negotiation", "ktor-serialization", "ktor-serialization-kotlinx-json", "ktor-websockets"]
 media3 = ["media3-ui", "media3-session", "media3-exoplayer"]
+camerax = ["camera-core", "camera-camera2", "camerax-lifecycle", "camerax-video", "camerax-view", "camerax-extensions"]
 
 testSuite = ["junit", "mockk-android", "mockk-agent", "turbine", "coroutines-test"]
 androidTestSuite = ["androidx-test-ext-junit", "androidx-test-espresso-core"]
