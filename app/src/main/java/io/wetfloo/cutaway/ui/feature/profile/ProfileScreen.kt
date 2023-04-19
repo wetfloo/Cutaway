@@ -19,9 +19,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.HostScaffold
+import io.wetfloo.cutaway.ui.component.SpacerSized
+import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationBlock
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 
 @Composable
@@ -73,6 +76,12 @@ fun ProfileScreen(
                 modifier = Modifier
                     .fillMaxWidth(),
             )
+
+            SpacerSized(h = 16.dp)
+
+            ProfileInformationBlock(
+                headline = "Profile info headline",
+            ) {}
         }
     }
 }

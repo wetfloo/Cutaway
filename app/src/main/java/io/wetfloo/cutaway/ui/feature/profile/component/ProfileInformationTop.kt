@@ -40,7 +40,7 @@ fun ProfileInformationTop(
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp),
+                .padding(dimensionResource(R.dimen.card_spacing_internal)),
         ) {
             Row {
                 AsyncImage(
@@ -83,11 +83,12 @@ fun ProfileInformationTop(
                 }
             }
 
-            SpacerSized(h = dimensionResource(R.dimen.divider_spacing))
-
-            DefaultDivider()
-
-            SpacerSized(h = dimensionResource(R.dimen.divider_spacing))
+            DefaultDivider(
+                modifier = Modifier
+                    .padding(
+                        vertical = dimensionResource(R.dimen.divider_spacing),
+                    ),
+            )
 
             Column(
                 modifier = Modifier
