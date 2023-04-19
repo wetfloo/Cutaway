@@ -9,10 +9,13 @@ import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.HostScaffold
@@ -68,6 +71,23 @@ fun ProfileScreen(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun ProfileScreenPreview1() {
+    val context = LocalContext.current
+    val navController = remember {
+        NavController(context)
+    }
+
+    ProfileScreen(
+        imageUrl = "",
+        navController = navController,
+        modifier = Modifier
+            .fillMaxSize(),
+        onEvent = {},
+    )
 }
 
 sealed interface ProfileScreenEvent {
