@@ -3,8 +3,11 @@ package io.wetfloo.cutaway.ui.feature.profile
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +30,29 @@ fun ProfileScreen(
             .fillMaxSize(),
         navController = navController,
         title = stringResource(R.string.profile_destination_name),
+        actions = {
+            IconButton(
+                onClick = {
+                    onEvent(ProfileScreenEvent.EditProfile)
+                },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = stringResource(R.string.profile_edit),
+                )
+            }
+
+            IconButton(
+                onClick = {
+                    onEvent(ProfileScreenEvent.ShowQrCode)
+                },
+            ) {
+                Icon(
+                    imageVector = Icons.Default.QrCode2,
+                    contentDescription = null, // TODO
+                )
+            }
+        },
     ) { scaffoldPaddingValues ->
         Column(
             modifier = Modifier
@@ -40,20 +66,11 @@ fun ProfileScreen(
             ProfileImage(
                 imageData = imageUrl,
             )
-
-            Button(
-                onClick = {
-                    onEvent(ProfileScreenEvent.EditProfile)
-                },
-            ) {
-                Text(
-                    text = stringResource(R.string.profile_edit),
-                )
-            }
         }
     }
 }
 
 sealed interface ProfileScreenEvent {
     object EditProfile : ProfileScreenEvent
+    object ShowQrCode : ProfileScreenEvent
 }
