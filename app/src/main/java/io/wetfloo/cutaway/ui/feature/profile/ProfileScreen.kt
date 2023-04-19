@@ -31,11 +31,10 @@ import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 fun ProfileScreen(
     imageUrl: String,
     navController: NavController,
-    modifier: Modifier = Modifier,
     onEvent: (ProfileScreenEvent) -> Unit,
 ) {
     HostScaffold(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize(),
         navController = navController,
         title = stringResource(R.string.profile_destination_name),
@@ -101,8 +100,6 @@ private fun ProfileScreenPreview1() {
     ProfileScreen(
         imageUrl = "",
         navController = navController,
-        modifier = Modifier
-            .fillMaxSize(),
         onEvent = {},
     )
 }

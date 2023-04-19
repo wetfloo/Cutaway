@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Cutaway</string>
 
+    <!-- App bar -->
+    <string name="app_bar_back">Go back</string>
+
     <!-- Host drawer -->
     <string name="host_drawer_menu_description">Drawer menu</string>
 
@@ -16,4 +19,7 @@
 
     <!-- QR -->
     <string name="qr_scanner_destination_name">QR code scanner</string>
+
+    <!-- QR generator -->
+    <string name="qr_generator_destination_name">QR generator</string>
 </resources>
