@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
+import io.wetfloo.cutaway.core.common.RICKROLL_GIF_URL
 
 @AndroidEntryPoint
 class ProfileFragment : ComposeFragment() {
@@ -20,15 +21,18 @@ class ProfileFragment : ComposeFragment() {
             }
 
             ProfileScreen(
-                imageUrl = RICKROLL_URL,
+                imageUrl = RICKROLL_GIF_URL,
                 navController = navController,
-                onEvent = {},
+                onEvent = { event ->
+                    when (event) {
+                        ProfileScreenEvent.EditProfile -> TODO()
+                        ProfileScreenEvent.ShowQrCode -> navController.navigate(
+                            directions = ProfileFragmentDirections
+                                .actionProfileFragmentToQrGeneratorFragment(),
+                        )
+                    }
+                },
             )
         }
-    }
-
-    companion object {
-        private const val RICKROLL_URL =
-            "https://www.icegif.com/wp-content/uploads/rick-roll-icegif-5.gif"
     }
 }

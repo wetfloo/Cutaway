@@ -57,8 +57,14 @@ dependencies {
     implementation(libs.result)
 
     implementation(libs.gms.scanner)
-
     implementation(libs.bundles.camerax)
+
+    implementation(libs.awesomeQr) {
+        exclude(
+            group = "com.waynejo",
+            module = "androidndkgif",
+        ) // exclude jcenter module
+    }
 
     implementation(libs.coil)
     implementation(libs.coil.compose)
