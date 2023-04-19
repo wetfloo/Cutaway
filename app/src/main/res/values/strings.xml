@@ -21,5 +21,5 @@
     <string name="qr_scanner_destination_name">QR code scanner</string>
 
     <!-- QR generator -->
-    <string name="qr_generator_destination_name">QR generator</string>
+    <string name="qr_generator_destination_name">Profile QR code</string>
 </resources>
