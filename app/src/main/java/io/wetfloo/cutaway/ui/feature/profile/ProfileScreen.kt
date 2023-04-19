@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -81,7 +82,11 @@ fun ProfileScreen(
 
             ProfileInformationBlock(
                 headline = "Profile info headline",
-            ) {}
+            ) {
+                Text(
+                    text = "This is a sample text to put content inside of ProfileInformationBlock",
+                )
+            }
         }
     }
 }
