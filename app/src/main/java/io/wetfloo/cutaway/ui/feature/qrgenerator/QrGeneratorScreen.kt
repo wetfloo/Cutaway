@@ -1,6 +1,7 @@
 package io.wetfloo.cutaway.ui.feature.qrgenerator
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -13,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
@@ -28,6 +30,8 @@ fun QrGeneratorScreen(
     navController: NavController,
 ) {
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize(),
         topBar = {
             TopAppBar(
                 title = {
@@ -50,23 +54,28 @@ fun QrGeneratorScreen(
             )
         },
     ) { scaffoldPaddingValues ->
-        Column(
+        Box(
             modifier = Modifier
                 .padding(dimensionResource(R.dimen.default_padding))
-                .padding(scaffoldPaddingValues),
+                .padding(scaffoldPaddingValues)
+                .fillMaxSize(),
         ) {
             if (qrGeneratorState.isLoading) {
-                CircularProgressIndicator() // TODO this is huge for some reason
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                )
             } else {
                 AsyncImage(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .aspectRatio(1f)
+                        .align(Alignment.Center),
                     model = qrGeneratorState.qrBitmap,
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
                 )
             }
-
         }
     }
 }
