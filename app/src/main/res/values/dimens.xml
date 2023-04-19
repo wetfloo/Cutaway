@@ -5,4 +5,5 @@
     <dimen name="default_padding">16dp</dimen>
     <dimen name="divider_spacing">16dp</dimen>
     <dimen name="card_spacing_internal">12dp</dimen>
+    <dimen name="default_card_spacing_vertical_external">16dp</dimen>
 </resources>

@@ -20,7 +20,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.HostScaffold
@@ -78,7 +77,7 @@ fun ProfileScreen(
                     .fillMaxWidth(),
             )
 
-            SpacerSized(h = 16.dp)
+            SpacerSized(h = dimensionResource(R.dimen.default_card_spacing_vertical_external))
 
             ProfileInformationBlock(
                 headline = "Profile info headline",
