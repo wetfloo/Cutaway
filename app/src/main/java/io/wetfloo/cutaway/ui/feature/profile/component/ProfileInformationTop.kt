@@ -28,7 +28,7 @@ import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.SpacerSized
 
 @Composable
-fun ProfileInformation(
+fun ProfileInformationTop(
     imageData: Any?,
     modifier: Modifier = Modifier,
 ) {

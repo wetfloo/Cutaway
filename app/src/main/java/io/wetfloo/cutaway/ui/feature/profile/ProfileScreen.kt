@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.HostScaffold
-import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformation
+import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 
 @Composable
 fun ProfileScreen(
@@ -68,7 +68,7 @@ fun ProfileScreen(
                 .padding(dimensionResource(R.dimen.default_padding)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            ProfileInformation(
+            ProfileInformationTop(
                 imageData = imageUrl,
                 modifier = Modifier
                     .fillMaxWidth(),
