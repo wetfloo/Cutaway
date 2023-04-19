@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.component.SpacerSized
 
 @Composable
@@ -84,18 +84,7 @@ fun ProfileInformationTop(
 
             SpacerSized(h = DIVIDER_SPACING.dp)
 
-            Divider(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 8.dp,
-                    ),
-                color = MaterialTheme
-                    .colorScheme
-                    .onSurfaceVariant
-                    .copy(
-                        alpha = .15f,
-                    ),
-            )
+            DefaultDivider()
 
             SpacerSized(h = DIVIDER_SPACING.dp)
 
