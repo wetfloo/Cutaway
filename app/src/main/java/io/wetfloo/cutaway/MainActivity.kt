@@ -2,6 +2,7 @@ package io.wetfloo.cutaway
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -9,6 +10,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(
+            /* window = */
+            window,
+            /* decorFitsSystemWindows = */
+            false,
+        )
         setContentView(R.layout.activity_main)
         setStartingDestination()
     }
