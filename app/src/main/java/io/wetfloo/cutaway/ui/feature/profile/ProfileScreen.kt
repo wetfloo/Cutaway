@@ -2,7 +2,10 @@ package io.wetfloo.cutaway.ui.feature.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode2
@@ -19,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.HostScaffold
-import io.wetfloo.cutaway.ui.feature.profile.component.ProfileImage
+import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformation
 
 @Composable
 fun ProfileScreen(
@@ -60,14 +63,15 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(scaffoldPaddingValues)
-                .padding(
-                    horizontal = dimensionResource(R.dimen.default_padding_horizontal),
-                ),
+                .padding(dimensionResource(R.dimen.default_padding)),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            ProfileImage(
+            ProfileInformation(
                 imageData = imageUrl,
+                modifier = Modifier
+                    .fillMaxWidth(),
             )
         }
     }
