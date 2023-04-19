@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.compose.ui.tooling.preview)
     debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.accompanist.systemuicontroller)
 
     implementation(libs.viewBindingDelegate)
 
