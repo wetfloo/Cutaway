@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import io.wetfloo.cutaway.core.ui.compose.core.AppTheme
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
+import io.wetfloo.cutaway.ui.component.TransparentSystemBars
 
 abstract class ComposeFragment : Fragment(R.layout.fragment_compose_base) {
     private val binding by viewBinding(FragmentComposeBaseBinding::bind)
@@ -24,6 +25,7 @@ abstract class ComposeFragment : Fragment(R.layout.fragment_compose_base) {
     protected fun drawContent(content: @Composable () -> Unit) {
         binding.composeView.apply {
             setContent {
+                TransparentSystemBars()
                 AppTheme {
                     content()
                 }
