@@ -3,7 +3,6 @@ package io.wetfloo.cutaway.ui.feature.profile
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
@@ -25,17 +24,13 @@ class ProfileFragment : ComposeFragment() {
                 .state
                 .collectAsStateWithLifecycle()
 
-            val navController = remember {
-                findNavController()
-            }
-
             ProfileScreen(
                 state = state,
-                navController = navController,
+                navController = findNavController(),
                 onMessage = { message ->
                     when (message) {
                         ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()
-                        ProfileScreenMessage.ShowQrCode -> navController.navigate(
+                        ProfileScreenMessage.ShowQrCode -> findNavController().navigate(
                             directions = ProfileFragmentDirections
                                 .actionProfileFragmentToQrGeneratorFragment(),
                         )
