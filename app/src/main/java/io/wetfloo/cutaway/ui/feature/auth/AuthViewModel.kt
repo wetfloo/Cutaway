@@ -16,9 +16,6 @@ import io.wetfloo.cutaway.core.commonimpl.EventResult
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.data.AuthPreferencesManager
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authPreferencesManager: AuthPreferencesManager,
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     var loginValue by savedStateHandle.saveable {
         mutableStateOf("")
@@ -36,8 +33,10 @@ class AuthViewModel @Inject constructor(
         mutableStateOf("")
     }
 
-    private val _authState: MutableStateFlow<AuthState> = MutableStateFlow(AuthState())
-    val authState = _authState.asStateFlow()
+    val authState = savedStateHandle.getStateFlow(
+        key = AUTH_STATE,
+        initialValue = AuthState(),
+    )
 
     private val _authEvent: MutableEventFlow<EventResult<AuthEvent>> = MutableEventFlow()
     val authEvent = _authEvent.asEventFlow()
@@ -72,8 +71,12 @@ class AuthViewModel @Inject constructor(
     }
 
     private inline fun updateState(block: (AuthState) -> AuthState) {
-        _authState.update { state ->
-            block(state)
-        }
+        val oldValue: AuthState = savedStateHandle[AUTH_STATE] ?: AuthState()
+        val newValue = block(oldValue)
+        savedStateHandle[AUTH_STATE] = newValue
+    }
+
+    companion object {
+        private const val AUTH_STATE = "AUTH_STATE"
     }
 }
