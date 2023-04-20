@@ -71,7 +71,7 @@ fun AuthScreen(
             ) { eventResult ->
                 eventResult.onFailure { error ->
                     snackbarHostState.showSnackbar(
-                        message = error.getErrorString(context),
+                        message = error.errorString(context),
                     )
                 }
             }

@@ -3,8 +3,8 @@ package io.wetfloo.cutaway.core.commonimpl
 import android.content.Context
 import androidx.annotation.StringRes
 
-sealed class UiError {
-    fun getErrorString(context: Context): String =
+sealed interface UiError {
+    fun errorString(context: Context): String =
         when (val uiError = this@UiError) {
             is Raw -> uiError.string
             is Resource -> context.getString(
@@ -16,7 +16,7 @@ sealed class UiError {
     data class Resource(
         @StringRes val stringRes: Int,
         val args: Array<Any> = emptyArray(),
-    ) : UiError() {
+    ) : UiError {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (javaClass != other?.javaClass) return false
@@ -36,5 +36,5 @@ sealed class UiError {
         }
     }
 
-    data class Raw(val string: String) : UiError()
+    data class Raw(val string: String) : UiError
 }
