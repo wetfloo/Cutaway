@@ -23,10 +23,10 @@ class ProfileFragment : ComposeFragment() {
             ProfileScreen(
                 imageUrl = SAMPLE_PROFILE_PICTURE_URL,
                 navController = navController,
-                onEvent = { event ->
-                    when (event) {
-                        ProfileScreenEvent.EditProfile -> TODO()
-                        ProfileScreenEvent.ShowQrCode -> navController.navigate(
+                onMessage = { message ->
+                    when (message) {
+                        ProfileScreenMessage.EditProfile -> TODO()
+                        ProfileScreenMessage.ShowQrCode -> navController.navigate(
                             directions = ProfileFragmentDirections
                                 .actionProfileFragmentToQrGeneratorFragment(),
                         )

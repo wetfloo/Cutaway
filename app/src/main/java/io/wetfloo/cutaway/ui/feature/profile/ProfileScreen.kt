@@ -31,7 +31,7 @@ import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 fun ProfileScreen(
     imageUrl: String,
     navController: NavController,
-    onEvent: (ProfileScreenEvent) -> Unit,
+    onMessage: (ProfileScreenMessage) -> Unit,
 ) {
     HostScaffold(
         modifier = Modifier
@@ -41,7 +41,7 @@ fun ProfileScreen(
         actions = {
             IconButton(
                 onClick = {
-                    onEvent(ProfileScreenEvent.EditProfile)
+                    onMessage(ProfileScreenMessage.EditProfile)
                 },
             ) {
                 Icon(
@@ -52,7 +52,7 @@ fun ProfileScreen(
 
             IconButton(
                 onClick = {
-                    onEvent(ProfileScreenEvent.ShowQrCode)
+                    onMessage(ProfileScreenMessage.ShowQrCode)
                 },
             ) {
                 Icon(
@@ -100,6 +100,6 @@ private fun ProfileScreenPreview1() {
     ProfileScreen(
         imageUrl = "",
         navController = navController,
-        onEvent = {},
+        onMessage = {},
     )
 }
