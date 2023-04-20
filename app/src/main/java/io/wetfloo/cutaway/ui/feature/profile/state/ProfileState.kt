@@ -16,5 +16,6 @@ sealed interface ProfileState : Parcelable {
         val status: String?,
         val pictureUrl: String?,
         val isUpdating: Boolean = false,
+        val pieces: List<ProfileInformationPiece>,
     ) : ProfileState
 }

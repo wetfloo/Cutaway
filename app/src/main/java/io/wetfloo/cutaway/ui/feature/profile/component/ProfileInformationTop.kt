@@ -7,13 +7,15 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -27,12 +29,11 @@ import coil.request.ImageRequest
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.component.SpacerSized
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 
 @Composable
 fun ProfileInformationTop(
-    name: String,
-    status: String?,
-    imageData: Any?,
+    state: ProfileState.Data,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -48,7 +49,7 @@ fun ProfileInformationTop(
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .crossfade(true)
-                        .data(imageData)
+                        .data(state.pictureUrl)
                         .build(),
                     contentDescription = stringResource(R.string.profile_image_description),
                     contentScale = ContentScale.Crop,
@@ -68,7 +69,7 @@ fun ProfileInformationTop(
                         .fillMaxWidth(),
                 ) {
                     Text(
-                        text = name,
+                        text = state.name,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.headlineMedium,
@@ -76,9 +77,9 @@ fun ProfileInformationTop(
 
                     SpacerSized(h = 4.dp)
 
-                    if (status != null) {
+                    if (state.status != null) {
                         Text(
-                            text = status,
+                            text = state.status,
                             maxLines = 3,
                             overflow = TextOverflow.Ellipsis,
                             style = MaterialTheme.typography.bodyMedium,
@@ -94,27 +95,41 @@ fun ProfileInformationTop(
                     ),
             )
 
-            Column(
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth(),
-            ) {
-                ProfileInformationItem(
-                    profileInformationPiece = ProfileInformationPiece(
-                        header = "header",
-                        value = "value",
-                        icon = ProfileInformationPiece.Icon(
-                            imageVector = Icons.Default.Work,
-                            contentDescription = null, // TODO
-                        )
+                    .fillMaxWidth()
+                    .sizeIn(
+                        maxHeight = 200.dp,
                     ),
-                    onClick = {
-                        Toast.makeText(
-                            context,
-                            "Profile info piece clicked",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
-                )
+                horizontalAlignment = Alignment.CenterHorizontally,
+                state = rememberLazyListState(),
+            ) {
+                itemsIndexed(
+                    items = state.pieces,
+                    key = { _, item ->
+                        item.hashCode()
+                    }
+                ) { index, piece ->
+                    ProfileInformationItem(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        piece = piece,
+                        onClick = {
+                            Toast.makeText(
+                                context,
+                                "Profile info piece clicked",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        },
+                    )
+                    if (index + 1 < state.pieces.count()) {
+                        DefaultDivider(
+                            modifier = Modifier
+                                .padding(vertical = 8.dp)
+                                .sizeIn(maxWidth = 120.dp),
+                        )
+                    }
+                }
             }
         }
     }

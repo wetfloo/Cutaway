@@ -9,6 +9,8 @@ import io.wetfloo.cutaway.core.common.SAMPLE_PROFILE_PICTURE_URL
 import io.wetfloo.cutaway.core.commonimpl.StateViewModel
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileInformationPiece
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileInformationPieceType
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -49,6 +51,16 @@ class ProfileViewModel @Inject constructor(
             name = "After Dark",
             status = "Reach for the sky, sinner!",
             pictureUrl = SAMPLE_PROFILE_PICTURE_URL,
+            pieces = listOf(
+                ProfileInformationPiece(
+                    value = "Here, Inc.",
+                    type = ProfileInformationPieceType.WORK,
+                ),
+                ProfileInformationPiece(
+                    value = "2000/01/01",
+                    type = ProfileInformationPieceType.BIRTHDAY,
+                ),
+            ),
         )
     }
 

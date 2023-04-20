@@ -23,6 +23,14 @@
         Profile editing not implemented yet
     </string>
 
+    <!-- Profile info pieces -->
+    <string name="piece_education">Education</string>
+    <string name="piece_work">Work place</string>
+    <string name="piece_location">Location</string>
+    <string name="piece_birthday">Birthday</string>
+    <string name="piece_interests">Interests</string>
+    <string name="piece_generic">Other information</string>
+
     <!-- QR -->
     <string name="qr_scanner_destination_name">QR code scanner</string>
 

@@ -114,9 +114,7 @@ fun ProfileScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     ProfileInformationTop(
-                        name = state.name,
-                        status = state.status,
-                        imageData = state.pictureUrl,
+                        state = state,
                         modifier = Modifier
                             .fillMaxWidth(),
                     )
@@ -156,6 +154,7 @@ private fun ProfileScreenPreview1() {
             name = "Creative name",
             status = "Ligma male",
             pictureUrl = null,
+            pieces = emptyList(),
         ),
         navController = navController,
         onMessage = {},
