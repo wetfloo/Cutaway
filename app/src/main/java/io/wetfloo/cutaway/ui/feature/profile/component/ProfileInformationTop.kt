@@ -30,6 +30,8 @@ import io.wetfloo.cutaway.ui.component.SpacerSized
 
 @Composable
 fun ProfileInformationTop(
+    name: String,
+    status: String?,
     imageData: Any?,
     modifier: Modifier = Modifier,
 ) {
@@ -66,7 +68,7 @@ fun ProfileInformationTop(
                         .fillMaxWidth(),
                 ) {
                     Text(
-                        text = "name",
+                        text = name,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.headlineMedium,
@@ -74,12 +76,14 @@ fun ProfileInformationTop(
 
                     SpacerSized(h = 4.dp)
 
-                    Text(
-                        text = "status",
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
+                    if (status != null) {
+                        Text(
+                            text = status,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
                 }
             }
 

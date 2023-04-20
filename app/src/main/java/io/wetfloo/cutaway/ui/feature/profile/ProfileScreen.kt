@@ -114,6 +114,8 @@ fun ProfileScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     ProfileInformationTop(
+                        name = state.name,
+                        status = state.status,
                         imageData = state.pictureUrl,
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -131,6 +133,7 @@ fun ProfileScreen(
                 }
 
                 ProfileState.Idle -> Unit
+
                 ProfileState.Loading -> CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center),
