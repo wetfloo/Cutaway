@@ -32,7 +32,11 @@ class AuthFragment : ComposeFragment() {
                 onLoginChange = { viewModel.loginValue = it },
                 onPasswordChange = { viewModel.passwordValue = it },
                 authState = state,
-                onClick = viewModel::logIn,
+                onMessage = { message ->
+                    when (message) {
+                        AuthScreenMessage.LoginButtonClicked -> viewModel.logIn()
+                    }
+                },
                 authEventFlow = viewModel.authEvent,
             )
         }

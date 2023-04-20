@@ -55,8 +55,8 @@ fun AuthScreen(
     onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     authState: AuthState,
+    onMessage: (AuthScreenMessage) -> Unit,
     authEventFlow: EventFlow<EventResult<AuthEvent>>,
-    onClick: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -128,7 +128,9 @@ fun AuthScreen(
                 Spacer(Modifier.height(16.dp))
 
                 Button(
-                    onClick = onClick,
+                    onClick = {
+                        onMessage(AuthScreenMessage.LoginButtonClicked)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
@@ -180,11 +182,15 @@ private fun AuthScreenPreview1() {
         onLoginChange = { loginValue = it },
         onPasswordChange = { passwordValue = it },
         authState = AuthState(),
-        onClick = {
-            coroutineScope.launch {
-                isLoading = true
-                delay(5000)
-                isLoading = false
+        onMessage = { message ->
+            when (message) {
+                AuthScreenMessage.LoginButtonClicked -> {
+                    coroutineScope.launch {
+                        isLoading = true
+                        delay(5000)
+                        isLoading = false
+                    }
+                }
             }
         },
         authEventFlow = MutableEventFlow(),
