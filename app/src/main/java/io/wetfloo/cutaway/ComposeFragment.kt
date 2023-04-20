@@ -5,25 +5,32 @@ import android.view.View
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import by.kirich1409.viewbindingdelegate.viewBinding
 import io.wetfloo.cutaway.core.ui.compose.core.AppTheme
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.component.TransparentSystemBars
 
 abstract class ComposeFragment : Fragment(R.layout.fragment_compose_base) {
-    private val binding by viewBinding(FragmentComposeBaseBinding::bind)
+    private var binding: FragmentComposeBaseBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.composeView.apply {
+
+        binding = FragmentComposeBaseBinding.bind(view)
+
+        binding?.composeView?.apply {
             setViewCompositionStrategy(
                 strategy = ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed,
             )
         }
     }
 
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
+
     protected fun drawContent(content: @Composable () -> Unit) {
-        binding.composeView.apply {
+        binding?.composeView?.apply {
             setContent {
                 TransparentSystemBars()
                 AppTheme {

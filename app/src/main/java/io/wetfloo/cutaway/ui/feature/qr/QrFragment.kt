@@ -12,7 +12,7 @@ class QrFragment : ComposeFragment() {
         super.onViewCreated(view, savedInstanceState)
         drawContent {
             QrScreen(
-                navController = findNavController(),
+                navController = { findNavController() },
             )
         }
     }

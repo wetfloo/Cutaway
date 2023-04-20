@@ -14,7 +14,7 @@ import io.wetfloo.cutaway.ui.component.HostScaffold
 
 @Composable
 fun QrScreen(
-    navController: NavController,
+    navController: () -> NavController,
     modifier: Modifier = Modifier,
 ) {
     HostScaffold(

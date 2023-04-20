@@ -28,7 +28,7 @@ import io.wetfloo.cutaway.ui.feature.qrgenerator.state.QrGeneratorState
 @Composable
 fun QrGeneratorScreen(
     state: QrGeneratorState,
-    navController: NavController,
+    navController: () -> NavController,
 ) {
     Scaffold(
         modifier = Modifier
@@ -43,7 +43,7 @@ fun QrGeneratorScreen(
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            navController.popBackStack()
+                            navController().popBackStack()
                         },
                     ) {
                         Icon(

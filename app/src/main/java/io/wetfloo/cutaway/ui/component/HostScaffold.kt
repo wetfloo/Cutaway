@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun HostScaffold(
     modifier: Modifier = Modifier,
-    navController: NavController,
+    navController: () -> NavController,
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
     snackbarHost: @Composable () -> Unit = {},
@@ -27,7 +27,7 @@ fun HostScaffold(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val activeDestinationId = remember {
-        navController.currentDestination?.id
+        navController().currentDestination?.id
     }
 
     Drawer(
@@ -41,7 +41,7 @@ fun HostScaffold(
                 drawerState.close()
 
                 if (destinationId != activeDestinationId) {
-                    navController.navigate(
+                    navController().navigate(
                         resId = destinationId,
                         args = null,
                         navOptions = navOptions {

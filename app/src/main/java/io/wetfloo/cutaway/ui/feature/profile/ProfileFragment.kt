@@ -26,7 +26,7 @@ class ProfileFragment : ComposeFragment() {
 
             ProfileScreen(
                 state = state,
-                navController = findNavController(),
+                navController = { findNavController() },
                 onMessage = { message ->
                     when (message) {
                         ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()

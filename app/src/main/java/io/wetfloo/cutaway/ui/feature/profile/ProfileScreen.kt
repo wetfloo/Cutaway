@@ -43,7 +43,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
-    navController: NavController,
+    navController: () -> NavController,
     onMessage: (ProfileScreenMessage) -> Unit,
     state: ProfileState,
     eventFlow: EventResultFlow<ProfileEvent>,
@@ -145,9 +145,6 @@ fun ProfileScreen(
 @Composable
 private fun ProfileScreenPreview1() {
     val context = LocalContext.current
-    val navController = remember {
-        NavController(context)
-    }
 
     ProfileScreen(
         state = ProfileState.Data(
@@ -156,7 +153,7 @@ private fun ProfileScreenPreview1() {
             pictureUrl = null,
             pieces = emptyList(),
         ),
-        navController = navController,
+        navController = { NavController(context) },
         onMessage = {},
         eventFlow = MutableEventFlow(),
     )

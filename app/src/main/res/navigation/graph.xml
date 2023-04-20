@@ -22,11 +22,18 @@
         <action
             android:id="@+id/action_profileFragment_to_qrGeneratorFragment"
             app:destination="@id/qrGeneratorFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_qrFragment"
+            app:destination="@id/qrFragment" />
     </fragment>
     <fragment
         android:id="@+id/qrFragment"
         android:name="io.wetfloo.cutaway.ui.feature.qr.QrFragment"
-        android:label="QrFragment" />
+        android:label="QrFragment">
+        <action
+            android:id="@+id/action_qrFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/qrGeneratorFragment"
         android:name="io.wetfloo.cutaway.ui.feature.qrgenerator.QrGeneratorFragment"

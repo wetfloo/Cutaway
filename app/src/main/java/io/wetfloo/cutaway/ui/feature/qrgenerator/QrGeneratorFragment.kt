@@ -29,7 +29,7 @@ class QrGeneratorFragment : ComposeFragment() {
 
             QrGeneratorScreen(
                 state = state,
-                navController = findNavController(),
+                navController = { findNavController() },
             )
         }
     }
