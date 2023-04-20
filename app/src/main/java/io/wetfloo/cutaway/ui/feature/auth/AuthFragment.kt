@@ -4,9 +4,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.getValue
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthFragment : ComposeFragment() {
@@ -15,8 +22,8 @@ class AuthFragment : ComposeFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawContent {
-            val isLoading by viewModel
-                .isLoading
+            val state by viewModel
+                .authState
                 .collectAsStateWithLifecycle()
 
             AuthScreen(
@@ -24,9 +31,26 @@ class AuthFragment : ComposeFragment() {
                 passwordValue = viewModel.passwordValue,
                 onLoginChange = { viewModel.loginValue = it },
                 onPasswordChange = { viewModel.passwordValue = it },
-                isLoading = isLoading,
+                authState = state,
                 onClick = viewModel::logIn,
             )
         }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.authResult.consumeAndNotify { result ->
+                    when (result) {
+                        is Err -> showErrorMessage(result)
+                        is Ok -> findNavController().navigate(
+                            directions = AuthFragmentDirections.actionAuthFragmentToProfileFragment(),
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showErrorMessage(error: Err<*>) {
+        TODO()
     }
 }

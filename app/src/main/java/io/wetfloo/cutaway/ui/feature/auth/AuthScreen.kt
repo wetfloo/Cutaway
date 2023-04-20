@@ -45,7 +45,7 @@ fun AuthScreen(
     onLoginChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    isLoading: Boolean = false,
+    authState: AuthState,
     onClick: () -> Unit,
 ) {
     Scaffold(
@@ -102,7 +102,7 @@ fun AuthScreen(
                             horizontal = 16.dp,
                         ),
                 ) {
-                    AnimatedContent(targetState = isLoading) { loading ->
+                    AnimatedContent(targetState = authState.isLoading) { loading ->
                         if (loading) {
                             CircularProgressIndicator(
                                 modifier = Modifier
@@ -146,7 +146,7 @@ private fun AuthScreenPreview1() {
         passwordValue = passwordValue,
         onLoginChange = { loginValue = it },
         onPasswordChange = { passwordValue = it },
-        isLoading = isLoading,
+        authState = AuthState(),
         onClick = {
             coroutineScope.launch {
                 isLoading = true
