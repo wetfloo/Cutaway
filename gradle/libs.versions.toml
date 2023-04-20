@@ -22,7 +22,7 @@ accompanist = "0.30.1"
 
 media3 = "1.0.0"
 
-camerax = "1.1.0-beta01"
+camerax = "1.2.2"
 
 zxing = "3.5.1"
 
