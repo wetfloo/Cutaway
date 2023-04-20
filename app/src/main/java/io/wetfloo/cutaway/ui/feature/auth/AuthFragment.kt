@@ -9,7 +9,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,9 +55,5 @@ class AuthFragment : ComposeFragment() {
                 }
             }
         }
-    }
-
-    private fun showErrorMessage(error: Err<*>) {
-        TODO()
     }
 }
