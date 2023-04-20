@@ -33,7 +33,7 @@ class ProfileFragment : ComposeFragment() {
                         )
                     }
                 },
-                eventFlow = viewModel.profileEvent,
+                eventFlow = viewModel.event,
             )
         }
     }

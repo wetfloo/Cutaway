@@ -25,7 +25,7 @@ class AuthFragment : ComposeFragment() {
         super.onViewCreated(view, savedInstanceState)
         drawContent {
             val state by viewModel
-                .authState
+                .state
                 .collectAsStateWithLifecycle()
 
             AuthScreen(
@@ -39,13 +39,13 @@ class AuthFragment : ComposeFragment() {
                         AuthScreenMessage.LoginButtonClicked -> viewModel.logIn()
                     }
                 },
-                eventFlow = viewModel.authEvent,
+                eventFlow = viewModel.event,
             )
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.authEvent.consumeAndNotify(
+                viewModel.event.consumeAndNotify(
                     filter = { it is Ok },
                 ) { eventResult ->
                     eventResult.onSuccess { authEvent ->
