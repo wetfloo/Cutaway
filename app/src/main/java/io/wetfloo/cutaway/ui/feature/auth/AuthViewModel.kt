@@ -48,12 +48,12 @@ class AuthViewModel @Inject constructor(
 
             delay(3000)
 
-            _authResult.addEvent(Ok(Unit))
             authPreferencesManager.setToken("fklefe")
+            _authResult.addEvent(Ok(Unit))
 
             updateState {
                 it.copy(
-                    isLoading = true,
+                    isLoading = false,
                 )
             }
         }
