@@ -54,8 +54,10 @@ class AuthViewModel @Inject constructor(
 
             with(_authEvent) {
                 if (booleanWithChance(0.9)) {
-                    addEvent(Ok(AuthEvent.Success))
+                    // it's important to set token before adding any events,
+                    // but this logic should be in a repository anyway
                     authPreferencesManager.setToken("sometoken")
+                    addEvent(Ok(AuthEvent.Success))
                 } else {
                     addEvent(Err(UiError.Resource(R.string.auth_random_error)))
                 }
