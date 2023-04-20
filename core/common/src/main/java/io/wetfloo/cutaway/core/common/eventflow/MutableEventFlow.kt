@@ -22,8 +22,8 @@ class MutableEventFlow<T>(
             events
                 .asReversed()
                 .onEach { event ->
-                    block(event)
                     removeEvent()
+                    block(event)
                 }
         }
     }
