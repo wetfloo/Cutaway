@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 abstract class StateViewModel<T : Parcelable, V>(
     protected val savedStateHandle: SavedStateHandle,
-    private val savedStateKey: String,
+    protected val savedStateKey: String,
     private val defaultStateValue: T,
 ) : ViewModel() {
     val state: StateFlow<T> = savedStateHandle.getStateFlow(
