@@ -1,12 +1,12 @@
 [versions]
 kotlin = "1.8.20"
-ksp = "1.8.20-1.0.10"
+ksp = "1.8.20-1.0.11"
 
 coroutines = "1.6.4"
 
 android-gradle-plugin = "8.0.0"
 androidx-lifecycle = "2.6.1"
-androidx-activity = "1.7.0"
+androidx-activity = "1.7.1"
 androidx-navigation = "2.5.3"
 room = "2.5.0"
 dagger = "2.45"
@@ -16,7 +16,7 @@ datastore = "1.0.0"
 coil = "2.3.0"
 ktor = "2.2.2"
 
-compose-bom = "2023.04.00"
+compose-bom = "2023.04.01"
 compose-compiler = "1.4.6"
 accompanist = "0.30.1"
 
