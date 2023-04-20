@@ -21,6 +21,7 @@ fun HostScaffold(
     navController: NavController,
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
+    snackbarHost: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -67,6 +68,7 @@ fun HostScaffold(
                     actions = actions,
                 )
             },
+            snackbarHost = snackbarHost,
         ) { paddingValues ->
             content(paddingValues)
         }
