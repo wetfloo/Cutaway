@@ -34,6 +34,8 @@ import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.component.SpacerSized
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationBlock
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import kotlinx.coroutines.launch
 
 @Composable

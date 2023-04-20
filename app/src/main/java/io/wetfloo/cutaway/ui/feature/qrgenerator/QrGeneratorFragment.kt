@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
+import io.wetfloo.cutaway.ui.feature.qrgenerator.state.QrGeneratorState
 
 @AndroidEntryPoint
 class QrGeneratorFragment : ComposeFragment() {

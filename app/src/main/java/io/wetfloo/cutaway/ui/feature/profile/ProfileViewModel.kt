@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.StateViewModel
 import io.wetfloo.cutaway.core.commonimpl.UiError
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

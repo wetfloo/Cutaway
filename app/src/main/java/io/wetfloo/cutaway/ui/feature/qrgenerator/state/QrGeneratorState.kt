@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.qrgenerator
+package io.wetfloo.cutaway.ui.feature.qrgenerator.state
 
 import android.graphics.Bitmap
 import androidx.compose.runtime.Immutable

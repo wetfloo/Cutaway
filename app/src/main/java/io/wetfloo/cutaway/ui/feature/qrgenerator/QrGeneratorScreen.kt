@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.ui.feature.qrgenerator.state.QrGeneratorState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

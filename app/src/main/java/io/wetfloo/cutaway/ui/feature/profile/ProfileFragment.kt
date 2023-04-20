@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
 import io.wetfloo.cutaway.core.common.SAMPLE_PROFILE_PICTURE_URL
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 
 @AndroidEntryPoint
 class ProfileFragment : ComposeFragment() {

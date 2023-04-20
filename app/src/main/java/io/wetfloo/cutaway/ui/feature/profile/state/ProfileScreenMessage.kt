@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.profile
+package io.wetfloo.cutaway.ui.feature.profile.state
 
 sealed interface ProfileScreenMessage {
     object EditProfile : ProfileScreenMessage

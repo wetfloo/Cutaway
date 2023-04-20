@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.auth
+package io.wetfloo.cutaway.ui.feature.auth.state
 
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable

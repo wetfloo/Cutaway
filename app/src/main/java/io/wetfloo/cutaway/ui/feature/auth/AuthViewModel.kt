@@ -13,6 +13,8 @@ import io.wetfloo.cutaway.core.common.booleanWithChance
 import io.wetfloo.cutaway.core.commonimpl.StateViewModel
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.data.AuthPreferencesManager
+import io.wetfloo.cutaway.ui.feature.auth.state.AuthEvent
+import io.wetfloo.cutaway.ui.feature.auth.state.AuthState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
