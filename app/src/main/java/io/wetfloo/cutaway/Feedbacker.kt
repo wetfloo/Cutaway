@@ -11,8 +11,8 @@ import javax.inject.Inject
 class Feedbacker @Inject constructor(
     @ApplicationContext private val context: Context,
 ) {
+    @Suppress("DEPRECATION")
     fun feedback() {
-        @Suppress("DEPRECATION")
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager =
                 context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
