@@ -7,7 +7,7 @@ import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
 import kotlinx.coroutines.flow.StateFlow
 
 abstract class StateViewModel<T : Parcelable, V>(
-    private val savedStateHandle: SavedStateHandle,
+    protected val savedStateHandle: SavedStateHandle,
     private val savedStateKey: String,
     private val defaultStateValue: T,
 ) : ViewModel() {
