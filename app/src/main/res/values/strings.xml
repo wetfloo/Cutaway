@@ -19,6 +19,9 @@
     <string name="profile_destination_name">Profile</string>
     <string name="profile_image_description">User\'s profile picture</string>
     <string name="profile_edit">Edit profile</string>
+    <string name="profile_edit_not_implemented_error">
+        Profile editing not implemented yet
+    </string>
 
     <!-- QR -->
     <string name="qr_scanner_destination_name">QR code scanner</string>

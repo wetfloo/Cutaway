@@ -37,9 +37,8 @@ import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.onFailure
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.core.common.eventflow.EventFlow
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
-import io.wetfloo.cutaway.core.commonimpl.EventResult
+import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -56,7 +55,7 @@ fun AuthScreen(
     modifier: Modifier = Modifier,
     authState: AuthState,
     onMessage: (AuthScreenMessage) -> Unit,
-    authEventFlow: EventFlow<EventResult<AuthEvent>>,
+    eventFlow: EventResultFlow<AuthEvent>,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -66,7 +65,7 @@ fun AuthScreen(
 
     LaunchedEffect(Unit) {
         coroutineScope.launch {
-            authEventFlow.consumeAndNotify(
+            eventFlow.consumeAndNotify(
                 filter = { it is Err },
             ) { eventResult ->
                 eventResult.onFailure { error ->
@@ -193,6 +192,6 @@ private fun AuthScreenPreview1() {
                 }
             }
         },
-        authEventFlow = MutableEventFlow(),
+        eventFlow = MutableEventFlow(),
     )
 }

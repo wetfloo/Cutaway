@@ -25,13 +25,14 @@ class ProfileFragment : ComposeFragment() {
                 navController = navController,
                 onMessage = { message ->
                     when (message) {
-                        ProfileScreenMessage.EditProfile -> TODO()
+                        ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()
                         ProfileScreenMessage.ShowQrCode -> navController.navigate(
                             directions = ProfileFragmentDirections
                                 .actionProfileFragmentToQrGeneratorFragment(),
                         )
                     }
                 },
+                eventFlow = viewModel.profileEvent,
             )
         }
     }

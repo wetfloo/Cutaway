@@ -12,8 +12,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.booleanWithChance
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
-import io.wetfloo.cutaway.core.commonimpl.EventResult
+import io.wetfloo.cutaway.core.commonimpl.MutableEventResultFlow
 import io.wetfloo.cutaway.core.commonimpl.UiError
+import io.wetfloo.cutaway.core.commonimpl.update
 import io.wetfloo.cutaway.data.AuthPreferencesManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class AuthViewModel @Inject constructor(
         initialValue = AuthState(),
     )
 
-    private val _authEvent: MutableEventFlow<EventResult<AuthEvent>> = MutableEventFlow()
+    private val _authEvent: MutableEventResultFlow<AuthEvent> = MutableEventFlow()
     val authEvent = _authEvent.asEventFlow()
 
     fun logIn() {
@@ -71,9 +72,11 @@ class AuthViewModel @Inject constructor(
     }
 
     private inline fun updateState(block: (AuthState) -> AuthState) {
-        val oldValue: AuthState = savedStateHandle[AUTH_STATE] ?: AuthState()
-        val newValue = block(oldValue)
-        savedStateHandle[AUTH_STATE] = newValue
+        savedStateHandle.update(
+            key = AUTH_STATE,
+            defaultValue = AuthState(),
+            updater = block,
+        )
     }
 
     companion object {

@@ -37,7 +37,7 @@ class AuthFragment : ComposeFragment() {
                         AuthScreenMessage.LoginButtonClicked -> viewModel.logIn()
                     }
                 },
-                authEventFlow = viewModel.authEvent,
+                eventFlow = viewModel.authEvent,
             )
         }
 
