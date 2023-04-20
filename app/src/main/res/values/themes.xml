@@ -1,4 +1,4 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Cutaway" parent="Theme.Material3.DynamicColors.DayNight" />
+    <style name="Theme.Cutaway" parent="Theme.Material3.DayNight.NoActionBar" />
 </resources>

@@ -1,5 +1,6 @@
 plugins {
     id("cutaway.android.library")
+    id("cutaway.android.hilt")
 }
 
 android {
@@ -10,7 +11,6 @@ android {
 dependencies {
     api(project(":core:common"))
 
-    implementation(libs.javax.inject)
     implementation(libs.datastore.preferences)
     implementation(libs.result)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
