@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
-import io.wetfloo.cutaway.core.common.RICKROLL_GIF_URL
+import io.wetfloo.cutaway.core.common.SAMPLE_PROFILE_PICTURE_URL
 
 @AndroidEntryPoint
 class ProfileFragment : ComposeFragment() {
@@ -21,7 +21,7 @@ class ProfileFragment : ComposeFragment() {
             }
 
             ProfileScreen(
-                imageUrl = RICKROLL_GIF_URL,
+                imageUrl = SAMPLE_PROFILE_PICTURE_URL,
                 navController = navController,
                 onEvent = { event ->
                     when (event) {
