@@ -33,7 +33,7 @@ class QrGeneratorFragment : ComposeFragment() {
             }
 
             QrGeneratorScreen(
-                qrGeneratorState = state,
+                state = state,
                 navController = navController,
             )
         }

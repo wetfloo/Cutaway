@@ -33,7 +33,7 @@ class AuthFragment : ComposeFragment() {
                 passwordValue = viewModel.passwordValue,
                 onLoginChange = { viewModel.loginValue = it },
                 onPasswordChange = { viewModel.passwordValue = it },
-                authState = state,
+                state = state,
                 onMessage = { message ->
                     when (message) {
                         AuthScreenMessage.LoginButtonClicked -> viewModel.logIn()

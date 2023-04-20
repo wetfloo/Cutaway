@@ -56,7 +56,7 @@ fun AuthScreen(
     onLoginChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    authState: AuthState,
+    state: AuthState,
     onMessage: (AuthScreenMessage) -> Unit,
     eventFlow: EventResultFlow<AuthEvent>,
 ) {
@@ -139,7 +139,7 @@ fun AuthScreen(
                             horizontal = 16.dp,
                         ),
                 ) {
-                    AnimatedContent(targetState = authState.isLoading) { loading ->
+                    AnimatedContent(targetState = state.isLoading) { loading ->
                         if (loading) {
                             CircularProgressIndicator(
                                 modifier = Modifier
@@ -183,7 +183,7 @@ private fun AuthScreenPreview1() {
         passwordValue = passwordValue,
         onLoginChange = { loginValue = it },
         onPasswordChange = { passwordValue = it },
-        authState = AuthState(),
+        state = AuthState(),
         onMessage = { message ->
             when (message) {
                 AuthScreenMessage.LoginButtonClicked -> {

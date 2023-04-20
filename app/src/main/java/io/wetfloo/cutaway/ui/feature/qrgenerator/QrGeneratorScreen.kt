@@ -27,7 +27,7 @@ import io.wetfloo.cutaway.ui.feature.qrgenerator.state.QrGeneratorState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QrGeneratorScreen(
-    qrGeneratorState: QrGeneratorState,
+    state: QrGeneratorState,
     navController: NavController,
 ) {
     Scaffold(
@@ -61,7 +61,7 @@ fun QrGeneratorScreen(
                 .padding(scaffoldPaddingValues)
                 .fillMaxSize(),
         ) {
-            if (qrGeneratorState.isLoading) {
+            if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center),
@@ -72,7 +72,7 @@ fun QrGeneratorScreen(
                         .fillMaxSize()
                         .aspectRatio(1f)
                         .align(Alignment.Center),
-                    model = qrGeneratorState.qrBitmap,
+                    model = state.qrBitmap,
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
                 )
