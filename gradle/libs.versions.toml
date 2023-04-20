@@ -12,6 +12,7 @@ androidx-navigation = "2.5.3"
 room = "2.5.0"
 dagger = "2.45"
 paging = "3.1.1"
+datastore = "1.0.0"
 
 coil = "2.3.0"
 ktor = "2.2.2"
@@ -73,7 +74,8 @@ room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 square-leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.10" }
 
 # Preferences Datastore
-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version = "1.0.0" }
+datastore-preferences-core = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 
 # Paging 3
 # For runtime use

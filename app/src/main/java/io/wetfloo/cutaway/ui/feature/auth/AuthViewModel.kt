@@ -10,6 +10,7 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
+import io.wetfloo.cutaway.data.AuthPreferencesManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @OptIn(SavedStateHandleSaveableApi::class)
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    private val authPreferencesManager: AuthPreferencesManager,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     var loginValue by savedStateHandle.saveable {
@@ -47,6 +49,7 @@ class AuthViewModel @Inject constructor(
             delay(3000)
 
             _authResult.addEvent(Ok(Unit))
+            authPreferencesManager.setToken("fklefe")
 
             updateState {
                 it.copy(

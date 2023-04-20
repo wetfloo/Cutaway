@@ -5,9 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
+import io.wetfloo.cutaway.data.AuthPreferencesManager
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    @Inject
+    lateinit var preferencesManager: AuthPreferencesManager
+
+    @Inject
+    lateinit var holder: ActivityStartDestinationSelectionHolder
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(
@@ -27,13 +37,24 @@ class MainActivity : AppCompatActivity() {
      * as it relies on [NavHostFragment] being available
      */
     private fun setStartingDestination() {
+        if (holder.isStartingDestinationSelected) return
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.graph)
 
-        navGraph.setStartDestination(R.id.authFragment)
+        val authPreferences = runBlocking {
+            preferencesManager.preferencesFlow.first()
+        }
 
+        if (authPreferences.token != null) {
+            navGraph.setStartDestination(R.id.profileFragment)
+        } else {
+            navGraph.setStartDestination(R.id.authFragment)
+        }
         navController.graph = navGraph
+
+        holder.isStartingDestinationSelected = true
     }
 }

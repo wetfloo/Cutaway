@@ -11,4 +11,5 @@ dependencies {
     api(project(":core:common"))
 
     implementation(libs.javax.inject)
+    implementation(libs.datastore.preferences)
 }
