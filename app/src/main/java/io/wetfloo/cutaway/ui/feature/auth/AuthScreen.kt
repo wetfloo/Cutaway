@@ -16,9 +16,12 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,11 +29,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.onFailure
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.common.eventflow.EventFlow
+import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
+import io.wetfloo.cutaway.core.commonimpl.EventResult
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -46,11 +55,35 @@ fun AuthScreen(
     onPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     authState: AuthState,
+    authEventFlow: EventFlow<EventResult<AuthEvent>>,
     onClick: () -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            authEventFlow.consumeAndNotify(
+                filter = { it is Err },
+            ) { eventResult ->
+                eventResult.onFailure { error ->
+                    snackbarHostState.showSnackbar(
+                        message = error.getErrorString(context),
+                    )
+                }
+            }
+        }
+    }
+
     Scaffold(
         modifier = modifier
             .fillMaxSize(),
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
     ) { scaffoldPaddingValues ->
         Column(
             modifier = Modifier
@@ -154,5 +187,6 @@ private fun AuthScreenPreview1() {
                 isLoading = false
             }
         },
+        authEventFlow = MutableEventFlow(),
     )
 }

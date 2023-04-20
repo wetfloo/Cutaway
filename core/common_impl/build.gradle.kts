@@ -12,4 +12,5 @@ dependencies {
 
     implementation(libs.javax.inject)
     implementation(libs.datastore.preferences)
+    implementation(libs.result)
 }

@@ -12,5 +12,8 @@ interface EventFlow<T> {
      * Collects given [EventFlow], giving values to [consumeBlock]
      * and automatically notifying about consumed events
      */
-    suspend fun consumeAndNotify(block: suspend (T) -> Unit)
+    suspend fun consumeAndNotify(
+        filter: suspend (T) -> Boolean = { true },
+        block: suspend (T) -> Unit,
+    )
 }

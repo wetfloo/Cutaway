@@ -6,10 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
 import androidx.lifecycle.viewmodel.compose.saveable
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.common.booleanWithChance
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
+import io.wetfloo.cutaway.core.commonimpl.EventResult
+import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.data.AuthPreferencesManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,8 +39,8 @@ class AuthViewModel @Inject constructor(
     private val _authState: MutableStateFlow<AuthState> = MutableStateFlow(AuthState())
     val authState = _authState.asStateFlow()
 
-    private val _authResult: MutableEventFlow<Result<*, *>> = MutableEventFlow()
-    val authResult = _authResult.asEventFlow()
+    private val _authEvent: MutableEventFlow<EventResult<AuthEvent>> = MutableEventFlow()
+    val authEvent = _authEvent.asEventFlow()
 
     fun logIn() {
         viewModelScope.launch {
@@ -48,8 +52,14 @@ class AuthViewModel @Inject constructor(
 
             delay(3000)
 
-            authPreferencesManager.setToken("fklefe")
-            _authResult.addEvent(Ok(Unit))
+            with(_authEvent) {
+                if (booleanWithChance(0.9)) {
+                    addEvent(Ok(AuthEvent.Success))
+                    authPreferencesManager.setToken("sometoken")
+                } else {
+                    addEvent(Err(UiError.Resource(R.string.auth_random_error)))
+                }
+            }
 
             updateState {
                 it.copy(

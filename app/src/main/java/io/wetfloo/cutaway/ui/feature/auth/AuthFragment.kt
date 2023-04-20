@@ -11,6 +11,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.ComposeFragment
 import kotlinx.coroutines.launch
@@ -33,17 +34,24 @@ class AuthFragment : ComposeFragment() {
                 onPasswordChange = { viewModel.passwordValue = it },
                 authState = state,
                 onClick = viewModel::logIn,
+                authEventFlow = viewModel.authEvent,
             )
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.authResult.consumeAndNotify { result ->
-                    when (result) {
-                        is Err -> showErrorMessage(result)
-                        is Ok -> findNavController().navigate(
-                            directions = AuthFragmentDirections.actionAuthFragmentToProfileFragment(),
-                        )
+                viewModel.authEvent.consumeAndNotify(
+                    filter = { it is Ok },
+                ) { eventResult ->
+                    eventResult.onSuccess { authEvent ->
+                        when (authEvent) {
+                            AuthEvent.Success -> {
+                                findNavController().navigate(
+                                    directions = AuthFragmentDirections
+                                        .actionAuthFragmentToProfileFragment(),
+                                )
+                            }
+                        }
                     }
                 }
             }

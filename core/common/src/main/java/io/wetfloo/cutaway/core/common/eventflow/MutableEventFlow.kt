@@ -17,13 +17,20 @@ class MutableEventFlow<T>(
 
     private val backingFlow = MutableStateFlow(initialValues)
 
-    override suspend fun consumeAndNotify(block: suspend (T) -> Unit) {
+    override suspend fun consumeAndNotify(
+        filter: suspend (T) -> Boolean,
+        block: suspend (T) -> Unit,
+    ) {
         backingFlow.collect { events ->
             events
                 .asReversed()
                 .onEach { event ->
-                    removeEvent()
-                    block(event)
+                    val willBeConsumed = filter(event)
+
+                    if (willBeConsumed) {
+                        removeEvent()
+                        block(event)
+                    }
                 }
         }
     }

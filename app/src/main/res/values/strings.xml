@@ -11,6 +11,9 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
+    <string name="auth_random_error">
+        Oops, couldn\'t authenticate you right now. Try again later!
+    </string>
 
     <!-- Profile -->
     <string name="profile_destination_name">Profile</string>
