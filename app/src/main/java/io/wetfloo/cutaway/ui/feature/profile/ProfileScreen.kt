@@ -103,8 +103,3 @@ private fun ProfileScreenPreview1() {
         onEvent = {},
     )
 }
-
-sealed interface ProfileScreenEvent {
-    object EditProfile : ProfileScreenEvent
-    object ShowQrCode : ProfileScreenEvent
-}
