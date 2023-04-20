@@ -14,4 +14,5 @@ dependencies {
     implementation(libs.datastore.preferences)
     implementation(libs.result)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+    implementation(libs.androidx.lifecycle.viewmodel)
 }

@@ -16,14 +16,16 @@ abstract class StateViewModel<T : Parcelable, V>(
         initialValue = defaultStateValue,
     )
 
+    var stateValue
+        get() = state.value
+        protected set(value) {
+            savedStateHandle[savedStateKey] = value
+        }
+
     protected val mutableEvent: MutableEventResultFlow<V> = MutableEventFlow()
     val event = mutableEvent.asEventFlow()
 
     protected fun updateState(updater: (T) -> T) {
-        savedStateHandle.update(
-            key = savedStateKey,
-            defaultValue = defaultStateValue,
-            updater = updater,
-        )
+        stateValue = updater(stateValue)
     }
 }

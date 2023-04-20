@@ -17,6 +17,9 @@ class ProfileFragment : ComposeFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.load()
+
         drawContent {
             val state by viewModel
                 .state

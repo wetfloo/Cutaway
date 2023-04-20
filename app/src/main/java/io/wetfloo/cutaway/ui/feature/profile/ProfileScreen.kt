@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
@@ -98,27 +100,40 @@ fun ProfileScreen(
             }
         },
     ) { scaffoldPaddingValues ->
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
                 .padding(scaffoldPaddingValues)
-                .padding(dimensionResource(R.dimen.default_padding)),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .fillMaxSize(),
         ) {
-            ProfileInformationTop(
-                imageData = state.pictureUrl,
-                modifier = Modifier
-                    .fillMaxWidth(),
-            )
+            when (state) {
+                is ProfileState.Data -> Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                        .padding(dimensionResource(R.dimen.default_padding)),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    ProfileInformationTop(
+                        imageData = state.pictureUrl,
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    )
 
-            SpacerSized(h = dimensionResource(R.dimen.default_card_spacing_vertical_external))
+                    SpacerSized(h = dimensionResource(R.dimen.default_card_spacing_vertical_external))
 
-            ProfileInformationBlock(
-                headline = "Profile info headline",
-            ) {
-                Text(
-                    text = "This is a sample text to put content inside of ProfileInformationBlock",
+                    ProfileInformationBlock(
+                        headline = "Profile info headline",
+                    ) {
+                        Text(
+                            text = "This is a sample text to put content inside of ProfileInformationBlock",
+                        )
+                    }
+                }
+
+                ProfileState.Idle -> Unit
+                ProfileState.Loading -> CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center),
                 )
             }
         }
@@ -134,7 +149,11 @@ private fun ProfileScreenPreview1() {
     }
 
     ProfileScreen(
-        state = ProfileState(),
+        state = ProfileState.Data(
+            name = "Creative name",
+            status = "Ligma male",
+            pictureUrl = null,
+        ),
         navController = navController,
         onMessage = {},
         eventFlow = MutableEventFlow(),
