@@ -36,13 +36,14 @@ import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationBlock
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
+import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
-    imageUrl: String,
     navController: NavController,
     onMessage: (ProfileScreenMessage) -> Unit,
+    state: ProfileState,
     eventFlow: EventResultFlow<ProfileEvent>,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -106,7 +107,7 @@ fun ProfileScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             ProfileInformationTop(
-                imageData = imageUrl,
+                imageData = state.pictureUrl,
                 modifier = Modifier
                     .fillMaxWidth(),
             )
@@ -133,7 +134,7 @@ private fun ProfileScreenPreview1() {
     }
 
     ProfileScreen(
-        imageUrl = "",
+        state = ProfileState(),
         navController = navController,
         onMessage = {},
         eventFlow = MutableEventFlow(),

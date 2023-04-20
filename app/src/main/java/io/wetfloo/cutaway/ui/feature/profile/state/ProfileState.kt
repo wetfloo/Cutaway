@@ -4,4 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class ProfileState : Parcelable
+data class ProfileState(
+    val pictureUrl: String? = null,
+) : Parcelable

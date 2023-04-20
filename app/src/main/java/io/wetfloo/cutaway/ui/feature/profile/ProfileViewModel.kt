@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.Err
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.common.SAMPLE_PROFILE_PICTURE_URL
 import io.wetfloo.cutaway.core.commonimpl.StateViewModel
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
@@ -18,7 +19,9 @@ class ProfileViewModel @Inject constructor(
 ) : StateViewModel<ProfileState, ProfileEvent>(
     savedStateHandle = savedStateHandle,
     savedStateKey = STATE,
-    defaultStateValue = ProfileState(),
+    defaultStateValue = ProfileState(
+        pictureUrl = SAMPLE_PROFILE_PICTURE_URL,
+    ),
 ) {
     fun showEditingNotSupported() {
         viewModelScope.launch {
