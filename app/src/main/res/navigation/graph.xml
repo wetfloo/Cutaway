@@ -30,9 +30,6 @@
         android:id="@+id/qrFragment"
         android:name="io.wetfloo.cutaway.ui.feature.qr.QrFragment"
         android:label="QrFragment">
-        <action
-            android:id="@+id/action_qrFragment_to_profileFragment"
-            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/qrGeneratorFragment"
