@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.core.common.forEachInBetween
-import io.wetfloo.cutaway.ui.destinations
+import io.wetfloo.cutaway.ui.core.destinations
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

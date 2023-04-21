@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui
+package io.wetfloo.cutaway.ui.core
 
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.DrawerMenuItem

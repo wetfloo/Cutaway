@@ -15,8 +15,8 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.composify
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
+import io.wetfloo.cutaway.ui.core.composify
 import io.wetfloo.cutaway.ui.feature.auth.state.AuthEvent
 import io.wetfloo.cutaway.ui.feature.auth.state.AuthScreenMessage
 import kotlinx.coroutines.launch

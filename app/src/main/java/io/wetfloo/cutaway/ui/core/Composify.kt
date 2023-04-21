@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway
+package io.wetfloo.cutaway.ui.core
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
