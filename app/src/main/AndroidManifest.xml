@@ -23,7 +23,7 @@
             android:value="barcode_ui" />
 
         <activity
-            android:name="io.wetfloo.cutaway.MainActivity"
+            android:name="io.wetfloo.cutaway.ui.core.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>

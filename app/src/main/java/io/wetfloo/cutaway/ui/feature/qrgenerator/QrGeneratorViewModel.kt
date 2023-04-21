@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.wetfloo.cutaway.Feedbacker
 import io.wetfloo.cutaway.core.common.RICKROLL_URL
+import io.wetfloo.cutaway.misc.Feedbacker
 import io.wetfloo.cutaway.misc.QrRenderer
 import io.wetfloo.cutaway.ui.feature.qrgenerator.state.QrGeneratorState
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway
+package io.wetfloo.cutaway.ui.core
 
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import javax.inject.Inject

@@ -1,10 +1,11 @@
-package io.wetfloo.cutaway
+package io.wetfloo.cutaway.ui.core
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
+import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.data.AuthPreferencesManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

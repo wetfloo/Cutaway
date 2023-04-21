@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.wetfloo.cutaway.MainActivity">
+    tools:context="io.wetfloo.cutaway.ui.core.MainActivity">
 
     <!-- Do not add app:navGraph to this view to not break conditional starting destination -->
     <androidx.fragment.app.FragmentContainerView

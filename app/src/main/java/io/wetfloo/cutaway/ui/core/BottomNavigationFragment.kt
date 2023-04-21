@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway
+package io.wetfloo.cutaway.ui.core
 
 import android.os.Bundle
 import android.view.View
@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
+import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentBottomNavigationBinding
 
 @AndroidEntryPoint

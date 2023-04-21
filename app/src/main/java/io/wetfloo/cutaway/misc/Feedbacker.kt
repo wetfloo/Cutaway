@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway
+package io.wetfloo.cutaway.misc
 
 import android.content.Context
 import android.os.Build
