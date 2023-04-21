@@ -28,6 +28,7 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.composeView.composify {
             val state by viewModel
                 .state

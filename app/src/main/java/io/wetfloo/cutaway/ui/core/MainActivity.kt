@@ -38,24 +38,22 @@ class MainActivity : AppCompatActivity() {
      * as it relies on [NavHostFragment] being available
      */
     private fun setStartingDestination() {
-        if (holder.isStartingDestinationSelected) return
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.graph)
 
-        val authPreferences = runBlocking {
-            preferencesManager.preferencesFlow.first()
-        }
-
-        if (authPreferences.token != null) {
-            navGraph.setStartDestination(R.id.profileFragment)
-        } else {
-            navGraph.setStartDestination(R.id.authFragment)
+        if (!holder.isStartingDestinationSelected) {
+            val authPreferences = runBlocking {
+                preferencesManager.preferencesFlow.first()
+            }
+            if (authPreferences.token != null) {
+                navGraph.setStartDestination(R.id.profileFragment)
+            } else {
+                navGraph.setStartDestination(R.id.authFragment)
+            }
         }
         navController.graph = navGraph
-
         holder.isStartingDestinationSelected = true
     }
 }
