@@ -128,13 +128,13 @@ appyx-testing-unit = { module = "com.bumble.appyx:testing-unit-common", version.
 appyx-testing-junit4 = { module = "com.bumble.appyx:testing-ui", version.ref = "appyx" }
 
 # Simple stack
-simplestack = { module = "com.github.Zhuinden:simple-stack", version.ref = "simple-stack" }
-simplestack-extensions-core = { module = "com.github.Zhuinden.simple-stack-extensions:core-ktx", version.ref = "simple-stack-extensions" }
-simplestack-extensions-fragments = { module = "com.github.Zhuinden.simple-stack-extensions:fragments", version.ref = "simple-stack-extensions" }
-simplestack-extensions-fragments-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:fragments-ktx", version.ref = "simple-stack-extensions" }
-simplestack-extensions-navigator-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:navigator-ktx", version.ref = "simple-stack-extensions" }
-simplestack-extensions-services = { module = "com.github.Zhuinden.simple-stack-extensions:services", version.ref = "simple-stack-extensions" }
-simplestack-extensions-services-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:services-ktx", version.ref = "simple-stack-extensions" }
+simplestack = { module = "com.github.Zhuinden:simple-stack", version.ref = "simplestack" }
+simplestack-extensions-core = { module = "com.github.Zhuinden.simple-stack-extensions:core-ktx", version.ref = "simplestack-extensions" }
+simplestack-extensions-fragments = { module = "com.github.Zhuinden.simple-stack-extensions:fragments", version.ref = "simplestack-extensions" }
+simplestack-extensions-fragments-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:fragments-ktx", version.ref = "simplestack-extensions" }
+simplestack-extensions-navigator-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:navigator-ktx", version.ref = "simplestack-extensions" }
+simplestack-extensions-services = { module = "com.github.Zhuinden.simple-stack-extensions:services", version.ref = "simplestack-extensions" }
+simplestack-extensions-services-ktx = { module = "com.github.Zhuinden.simple-stack-extensions:services-ktx", version.ref = "simplestack-extensions" }
 
 # Desugaring
 core-desugaring = { module = "com.android.tools:desugar_jdk_libs", version = "2.0.3" }
@@ -198,6 +198,15 @@ room = ["room-room", "room-ktx"]
 ktor = ["ktor-core", "ktor-cio", "ktor-negotiation", "ktor-serialization", "ktor-serialization-kotlinx-json", "ktor-websockets"]
 media3 = ["media3-ui", "media3-session", "media3-exoplayer"]
 camerax = ["camera-core", "camera-camera2", "camerax-lifecycle", "camerax-video", "camerax-view", "camerax-extensions"]
+simplestack = [
+    "simplestack",
+    "simplestack-extensions-core",
+    "simplestack-extensions-fragments",
+    "simplestack-extensions-fragments-ktx",
+    "simplestack-extensions-navigator-ktx",
+    "simplestack-extensions-services",
+    "simplestack-extensions-services-ktx",
+]
 
 testSuite = ["junit", "mockk-android", "mockk-agent", "turbine", "coroutines-test"]
 androidTestSuite = ["androidx-test-ext-junit", "androidx-test-espresso-core"]
