@@ -8,7 +8,6 @@ fun <V> SavedStateHandle.saved(
     default: V,
     key: String? = null,
 ) = object : ReadWriteProperty<Any?, V> {
-
     override fun getValue(thisRef: Any?, property: KProperty<*>): V =
         get(key(property.name)) ?: default
 
