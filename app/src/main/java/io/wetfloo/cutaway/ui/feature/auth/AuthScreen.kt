@@ -60,22 +60,19 @@ fun AuthScreen(
     onMessage: (AuthScreenMessage) -> Unit,
     eventFlow: EventResultFlow<AuthEvent>,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val snackbarHostState = remember {
         SnackbarHostState()
     }
 
     LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            eventFlow.consumeAndNotify(
-                filter = { it is Err },
-            ) { eventResult ->
-                eventResult.onFailure { error ->
-                    snackbarHostState.showSnackbar(
-                        message = error.errorString(context),
-                    )
-                }
+        eventFlow.consumeAndNotify(
+            filter = { it is Err },
+        ) { eventResult ->
+            eventResult.onFailure { error ->
+                snackbarHostState.showSnackbar(
+                    message = error.errorString(context),
+                )
             }
         }
     }

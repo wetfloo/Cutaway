@@ -19,7 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,7 +38,6 @@ import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
-import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
@@ -48,22 +46,19 @@ fun ProfileScreen(
     state: ProfileState,
     eventFlow: EventResultFlow<ProfileEvent>,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val snackbarHostState = remember {
         SnackbarHostState()
     }
 
     LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            eventFlow.consumeAndNotify(
-                filter = { it is Err },
-            ) { eventResult ->
-                eventResult.onFailure { error ->
-                    snackbarHostState.showSnackbar(
-                        message = error.errorString(context),
-                    )
-                }
+        eventFlow.consumeAndNotify(
+            filter = { it is Err },
+        ) { eventResult ->
+            eventResult.onFailure { error ->
+                snackbarHostState.showSnackbar(
+                    message = error.errorString(context),
+                )
             }
         }
     }
