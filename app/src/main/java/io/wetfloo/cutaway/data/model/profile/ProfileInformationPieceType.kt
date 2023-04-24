@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.profile.state
+package io.wetfloo.cutaway.data.model.profile
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

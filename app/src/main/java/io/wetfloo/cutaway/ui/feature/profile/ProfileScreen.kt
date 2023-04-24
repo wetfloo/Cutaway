@@ -1,8 +1,12 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode2
@@ -10,23 +14,24 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
 import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
-import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationAnimatedContent
+import io.wetfloo.cutaway.ui.component.SpacerSized
+import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationBlock
+import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
@@ -76,21 +81,33 @@ fun ProfileScreen(
                     .padding(scaffoldPaddingValues)
                     .fillMaxSize(),
             ) {
-                var isDetailedInformationOpen by rememberSaveable {
-                    mutableStateOf(false)
-                }
-
                 when (state) {
-                    is ProfileState.Data -> ProfileInformationAnimatedContent(
-                        state = state,
-                        isDetailedInformationOpen = isDetailedInformationOpen,
-                        onCardClick = {
-                            isDetailedInformationOpen = true
-                        },
-                        onClose = {
-                            isDetailedInformationOpen = false
-                        },
-                    )
+                    is ProfileState.Ready -> Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                            .padding(dimensionResource(R.dimen.default_padding)),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        ProfileInformationTop(
+                            data = state.data,
+                            onCardClick = {
+                                onMessage(ProfileScreenMessage.ShowProfileDetailedInformation)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        )
+
+                        SpacerSized(h = dimensionResource(R.dimen.default_card_spacing_vertical_external))
+
+                        ProfileInformationBlock(
+                            headline = "Profile info headline",
+                        ) {
+                            Text(
+                                text = "This is a sample text to put content inside of ProfileInformationBlock",
+                            )
+                        }
+                    }
 
                     ProfileState.Idle -> Unit
 
@@ -110,11 +127,13 @@ private fun ProfileScreenPreview1() {
     val context = LocalContext.current
 
     ProfileScreen(
-        state = ProfileState.Data(
-            name = "Creative name",
-            status = "Ligma male",
-            pictureUrl = null,
-            pieces = emptyList(),
+        state = ProfileState.Ready(
+            data = ProfileInformation(
+                name = "Creative name",
+                status = "Ligma male",
+                pictureUrl = null,
+                pieces = emptyList(),
+            )
         ),
         navController = { NavController(context) },
         onMessage = {},

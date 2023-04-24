@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.profile.state
+package io.wetfloo.cutaway.data.model.profile
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

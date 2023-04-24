@@ -8,9 +8,10 @@ import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.SAMPLE_PROFILE_PICTURE_URL
 import io.wetfloo.cutaway.core.commonimpl.StateViewModel
 import io.wetfloo.cutaway.core.commonimpl.UiError
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
+import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
+import io.wetfloo.cutaway.data.model.profile.ProfileInformationPieceType
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
-import io.wetfloo.cutaway.ui.feature.profile.state.ProfileInformationPiece
-import io.wetfloo.cutaway.ui.feature.profile.state.ProfileInformationPieceType
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class ProfileViewModel @Inject constructor(
 ) {
     fun load() {
         when (val currentState = stateValue) {
-            is ProfileState.Data -> {
+            is ProfileState.Ready -> {
                 stateValue = currentState.copy(
                     isUpdating = true,
                 )
@@ -45,20 +46,22 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateProfile(): ProfileState.Data {
+    private suspend fun updateProfile(): ProfileState.Ready {
         delay(3000)
-        return ProfileState.Data(
-            name = "After Dark",
-            status = "Reach for the sky, sinner!",
-            pictureUrl = SAMPLE_PROFILE_PICTURE_URL,
-            pieces = listOf(
-                ProfileInformationPiece(
-                    value = "Here, Inc.",
-                    type = ProfileInformationPieceType.WORK,
-                ),
-                ProfileInformationPiece(
-                    value = "2000/01/01",
-                    type = ProfileInformationPieceType.BIRTHDAY,
+        return ProfileState.Ready(
+            data = ProfileInformation(
+                name = "After Dark",
+                status = "Reach for the sky, sinner!",
+                pictureUrl = SAMPLE_PROFILE_PICTURE_URL,
+                pieces = listOf(
+                    ProfileInformationPiece(
+                        value = "Here, Inc.",
+                        type = ProfileInformationPieceType.WORK,
+                    ),
+                    ProfileInformationPiece(
+                        value = "2000/01/01",
+                        type = ProfileInformationPieceType.BIRTHDAY,
+                    ),
                 ),
             ),
         )

@@ -1,6 +1,7 @@
 package io.wetfloo.cutaway.ui.feature.profile.state
 
 import android.os.Parcelable
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import kotlinx.parcelize.Parcelize
 
 sealed interface ProfileState : Parcelable {
@@ -11,11 +12,8 @@ sealed interface ProfileState : Parcelable {
     object Loading : ProfileState
 
     @Parcelize
-    data class Data(
-        val name: String,
-        val status: String?,
-        val pictureUrl: String?,
+    data class Ready(
+        val data: ProfileInformation,
         val isUpdating: Boolean = false,
-        val pieces: List<ProfileInformationPiece>,
     ) : ProfileState
 }

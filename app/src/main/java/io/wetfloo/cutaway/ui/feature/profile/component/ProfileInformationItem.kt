@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
 import io.wetfloo.cutaway.ui.component.SpacerSized
-import io.wetfloo.cutaway.ui.feature.profile.state.ProfileInformationPiece
 
 @Composable
 fun ProfileInformationItem(

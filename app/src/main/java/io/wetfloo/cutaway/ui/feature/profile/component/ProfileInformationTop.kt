@@ -28,13 +28,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.forEachInBetween
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.component.SpacerSized
-import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 
 @Composable
 fun ProfileInformationTop(
-    state: ProfileState.Data,
+    data: ProfileInformation,
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -42,7 +42,7 @@ fun ProfileInformationTop(
 
     val informationPiecesPinned by remember {
         derivedStateOf {
-            state
+            data
                 .pieces
                 .takeLast(2)
         }
@@ -60,7 +60,7 @@ fun ProfileInformationTop(
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .crossfade(true)
-                        .data(state.pictureUrl)
+                        .data(data.pictureUrl)
                         .build(),
                     contentDescription = stringResource(R.string.profile_image_description),
                     contentScale = ContentScale.Crop,
@@ -80,7 +80,7 @@ fun ProfileInformationTop(
                         .fillMaxWidth(),
                 ) {
                     Text(
-                        text = state.name,
+                        text = data.name,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.headlineMedium,
@@ -88,9 +88,9 @@ fun ProfileInformationTop(
 
                     SpacerSized(h = 4.dp)
 
-                    if (state.status != null) {
+                    if (data.status != null) {
                         Text(
-                            text = state.status,
+                            text = data.status,
                             maxLines = 3,
                             overflow = TextOverflow.Ellipsis,
                             style = MaterialTheme.typography.bodyMedium,

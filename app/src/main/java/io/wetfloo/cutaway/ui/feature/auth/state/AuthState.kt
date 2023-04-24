@@ -1,11 +1,12 @@
 package io.wetfloo.cutaway.ui.feature.auth.state
 
 import android.os.Parcelable
-import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
 
-@Immutable
-@Parcelize
-data class AuthState(
-    val isLoading: Boolean = false,
-) : Parcelable
+sealed interface AuthState : Parcelable {
+    @Parcelize
+    object Idle : AuthState
+
+    @Parcelize
+    object Loading : AuthState
+}

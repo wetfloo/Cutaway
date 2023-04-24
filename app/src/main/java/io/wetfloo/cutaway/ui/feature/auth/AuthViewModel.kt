@@ -27,7 +27,7 @@ class AuthViewModel @Inject constructor(
 ) : StateViewModel<AuthState, AuthEvent>(
     savedStateHandle = savedStateHandle,
     savedStateKey = STATE,
-    defaultStateValue = AuthState(),
+    defaultStateValue = AuthState.Idle,
 ) {
     var loginValue by savedStateHandle.saveable {
         mutableStateOf("")
@@ -39,9 +39,7 @@ class AuthViewModel @Inject constructor(
 
     fun logIn() {
         viewModelScope.launch {
-            updateState {
-                it.copy(isLoading = true)
-            }
+            stateValue = AuthState.Loading
 
             delay(3000)
 
@@ -56,9 +54,7 @@ class AuthViewModel @Inject constructor(
                 }
             }
 
-            updateState {
-                it.copy(isLoading = false)
-            }
+            stateValue = AuthState.Idle
         }
     }
 
