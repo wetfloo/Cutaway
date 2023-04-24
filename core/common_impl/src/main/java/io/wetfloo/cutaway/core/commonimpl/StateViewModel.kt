@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
 import kotlinx.coroutines.flow.StateFlow
 
-abstract class StateViewModel<T : Parcelable, V>(
+abstract class StateViewModel<S : Parcelable, V>(
     protected val savedStateHandle: SavedStateHandle,
     protected val savedStateKey: String,
-    private val defaultStateValue: T,
+    private val defaultStateValue: S,
 ) : ViewModel() {
-    val state: StateFlow<T> = savedStateHandle.getStateFlow(
+    val state: StateFlow<S> = savedStateHandle.getStateFlow(
         key = savedStateKey,
         initialValue = defaultStateValue,
     )
@@ -25,7 +25,7 @@ abstract class StateViewModel<T : Parcelable, V>(
     protected val mutableEvent: MutableEventResultFlow<V> = MutableEventFlow()
     val event = mutableEvent.asEventFlow()
 
-    protected fun updateState(updater: (T) -> T) {
+    protected fun updateState(updater: (S) -> S) {
         stateValue = updater(stateValue)
     }
 }
