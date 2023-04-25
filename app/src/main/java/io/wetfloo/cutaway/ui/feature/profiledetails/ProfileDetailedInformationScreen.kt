@@ -100,9 +100,9 @@ fun ProfileDetailedInformationScreen(
     }
 }
 
-@Composable
 @Preview(uiMode = UI_MODE_NIGHT_NO)
 @Preview(uiMode = UI_MODE_NIGHT_YES)
+@Composable
 private fun Preview() {
     AppTheme {
         ProfileDetailedInformationScreen(

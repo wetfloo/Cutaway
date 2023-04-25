@@ -1,5 +1,7 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +28,9 @@ import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
 import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
+import io.wetfloo.cutaway.core.ui.compose.core.AppTheme
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
+import io.wetfloo.cutaway.misc.utils.demo
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.component.SpacerSized
@@ -121,22 +125,20 @@ fun ProfileScreen(
     }
 }
 
-@Preview
+@Preview(uiMode = UI_MODE_NIGHT_NO)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun ProfileScreenPreview1() {
+private fun Preview() {
     val context = LocalContext.current
 
-    ProfileScreen(
-        state = ProfileState.Ready(
-            data = ProfileInformation(
-                name = "Creative name",
-                status = "Ligma male",
-                pictureUrl = null,
-                pieces = emptyList(),
-            )
-        ),
-        navController = { NavController(context) },
-        onMessage = {},
-        eventFlow = MutableEventFlow(),
-    )
+    AppTheme {
+        ProfileScreen(
+            state = ProfileState.Ready(
+                data = ProfileInformation.demo,
+            ),
+            navController = { NavController(context) },
+            onMessage = {},
+            eventFlow = MutableEventFlow(),
+        )
+    }
 }
