@@ -13,6 +13,6 @@ kotlin {
 }
 
 dependencies {
-    api(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.coroutines)
     implementation(libs.result)
 }

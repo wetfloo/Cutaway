@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.component
+package io.wetfloo.cutaway.misc.utils.savedastate
 
 import androidx.lifecycle.SavedStateHandle
 import kotlin.properties.ReadWriteProperty

@@ -46,6 +46,10 @@ dependencies {
     implementation(libs.bundles.lifecycleCompose)
     implementation(libs.bundles.navigation)
 
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.gms)
+
     implementation(libs.compose.material3)
     implementation(libs.compose.icons)
     implementation(libs.compose.activity)
@@ -58,7 +62,6 @@ dependencies {
     implementation(libs.result)
 
     implementation(libs.gms.scanner)
-    implementation(libs.bundles.camerax)
 
     implementation(libs.awesomeQr) {
         exclude(
@@ -66,7 +69,6 @@ dependencies {
             module = "androidndkgif",
         ) // exclude jcenter module
     }
-    implementation(libs.zxing.core)
 
     implementation(libs.coil)
     implementation(libs.coil.compose)

@@ -33,6 +33,7 @@
 
     <!-- QR -->
     <string name="qr_scanner_destination_name">QR code scanner</string>
+    <string name="qr_parse_failed">Failed to parse QR code</string>
 
     <!-- QR generator -->
     <string name="qr_generator_destination_name">Profile QR code</string>
