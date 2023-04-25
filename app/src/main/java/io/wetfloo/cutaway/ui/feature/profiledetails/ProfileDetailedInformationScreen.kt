@@ -1,5 +1,7 @@
 package io.wetfloo.cutaway.ui.feature.profiledetails
 
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +21,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.wetfloo.cutaway.core.ui.compose.core.AppTheme
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
+import io.wetfloo.cutaway.misc.utils.demo
 import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationItem
 import io.wetfloo.cutaway.ui.feature.profiledetails.state.ProfileDetailedScreenMessage
@@ -92,5 +97,17 @@ fun ProfileDetailedInformationScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+@Preview(uiMode = UI_MODE_NIGHT_NO)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
+private fun Preview() {
+    AppTheme {
+        ProfileDetailedInformationScreen(
+            data = ProfileInformation.demo,
+            onMessage = {},
+        )
     }
 }
