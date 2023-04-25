@@ -1,6 +1,8 @@
 package io.wetfloo.cutaway.di
 
 import android.content.Context
+import com.google.android.gms.common.moduleinstall.ModuleInstall
+import com.google.android.gms.common.moduleinstall.ModuleInstallClient
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanner
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
@@ -31,4 +33,9 @@ class GoogleModule {
             options,
         )
     }
+
+    @Provides
+    fun provideModuleInstallClient(
+        @ApplicationContext context: Context,
+    ): ModuleInstallClient = ModuleInstall.getClient(context)
 }
