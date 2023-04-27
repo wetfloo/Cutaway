@@ -48,7 +48,7 @@ fun QrGeneratorScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.app_bar_back),
+                            contentDescription = stringResource(R.string.navigation_go_back),
                         )
                     }
                 },
