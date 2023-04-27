@@ -2,12 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".CutawayApp"
@@ -20,11 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cutaway"
         tools:targetApi="33">
-
-        <!-- Preinstall google's barcode module on app install -->
-        <meta-data
-            android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="barcode_ui" />
 
         <activity
             android:name="io.wetfloo.cutaway.ui.core.MainActivity"
