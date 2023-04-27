@@ -62,6 +62,7 @@ dependencies {
     implementation(libs.viewBindingDelegate)
 
     implementation(libs.result)
+    implementation(libs.resultCoroutines)
 
     implementation(libs.zxingAndroidEmbedded)
     implementation(libs.awesomeQr) {

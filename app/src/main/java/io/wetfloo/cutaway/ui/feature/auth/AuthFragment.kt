@@ -51,9 +51,7 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.event.consumeAndNotify(
-                    filter = { it is Ok },
-                ) { eventResult ->
+                viewModel.event.consumeAndNotify { eventResult ->
                     eventResult.onSuccess { authEvent ->
                         when (authEvent) {
                             AuthEvent.Success -> {
@@ -64,6 +62,8 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
                             }
                         }
                     }
+
+                    eventResult is Ok
                 }
             }
         }

@@ -35,6 +35,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="user"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>

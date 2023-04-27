@@ -20,14 +20,14 @@ fun <T> EventFlowSnackbarDisplay(
     }
 
     LaunchedEffect(Unit) {
-        eventFlow.consumeAndNotify(
-            filter = { it is Err },
-        ) { eventResult ->
+        eventFlow.consumeAndNotify { eventResult ->
             eventResult.onFailure { error ->
                 snackbarHostState.showSnackbar(
                     message = error.errorString(context),
                 )
             }
+
+            eventResult is Err
         }
     }
 

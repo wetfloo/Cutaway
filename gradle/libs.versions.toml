@@ -1,10 +1,9 @@
 [versions]
 kotlin = "1.8.20"
 ksp = "1.8.20-1.0.11"
+android-gradle-plugin = "8.0.0"
 
 coroutines = "1.6.4"
-
-android-gradle-plugin = "8.0.0"
 androidx-lifecycle = "2.6.1"
 androidx-activity = "1.7.1"
 androidx-navigation = "2.5.3"
@@ -12,21 +11,17 @@ room = "2.5.0"
 dagger = "2.45"
 paging = "3.1.1"
 datastore = "1.0.0"
-
 coil = "2.3.0"
 ktor = "2.2.2"
+media3 = "1.0.0"
+camerax = "1.2.2"
+zxing = "3.5.1"
+mockk = "1.13.3"
+kotlin-result = "1.1.17"
 
 compose-bom = "2023.04.01"
 compose-compiler = "1.4.6"
 accompanist = "0.30.1"
-
-media3 = "1.0.0"
-
-camerax = "1.2.2"
-
-zxing = "3.5.1"
-
-mockk = "1.13.3"
 
 # Third party navigation
 simple-stack = "2.7.0"
@@ -147,7 +142,8 @@ media3-session = { module = "androidx.media3:media3-session", version.ref = "med
 
 viewBindingDelegate = { module = "com.github.kirich1409:viewbindingpropertydelegate-noreflection", version = "1.5.9" }
 
-result = { module = "com.michael-bull.kotlin-result:kotlin-result", version = "1.1.17" }
+result = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "kotlin-result" }
+resultCoroutines = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "kotlin-result" }
 
 # GMS
 gms-scanner = { module = "com.google.android.gms:play-services-code-scanner", version = "16.0.0" }
