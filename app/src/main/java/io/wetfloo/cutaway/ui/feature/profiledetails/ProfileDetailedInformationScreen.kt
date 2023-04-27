@@ -62,7 +62,7 @@ fun ProfileDetailedInformationScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = null, // TODO
+                            contentDescription = stringResource(R.string.navigation_close),
                         )
                     }
                 }

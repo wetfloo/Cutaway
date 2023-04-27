@@ -73,7 +73,7 @@ fun QrGeneratorScreen(
                         .aspectRatio(1f)
                         .align(Alignment.Center),
                     model = state.qrBitmap,
-                    contentDescription = null,
+                    contentDescription = stringResource(R.string.qr_generator_descripion),
                     contentScale = ContentScale.Fit,
                 )
             }

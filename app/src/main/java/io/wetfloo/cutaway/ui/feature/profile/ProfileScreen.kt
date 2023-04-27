@@ -75,7 +75,7 @@ fun ProfileScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.QrCode2,
-                        contentDescription = null, // TODO
+                        contentDescription = stringResource(R.string.profile_qr_description),
                     )
                 }
             },
