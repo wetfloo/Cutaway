@@ -20,7 +20,7 @@ fun <T> EventFlowSnackbarDisplay(
     }
 
     LaunchedEffect(Unit) {
-        eventFlow.consumeAndNotify { eventResult ->
+        eventFlow.consumeMatching { eventResult ->
             eventResult.onFailure { error ->
                 snackbarHostState.showSnackbar(
                     message = error.errorString(context),

@@ -50,8 +50,8 @@ class QrFragment : Fragment(R.layout.fragment_compose_base) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.event.consumeAndNotify { eventResult ->
-                    if (eventResult !is Ok) return@consumeAndNotify false
+                viewModel.event.consumeMatching { eventResult ->
+                    if (eventResult !is Ok) return@consumeMatching false
 
                     when (val qrEvent = eventResult.value) {
                         is QrEvent.UrlScanned -> {

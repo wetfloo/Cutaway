@@ -51,7 +51,7 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.event.consumeAndNotify { eventResult ->
+                viewModel.event.consumeMatching { eventResult ->
                     eventResult.onSuccess { authEvent ->
                         when (authEvent) {
                             AuthEvent.Success -> {

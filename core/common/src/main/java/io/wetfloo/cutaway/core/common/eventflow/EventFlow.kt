@@ -13,5 +13,5 @@ interface EventFlow<T> {
      * Collects given [EventFlow], giving values to [block]
      * and automatically removes consumed events, if [block] returns `true`
      */
-    suspend fun consumeAndNotify(block: suspend (T) -> Boolean)
+    suspend fun consumeMatching(block: suspend (T) -> Boolean)
 }
