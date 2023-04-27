@@ -163,6 +163,7 @@ camerax-extensions = { module = "androidx.camera:camera-extensions", version.ref
 awesomeQr = { module = "com.github.SumiMakito:AwesomeQRCode", version = "1.2.0" }
 androidNdkGif = { module = "io.github.waynejo:androidndkgif", version = "1.0.1" } # only used for animated backgrounds in the library above
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
+zxingAndroidEmbedded = { module = "com.journeyapps:zxing-android-embedded", version = "4.3.0" }
 
 # -- Networking stuff --
 # OkHttp

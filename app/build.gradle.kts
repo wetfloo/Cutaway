@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("cutaway.android.application")
     id("cutaway.android.hilt")
@@ -15,6 +17,7 @@ android {
     }
 
     buildTypes {
+        @Suppress("UNUSED_VARIABLE")
         val release by getting {
             isMinifyEnabled = true
             proguardFiles(
@@ -48,7 +51,6 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines)
     implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.gms)
 
     implementation(libs.compose.material3)
     implementation(libs.compose.icons)
@@ -61,8 +63,7 @@ dependencies {
 
     implementation(libs.result)
 
-    implementation(libs.gms.scanner)
-
+    implementation(libs.zxingAndroidEmbedded)
     implementation(libs.awesomeQr) {
         exclude(
             group = "com.waynejo",
