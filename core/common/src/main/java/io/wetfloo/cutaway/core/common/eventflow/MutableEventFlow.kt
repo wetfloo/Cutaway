@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.update
 class MutableEventFlow<T>(
     initialValues: List<T> = emptyList(),
 ) : EventFlow<T> {
-
     constructor(vararg events: T) : this(listOf(*events))
 
     private val backingFlow = MutableStateFlow(initialValues)

@@ -1,3 +1,5 @@
+@file:Suppress("unused", "RedundantSuspendModifier")
+
 package io.wetfloo.cutaway.core.common
 
 import com.github.michaelbull.result.Result

@@ -8,7 +8,6 @@ import kotlin.coroutines.CoroutineContext
  * where coroutine scopes are typically available
  */
 interface CoroutineScopeProvider {
-
     /**
      * @param coroutineContext Context to be applied to a new coroutine
      * @return A new [CoroutineScope]

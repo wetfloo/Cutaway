@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
  * - Navigating between destinations
  */
 interface EventFlow<T> {
-
     /**
      * Collects given [EventFlow], giving values to [block]
      * and automatically notifying about consumed events

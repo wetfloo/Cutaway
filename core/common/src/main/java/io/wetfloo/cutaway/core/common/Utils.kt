@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.wetfloo.cutaway.core.common
 
 import kotlin.random.Random
