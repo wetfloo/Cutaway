@@ -16,9 +16,7 @@ class MutableEventFlow<T>(
 
     private val backingFlow = MutableStateFlow(initialValues)
 
-    override suspend fun consumeAndNotify(
-        block: suspend (T) -> Boolean,
-    ) {
+    override suspend fun consumeAndNotify(block: suspend (T) -> Boolean) {
         backingFlow.collect { events ->
             events
                 .asReversed()
