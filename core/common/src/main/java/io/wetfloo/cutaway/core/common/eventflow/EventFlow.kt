@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface EventFlow<T> {
     /**
      * Collects given [EventFlow], giving values to [block]
-     * and automatically notifying about consumed events
+     * and automatically removes consumed events, if [block] returns `true`
      */
     suspend fun consumeAndNotify(block: suspend (T) -> Boolean)
 }
