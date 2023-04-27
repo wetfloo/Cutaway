@@ -25,8 +25,9 @@ class QrViewModel @Inject constructor(
     defaultStateValue = QrState.Idle,
 ) {
     fun scanResult(result: ScanIntentResult?) {
-        val logMessage = if (result != null) {
-            "Scanned QR with data: ${result.contents}"
+        val scanContents = result?.contents
+        val logMessage = if (scanContents != null) {
+            "Scanned QR with data: $scanContents"
         } else {
             "Couldn't get contents out of QR"
         }
@@ -34,7 +35,7 @@ class QrViewModel @Inject constructor(
 
         // try to get a valid url out of QR contents.
         // if anything goes wrong, display canned error
-        val scanData = result?.contents?.takeIf {
+        val scanData = scanContents?.takeIf {
             PatternsCompat.WEB_URL.matcher(it).matches()
         }
         val resultEvent = scanData.toResultOr {
