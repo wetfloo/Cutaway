@@ -21,9 +21,9 @@ class MutableEventFlow<T>(
             events
                 .asReversed()
                 .onEach { event ->
-                    val willBeConsumed = block(event)
+                    val isConsideredConsumed = block(event)
 
-                    if (willBeConsumed) {
+                    if (isConsideredConsumed) {
                         removeEvent()
                     }
                 }
