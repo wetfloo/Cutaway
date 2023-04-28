@@ -1,6 +1,7 @@
 plugins {
     id("cutaway.android.library")
     id("cutaway.android.hilt")
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
