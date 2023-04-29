@@ -16,4 +16,5 @@ dependencies {
     implementation(libs.result)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.navigation.fragment.ktx)
 }
