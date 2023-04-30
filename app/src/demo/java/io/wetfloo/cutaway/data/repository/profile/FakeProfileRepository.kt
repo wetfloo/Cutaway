@@ -24,20 +24,21 @@ class FakeProfileRepository @Inject constructor(
 ) : ProfileRepository {
     private val coroutineScope = CoroutineScope(dispatcherProvider.default + SupervisorJob())
 
-    private val profileInformationResult
-        get() = Ok(ProfileInformation.demo)
+    private val profileInformation
+        get() = ProfileInformation.demo
 
-    override val state: MutableStateFlow<Result<ProfileInformation, Throwable>?> =
+    override val state: MutableStateFlow<ProfileInformation?> =
         MutableStateFlow(null)
 
-    override suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable> {
-        return state.filterNotNull().first()
-    }
+    override suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable> = state
+        .filterNotNull()
+        .first()
+        .let(::Ok)
 
     init {
         coroutineScope.launch {
             delay(5.seconds)
-            state.value = profileInformationResult
+            state.value = profileInformation
         }
     }
 }

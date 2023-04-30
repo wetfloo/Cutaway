@@ -5,7 +5,7 @@ import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileRepository {
-    val state: StateFlow<Result<ProfileInformation, Throwable>?>
+    val state: StateFlow<ProfileInformation?>
 
     suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable>
 }
