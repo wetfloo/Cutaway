@@ -39,7 +39,7 @@ class QrViewModel @Inject constructor(
             PatternsCompat.WEB_URL.matcher(it).matches()
         }
         val resultEvent = scanData.toResultOr {
-            UiError.Resource(R.string.qr_parse_failed)
+            UiError.Res(R.string.qr_parse_failed)
         }.map(QrEvent::UrlScanned)
         viewModelScope.launch {
             mutableEvent.addEvent(resultEvent)

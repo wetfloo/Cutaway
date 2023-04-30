@@ -50,7 +50,7 @@ class AuthViewModel @Inject constructor(
                     authPreferencesManager.setToken("sometoken")
                     addEvent(Ok(AuthEvent.Success))
                 } else {
-                    addEvent(Err(UiError.Resource(R.string.auth_random_error)))
+                    addEvent(Err(UiError.Res(R.string.auth_random_error)))
                 }
             }
 

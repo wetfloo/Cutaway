@@ -9,14 +9,14 @@ sealed class UiError : Parcelable {
     fun errorString(context: Context): String =
         when (val uiError = this@UiError) {
             is Raw -> uiError.string
-            is Resource -> context.getString(
+            is Res -> context.getString(
                 uiError.stringRes,
                 uiError.args,
             )
         }
 
     @Parcelize
-    data class Resource(
+    data class Res(
         @StringRes val stringRes: Int,
         val args: List<String> = emptyList(),
     ) : UiError() {

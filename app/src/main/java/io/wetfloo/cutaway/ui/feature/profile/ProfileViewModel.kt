@@ -69,7 +69,7 @@ class ProfileViewModel @Inject constructor(
 
     fun showEditingNotSupported() {
         viewModelScope.launch {
-            mutableEvent.addEvent(Err(UiError.Resource(R.string.profile_edit_not_implemented_error)))
+            mutableEvent.addEvent(Err(UiError.Res(R.string.profile_edit_not_implemented_error)))
         }
     }
 
