@@ -12,7 +12,7 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="log_in">Log in</string>
-    <string name="auth_random_error">
+    <string name="auth_failure_general">
         Oops, couldn\'t authenticate you right now. Try again later!
     </string>
 
