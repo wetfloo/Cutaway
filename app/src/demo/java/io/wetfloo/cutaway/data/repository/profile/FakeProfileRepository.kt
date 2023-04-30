@@ -24,9 +24,6 @@ class FakeProfileRepository @Inject constructor(
 ) : ProfileRepository {
     private val coroutineScope = CoroutineScope(dispatcherProvider.default + SupervisorJob())
 
-    private val profileInformation
-        get() = ProfileInformation.demo
-
     override val state: MutableStateFlow<ProfileInformation?> =
         MutableStateFlow(null)
 
@@ -38,7 +35,7 @@ class FakeProfileRepository @Inject constructor(
     init {
         coroutineScope.launch {
             delay(5.seconds)
-            state.value = profileInformation
+            state.value = ProfileInformation.demo
         }
     }
 }
