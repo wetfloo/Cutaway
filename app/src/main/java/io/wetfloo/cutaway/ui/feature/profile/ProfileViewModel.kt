@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-) : StateViewModel<ProfileState, ProfileEvent>(
+) : StateViewModel<ProfileState, ProfileEvent, UiError>(
     savedStateHandle = savedStateHandle,
     savedStateKey = STATE,
     defaultStateValue = ProfileState.Idle,

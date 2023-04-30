@@ -24,7 +24,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authPreferencesManager: AuthPreferencesManager,
     savedStateHandle: SavedStateHandle,
-) : StateViewModel<AuthState, AuthEvent>(
+) : StateViewModel<AuthState, AuthEvent, UiError>(
     savedStateHandle = savedStateHandle,
     savedStateKey = STATE,
     defaultStateValue = AuthState.Idle,

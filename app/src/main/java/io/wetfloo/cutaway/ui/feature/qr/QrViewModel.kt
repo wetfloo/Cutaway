@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class QrViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-) : StateViewModel<QrState, QrEvent>(
+) : StateViewModel<QrState, QrEvent, UiError>(
     savedStateHandle = savedStateHandle,
     savedStateKey = STATE,
     defaultStateValue = QrState.Idle,
