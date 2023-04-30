@@ -36,7 +36,7 @@ abstract class StateViewModel<S : Parcelable, V, E>(
             savedStateHandle[savedStateKey] = value
         }
 
-    protected fun updateState(updater: (S) -> S) {
+    protected inline fun updateState(updater: (S) -> S) {
         stateValue = updater(stateValue)
     }
 
