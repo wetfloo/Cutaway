@@ -1,7 +1,6 @@
 package io.wetfloo.cutaway.data.repository.profile
 
 import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
 import io.wetfloo.cutaway.core.common.DispatcherProvider
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.misc.utils.demo
@@ -27,7 +26,7 @@ class FakeProfileRepository @Inject constructor(
     override val state: MutableStateFlow<ProfileInformation?> =
         MutableStateFlow(null)
 
-    override suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable> = state
+    override suspend fun loadProfileInformation() = state
         .filterNotNull()
         .first()
         .let(::Ok)
