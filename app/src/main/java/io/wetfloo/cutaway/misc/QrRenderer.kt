@@ -10,14 +10,14 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class QrRenderer @Inject constructor(
-    private val dispatcherProvider: DispatcherProvider,
+    private val dispatchers: DispatcherProvider,
 ) {
     suspend fun renderQr(
         content: String,
         renderOptions: RenderOption = defaultRenderOptions(content),
     ): Result<Bitmap, Throwable> {
         return runSuspendCatching {
-            withContext(dispatcherProvider.default) {
+            withContext(dispatchers.default) {
                 AwesomeQrRenderer.render(renderOptions)
             }.bitmap!!
         }

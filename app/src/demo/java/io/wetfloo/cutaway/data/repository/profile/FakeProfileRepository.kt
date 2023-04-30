@@ -18,9 +18,9 @@ import kotlin.time.Duration.Companion.seconds
  * and then stores it for the entire lifetime.
  */
 class FakeProfileRepository @Inject constructor(
-    dispatcherProvider: DispatcherProvider,
+    dispatchers: DispatcherProvider,
 ) : ProfileRepository {
-    private val coroutineScope = dispatcherProvider.default.supervisor()
+    private val coroutineScope = dispatchers.default.supervisor()
 
     override val state: MutableStateFlow<ProfileInformation?> =
         MutableStateFlow(null)
