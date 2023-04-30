@@ -2,10 +2,9 @@ package io.wetfloo.cutaway.data.repository.profile
 
 import com.github.michaelbull.result.Ok
 import io.wetfloo.cutaway.core.common.DispatcherProvider
+import io.wetfloo.cutaway.core.common.supervisor
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.misc.utils.demo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
@@ -21,7 +20,7 @@ import kotlin.time.Duration.Companion.seconds
 class FakeProfileRepository @Inject constructor(
     dispatcherProvider: DispatcherProvider,
 ) : ProfileRepository {
-    private val coroutineScope = CoroutineScope(dispatcherProvider.default + SupervisorJob())
+    private val coroutineScope = dispatcherProvider.default.supervisor()
 
     override val state: MutableStateFlow<ProfileInformation?> =
         MutableStateFlow(null)
