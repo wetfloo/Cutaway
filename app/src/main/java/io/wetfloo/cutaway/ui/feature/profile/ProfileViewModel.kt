@@ -33,14 +33,14 @@ class ProfileViewModel @Inject constructor(
                 )
 
                 viewModelScope.launch {
-                    updateProfile().handleResult()
+                    updateProfile().handleStateResult()
                 }
             }
 
             ProfileState.Idle -> {
                 stateValue = ProfileState.Loading
                 viewModelScope.launch {
-                    updateProfile().handleResult()
+                    updateProfile().handleStateResult()
                 }
             }
 

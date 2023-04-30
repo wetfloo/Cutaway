@@ -40,8 +40,8 @@ abstract class StateViewModel<S : Parcelable, V, E>(
         stateValue = updater(stateValue)
     }
 
-    protected fun Result<S, E>.handleResult() {
-        when (val result = this@handleResult) {
+    protected fun Result<S, E>.handleStateResult() {
+        when (val result = this@handleStateResult) {
             is Err -> mutableEvent.addEvent(result)
             is Ok -> stateValue = result.value
         }
