@@ -2,10 +2,10 @@ package io.wetfloo.cutaway.data.repository.profile
 
 import com.github.michaelbull.result.Result
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 interface ProfileRepository {
-    val state: Flow<Result<ProfileInformation, Throwable>>
+    val state: StateFlow<Result<ProfileInformation, Throwable>>
 
     suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable>
 }
