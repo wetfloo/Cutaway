@@ -3,6 +3,8 @@ package io.wetfloo.cutaway.core.commonimpl
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,5 +38,12 @@ abstract class StateViewModel<S : Parcelable, V, E>(
 
     protected fun updateState(updater: (S) -> S) {
         stateValue = updater(stateValue)
+    }
+
+    protected fun Result<S, E>.handleResult() {
+        when (val result = this@handleResult) {
+            is Err -> mutableEvent.addEvent(result)
+            is Ok -> stateValue = result.value
+        }
     }
 }

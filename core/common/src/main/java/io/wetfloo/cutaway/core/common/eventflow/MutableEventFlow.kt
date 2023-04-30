@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.update
  *
  * This distinction is useful to forbid UI from adding anything
  */
-@Suppress("RedundantSuspendModifier", "MemberVisibilityCanBePrivate", "unused")
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 class MutableEventFlow<T>(
     initialValues: List<T> = emptyList(),
 ) : EventFlow<T> {
@@ -33,7 +33,7 @@ class MutableEventFlow<T>(
     /**
      * Adds new event to event queue
      */
-    suspend fun addEvent(newEvent: T) {
+    fun addEvent(newEvent: T) {
         backingFlow.update { existingEvents ->
             existingEvents + newEvent
         }
@@ -44,7 +44,7 @@ class MutableEventFlow<T>(
      * @return `true` if element is removed successfully,
      * `false` if didn't exist
      */
-    suspend fun removeEvent(matcher: suspend (T) -> Boolean): Boolean {
+    fun removeEvent(matcher: (T) -> Boolean): Boolean {
         var eventFound = false
 
         backingFlow.update { existingEvents ->
@@ -66,7 +66,7 @@ class MutableEventFlow<T>(
     /**
      * Removes oldest event in queue
      */
-    suspend fun removeEvent() {
+    fun removeEvent() {
         backingFlow.update { existingEvents ->
             existingEvents.dropLast(1)
         }

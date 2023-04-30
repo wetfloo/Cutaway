@@ -3,22 +3,22 @@ package io.wetfloo.cutaway.ui.feature.profile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.map
+import com.github.michaelbull.result.mapError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.core.common.SAMPLE_PROFILE_PICTURE_URL
 import io.wetfloo.cutaway.core.commonimpl.StateViewModel
 import io.wetfloo.cutaway.core.commonimpl.UiError
-import io.wetfloo.cutaway.data.model.profile.ProfileInformation
-import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
-import io.wetfloo.cutaway.data.model.profile.ProfileInformationPieceType
+import io.wetfloo.cutaway.data.repository.profile.ProfileRepository
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    private val profileRepository: ProfileRepository,
     savedStateHandle: SavedStateHandle,
 ) : StateViewModel<ProfileState, ProfileEvent, UiError>(
     savedStateHandle = savedStateHandle,
@@ -33,39 +33,25 @@ class ProfileViewModel @Inject constructor(
                 )
 
                 viewModelScope.launch {
-                    stateValue = updateProfile()
+                    updateProfile().handleResult()
                 }
             }
 
-            ProfileState.Idle -> viewModelScope.launch {
+            ProfileState.Idle -> {
                 stateValue = ProfileState.Loading
-                stateValue = updateProfile()
+                viewModelScope.launch {
+                    updateProfile().handleResult()
+                }
             }
 
-            ProfileState.Loading -> state
+            ProfileState.Loading -> Unit
         }
     }
 
-    private suspend fun updateProfile(): ProfileState.Ready {
-        delay(3000)
-        return ProfileState.Ready(
-            data = ProfileInformation(
-                name = "After Dark",
-                status = "Reach for the sky, sinner!",
-                pictureUrl = SAMPLE_PROFILE_PICTURE_URL,
-                pieces = listOf(
-                    ProfileInformationPiece(
-                        value = "Here, Inc.",
-                        type = ProfileInformationPieceType.WORK,
-                    ),
-                    ProfileInformationPiece(
-                        value = "2000/01/01",
-                        type = ProfileInformationPieceType.BIRTHDAY,
-                    ),
-                ),
-            ),
-        )
-    }
+    private suspend fun updateProfile(): Result<ProfileState.Ready, UiError> = profileRepository
+        .loadProfileInformation()
+        .map(ProfileState::Ready)
+        .mapError { UiError.Res(R.string.profile_failure_load) }
 
     fun showEditingNotSupported() {
         viewModelScope.launch {

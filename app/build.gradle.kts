@@ -33,6 +33,17 @@ android {
         compose = true
     }
 
+    flavorDimensions += "dataSource"
+    productFlavors {
+        create("demo") {
+            dimension = "dataSource"
+        }
+
+        create("real") {
+            dimension = "dataSource"
+        }
+    }
+
     namespace = "io.wetfloo.cutaway"
 }
 

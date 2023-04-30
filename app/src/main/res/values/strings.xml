@@ -24,6 +24,7 @@
     <string name="profile_edit_not_implemented_error">
         Profile editing not implemented yet
     </string>
+    <string name="profile_failure_load">Failed to load Profile</string>
 
     <!-- Profile info pieces -->
     <string name="piece_education">Education</string>
