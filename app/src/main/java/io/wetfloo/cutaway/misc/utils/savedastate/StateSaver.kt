@@ -22,6 +22,12 @@ class StateSaver<S : Parcelable>(
         )
     }
 
+    inline fun update(block: (S) -> S) {
+        val oldValue = state.value
+        val newValue = block(oldValue)
+        save(newValue)
+    }
+
     operator fun getValue(
         thisRef: Any?,
         property: KProperty<*>,
