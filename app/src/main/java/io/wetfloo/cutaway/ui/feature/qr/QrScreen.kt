@@ -11,18 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
+import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
-import io.wetfloo.cutaway.ui.feature.qr.state.QrEvent
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun QrScreen(
     navController: () -> NavController,
-    eventFlow: EventResultFlow<QrEvent>,
+    errorFlow: Flow<UiError>,
     modifier: Modifier = Modifier,
 ) {
-    EventFlowSnackbarDisplay(eventFlow = eventFlow) { snackbarHostState ->
+    EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
         HostScaffold(
             navController = navController,
             modifier = modifier

@@ -5,13 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.onFailure
-import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
+import io.wetfloo.cutaway.core.commonimpl.UiError
+import kotlinx.coroutines.flow.Flow
 
 @Composable
-fun <T> EventFlowSnackbarDisplay(
-    eventFlow: EventResultFlow<T>,
+fun EventFlowSnackbarDisplay(
+    errorFlow: Flow<UiError>,
     content: @Composable (SnackbarHostState) -> Unit,
 ) {
     val context = LocalContext.current
@@ -20,14 +19,10 @@ fun <T> EventFlowSnackbarDisplay(
     }
 
     LaunchedEffect(Unit) {
-        eventFlow.consumeMatching { eventResult ->
-            eventResult.onFailure { error ->
-                snackbarHostState.showSnackbar(
-                    message = error.errorString(context),
-                )
-            }
-
-            eventResult is Err
+        errorFlow.collect { error ->
+            snackbarHostState.showSnackbar(
+                message = error.errorString(context),
+            )
         }
     }
 

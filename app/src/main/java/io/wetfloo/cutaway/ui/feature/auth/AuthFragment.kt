@@ -11,8 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
@@ -31,7 +29,7 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
 
         binding.composeView.composify {
             val state by viewModel
-                .state
+                .stateFlow
                 .collectAsStateWithLifecycle()
 
             AuthScreen(
@@ -45,25 +43,21 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
                         AuthScreenMessage.LoginButtonClicked -> viewModel.logIn()
                     }
                 },
-                eventFlow = viewModel.event,
+                errorFlow = viewModel.error,
             )
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.event.consumeMatching { eventResult ->
-                    eventResult.onSuccess { authEvent ->
-                        when (authEvent) {
-                            AuthEvent.Success -> {
-                                findNavController().navigate(
-                                    directions = AuthFragmentDirections
-                                        .actionAuthFragmentToProfileFragment(),
-                                )
-                            }
+                viewModel.event.collect { authEvent ->
+                    when (authEvent) {
+                        AuthEvent.Success -> {
+                            findNavController().navigate(
+                                directions = AuthFragmentDirections
+                                    .actionAuthFragmentToProfileFragment(),
+                            )
                         }
                     }
-
-                    eventResult is Ok
                 }
             }
         }

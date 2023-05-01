@@ -3,6 +3,7 @@ package io.wetfloo.cutaway.misc.utils.savedastate
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.reflect.KProperty
 
 class StateSaver<S : Parcelable>(
     private val savedStateHandle: SavedStateHandle,
@@ -19,5 +20,18 @@ class StateSaver<S : Parcelable>(
             key = key,
             value = value,
         )
+    }
+
+    operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+    ): S = state.value
+
+    operator fun setValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+        value: S
+    ) {
+        save(value)
     }
 }

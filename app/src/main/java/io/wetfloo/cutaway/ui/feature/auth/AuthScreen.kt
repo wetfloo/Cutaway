@@ -32,13 +32,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
-import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
+import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
-import io.wetfloo.cutaway.ui.feature.auth.state.AuthEvent
 import io.wetfloo.cutaway.ui.feature.auth.state.AuthScreenMessage
 import io.wetfloo.cutaway.ui.feature.auth.state.AuthState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -54,9 +54,9 @@ fun AuthScreen(
     modifier: Modifier = Modifier,
     state: AuthState,
     onMessage: (AuthScreenMessage) -> Unit,
-    eventFlow: EventResultFlow<AuthEvent>,
+    errorFlow: Flow<UiError>,
 ) {
-    EventFlowSnackbarDisplay(eventFlow = eventFlow) { snackbarHostState ->
+    EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
         Scaffold(
             modifier = modifier
                 .fillMaxSize(),
@@ -173,6 +173,6 @@ private fun AuthScreenPreview1() {
                 }
             }
         },
-        eventFlow = MutableEventFlow(),
+        errorFlow = emptyFlow(),
     )
 }

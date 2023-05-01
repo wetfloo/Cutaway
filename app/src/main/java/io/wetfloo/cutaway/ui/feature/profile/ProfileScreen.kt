@@ -26,8 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
-import io.wetfloo.cutaway.core.commonimpl.EventResultFlow
+import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.ui.compose.core.AppTheme
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.misc.utils.demo
@@ -36,18 +35,19 @@ import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.component.SpacerSized
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationBlock
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
-import io.wetfloo.cutaway.ui.feature.profile.state.ProfileEvent
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 
 @Composable
 fun ProfileScreen(
     navController: () -> NavController,
     onMessage: (ProfileScreenMessage) -> Unit,
     state: ProfileState,
-    eventFlow: EventResultFlow<ProfileEvent>,
+    errorFlow: Flow<UiError>,
 ) {
-    EventFlowSnackbarDisplay(eventFlow = eventFlow) { snackbarHostState ->
+    EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
         HostScaffold(
             modifier = Modifier
                 .fillMaxSize(),
@@ -138,7 +138,7 @@ private fun Preview() {
             ),
             navController = { NavController(context) },
             onMessage = {},
-            eventFlow = MutableEventFlow(),
+            errorFlow = emptyFlow(),
         )
     }
 }

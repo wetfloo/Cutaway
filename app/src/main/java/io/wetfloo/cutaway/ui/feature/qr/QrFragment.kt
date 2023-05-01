@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.github.michaelbull.result.Ok
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
@@ -44,23 +43,20 @@ class QrFragment : Fragment(R.layout.fragment_compose_base) {
         binding.composeView.composify {
             QrScreen(
                 navController = { findNavController() },
-                eventFlow = viewModel.event,
+                errorFlow = viewModel.error,
             )
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.event.consumeMatching { eventResult ->
-                    if (eventResult !is Ok) return@consumeMatching false
-
-                    when (val qrEvent = eventResult.value) {
+                viewModel.event.collect { qrEvent ->
+                    when (qrEvent) {
                         is QrEvent.UrlScanned -> {
                             Toast.makeText(
                                 requireContext(),
                                 qrEvent.url,
                                 Toast.LENGTH_SHORT,
                             ).show()
-                            true
                         }
                     }
                 }

@@ -27,17 +27,18 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
 
         binding.composeView.composify {
             val state by viewModel
-                .state
+                .stateFlow
                 .collectAsStateWithLifecycle()
 
             ProfileScreen(
                 state = state,
                 navController = { findNavController() },
+                errorFlow = viewModel.error,
                 onMessage = { message ->
                     when (message) {
                         ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()
                         ProfileScreenMessage.ShowProfileDetailedInformation -> {
-                            val profileState = viewModel.state.value
+                            val profileState = viewModel.stateFlow.value
 
                             if (profileState is ProfileState.Ready) {
                                 findNavController().navigate(
@@ -57,7 +58,6 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                         }
                     }
                 },
-                eventFlow = viewModel.event,
             )
         }
     }
