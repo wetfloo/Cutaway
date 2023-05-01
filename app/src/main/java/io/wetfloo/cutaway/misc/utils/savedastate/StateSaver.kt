@@ -39,7 +39,7 @@ class StateSaver<S : Parcelable>(
     operator fun setValue(
         thisRef: Any?,
         property: KProperty<*>,
-        value: S
+        value: S,
     ) {
         save(value)
     }
