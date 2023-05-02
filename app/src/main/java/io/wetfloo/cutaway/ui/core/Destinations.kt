@@ -12,6 +12,10 @@ val destinations: List<DrawerMenuItem> by lazy(LazyThreadSafetyMode.PUBLICATION)
         DrawerMenuItem(
             R.id.qrFragment,
             R.string.qr_scanner_destination_name,
+        ),
+        DrawerMenuItem(
+            R.id.searchUserFragment,
+            R.string.search_user_destination_name,
         )
     )
 }

@@ -46,4 +46,8 @@
             android:name="profileInformation"
             app:argType="io.wetfloo.cutaway.data.model.profile.ProfileInformation" />
     </fragment>
+    <fragment
+        android:id="@+id/searchUserFragment"
+        android:name="io.wetfloo.cutaway.ui.feature.searchuser.SearchUserFragment"
+        android:label="SearchUserFragment" />
 </navigation>

@@ -19,6 +19,15 @@ fun booleanWithChance(chance: Double): Boolean = Random.nextFloat() < chance
 fun booleanWithChance(chance: Float): Boolean = booleanWithChance(chance.toDouble())
 
 /**
+ * Generates random alphanumeric [String] of given [length]
+ */
+fun randomAlphaNumericString(length: Int): String = (0..length).map {
+    val charPool = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+    val charIndex = Random.nextInt(0, charPool.count())
+    return@map charPool[charIndex]
+}.joinToString("")
+
+/**
  * Returns a new [CoroutineScope] with [SupervisorJob],
  * added together with receiver's [CoroutineContext]
  */

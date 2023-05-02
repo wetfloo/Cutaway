@@ -9,6 +9,7 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapError
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.handleStateResult
@@ -24,6 +25,7 @@ import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(SavedStateHandleSaveableApi::class)
+@HiltViewModel
 class SearchUserViewModel @Inject constructor(
     private val searchUserRepository: SearchUserRepository,
     savedStateHandle: SavedStateHandle,
