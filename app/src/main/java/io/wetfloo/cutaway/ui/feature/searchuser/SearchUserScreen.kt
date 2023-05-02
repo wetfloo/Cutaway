@@ -1,14 +1,18 @@
 package io.wetfloo.cutaway.ui.feature.searchuser
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -46,17 +50,31 @@ fun SearchUserScreen(
                 )
                 Text("WIP")
 
-                when (state) {
-                    is SearchUserState.Found -> {
-                        LazyColumn {
-                            items(items = state.users) { user ->
-                                SearchUserItem(user = user)
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                ) {
+                    when (state) {
+                        is SearchUserState.Found -> {
+                            Column {
+                                LazyColumn(
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                ) {
+                                    items(items = state.users) { user ->
+                                        SearchUserItem(user = user)
+                                    }
+                                }
                             }
                         }
-                    }
 
-                    SearchUserState.Idle -> Text("TODO")
-                    SearchUserState.Loading -> Text("TODO")
+                        SearchUserState.Idle -> Unit
+
+                        SearchUserState.Loading -> CircularProgressIndicator(
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                        )
+                    }
                 }
             }
         }
