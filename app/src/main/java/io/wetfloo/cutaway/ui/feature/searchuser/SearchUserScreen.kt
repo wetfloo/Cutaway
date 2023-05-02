@@ -2,6 +2,8 @@ package io.wetfloo.cutaway.ui.feature.searchuser
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
@@ -43,6 +45,19 @@ fun SearchUserScreen(
                     onValueChange = onQueryChange,
                 )
                 Text("WIP")
+
+                when (state) {
+                    is SearchUserState.Found -> {
+                        LazyColumn {
+                            items(items = state.users) { user ->
+                                SearchUserItem(user = user)
+                            }
+                        }
+                    }
+
+                    SearchUserState.Idle -> Text("TODO")
+                    SearchUserState.Loading -> Text("TODO")
+                }
             }
         }
     }
