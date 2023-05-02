@@ -1,9 +1,23 @@
 package io.wetfloo.cutaway.core.commonimpl
 
 import com.github.michaelbull.result.Result
-import io.wetfloo.cutaway.core.common.eventflow.EventFlow
-import io.wetfloo.cutaway.core.common.eventflow.MutableEventFlow
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 
-typealias EventResult<T> = Result<T, UiError>
-typealias MutableEventResultFlow<T> = MutableEventFlow<EventResult<T>>
-typealias EventResultFlow<T> = EventFlow<EventResult<T>>
+@Suppress("REDUNDANT_INLINE_SUSPEND_FUNCTION_TYPE")
+suspend inline fun <V, E> handleStateResult(
+    previousValue: V,
+    loadingValue: V,
+    valueReceiver: (V) -> Unit,
+    errorReceiver: suspend (E) -> Unit,
+    operation: () -> Result<V, E>,
+) {
+    valueReceiver(loadingValue)
+
+    operation()
+        .onSuccess(valueReceiver)
+        .onFailure { error ->
+            valueReceiver(previousValue)
+            errorReceiver(error)
+        }
+}

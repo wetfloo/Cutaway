@@ -30,7 +30,7 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 state = state,
                 errorFlow = viewModel.error,
                 navController = { findNavController() },
-                onQueryChange = { viewModel.query = it },
+                onQueryChange = viewModel::updateQuery,
                 queryValue = viewModel.query,
             )
         }
