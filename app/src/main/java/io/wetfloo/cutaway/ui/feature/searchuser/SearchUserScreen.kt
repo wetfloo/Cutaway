@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -104,14 +105,15 @@ fun SearchUserScreen(
 
                 Box(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .imePadding(),
                 ) {
                     when (state) {
                         is SearchUserState.Found -> {
                             Column {
                                 LazyColumn(
                                     modifier = Modifier
-                                        .fillMaxSize(),
+                                        .weight(1f),
                                 ) {
                                     items(items = state.users) { user ->
                                         SearchUserItem(user = user)
