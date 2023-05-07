@@ -1,5 +1,8 @@
 package io.wetfloo.cutaway.ui.feature.searchuser
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -73,13 +76,19 @@ fun SearchUserScreen(
                         )
                     },
                     trailingIcon = {
-                        IconButton(
-                            onClick = { onMessage(SearchUserMessage.Clear) },
+                        AnimatedVisibility(
+                            visible = queryValue.isNotBlank(),
+                            enter = fadeIn(),
+                            exit = fadeOut(),
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Close,
-                                contentDescription = null,
-                            )
+                            IconButton(
+                                onClick = { onMessage(SearchUserMessage.Clear) },
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Close,
+                                    contentDescription = null,
+                                )
+                            }
                         }
                     },
                     keyboardOptions = KeyboardOptions(
