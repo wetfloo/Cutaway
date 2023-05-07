@@ -118,7 +118,12 @@ fun SearchUserContent(
                                 .fillMaxSize(),
                         ) {
                             items(items = state.users) { user ->
-                                SearchUserItem(user = user)
+                                SearchUserItem(
+                                    user = user,
+                                    modifier = Modifier
+                                        .sizeIn(minHeight = dimensionResource(R.dimen.list_item_min_height))
+                                        .fillMaxWidth(),
+                                )
                             }
                         }
                     }

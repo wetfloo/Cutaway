@@ -10,7 +10,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
+import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
 import io.wetfloo.cutaway.ui.component.BoxLoadingIndicator
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
@@ -41,7 +42,7 @@ fun SearchHistoryContent(
                             onDeleteClick = { onDeleteClick(history) },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .sizeIn(minHeight = 24.dp)
+                                .sizeIn(minHeight = dimensionResource(R.dimen.list_item_min_height))
                                 .clickable {
                                     onItemClick(history)
                                 },
