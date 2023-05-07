@@ -2,6 +2,7 @@ package io.wetfloo.cutaway.data.local.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
 
 @Database(
@@ -11,4 +12,5 @@ import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
         SearchHistoryItem::class,
     ],
 )
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase()
