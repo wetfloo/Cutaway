@@ -26,8 +26,13 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 .stateFlow
                 .collectAsStateWithLifecycle()
 
+            val searchHistoryState by viewModel
+                .searchHistoryState
+                .collectAsStateWithLifecycle()
+
             SearchUserScreen(
                 state = state,
+                searchHistoryState = searchHistoryState,
                 errorFlow = viewModel.error,
                 navController = { findNavController() },
                 onQueryChange = viewModel::updateQuery,

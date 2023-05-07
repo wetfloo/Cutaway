@@ -20,6 +20,8 @@ import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
+import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchUserItem
+import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
 import kotlinx.coroutines.flow.Flow
 
@@ -27,6 +29,7 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun SearchUserScreen(
     state: SearchUserState,
+    searchHistoryState: SearchHistoryState,
     errorFlow: Flow<UiError>,
     navController: () -> NavController,
     onQueryChange: (String) -> Unit,

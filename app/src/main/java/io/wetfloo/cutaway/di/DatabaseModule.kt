@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.wetfloo.cutaway.data.local.dao.SearchDao
 import io.wetfloo.cutaway.data.local.db.AppDatabase
 import javax.inject.Singleton
 
@@ -22,4 +23,7 @@ class DatabaseModule {
             klass = AppDatabase::class.java,
             name = "app_db",
         ).build()
+
+    @Provides
+    fun provideSearchDao(db: AppDatabase): SearchDao = db.searchDao
 }

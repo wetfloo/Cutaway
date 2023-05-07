@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser
+package io.wetfloo.cutaway.ui.feature.searchuser.component
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

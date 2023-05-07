@@ -7,6 +7,7 @@ import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.misc.utils.demo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -22,8 +23,9 @@ class FakeProfileRepository @Inject constructor(
 ) : ProfileRepository {
     private val coroutineScope = dispatchers.default.supervisor()
 
-    override val state: MutableStateFlow<ProfileInformation?> =
+    private val _state: MutableStateFlow<ProfileInformation?> =
         MutableStateFlow(null)
+    override val state = _state.asStateFlow()
 
     override suspend fun loadProfileInformation() = state
         .filterNotNull()
@@ -33,7 +35,7 @@ class FakeProfileRepository @Inject constructor(
     init {
         coroutineScope.launch {
             delay(5.seconds)
-            state.value = ProfileInformation.demo
+            _state.value = ProfileInformation.demo
         }
     }
 }
