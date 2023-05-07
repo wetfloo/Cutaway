@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.BoxLoadingIndicator
 import io.wetfloo.cutaway.ui.component.NiceTextField
+import io.wetfloo.cutaway.ui.component.SpacerSized
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
 
 @Composable
@@ -57,6 +58,8 @@ fun SearchUserContent(
                 focusRequester.requestFocus()
             }
         }
+
+        SpacerSized(h = 16.dp)
 
         NiceTextField(
             value = queryValue,
@@ -99,6 +102,8 @@ fun SearchUserContent(
                 onSearch = { onSearchRequested() },
             ),
         )
+
+        SpacerSized(h = 16.dp)
 
         Box(
             modifier = Modifier
