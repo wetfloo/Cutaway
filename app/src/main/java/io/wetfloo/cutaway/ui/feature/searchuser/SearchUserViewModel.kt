@@ -67,11 +67,11 @@ class SearchUserViewModel @Inject constructor(
         if (query.isBlank()) return
         autoSearchJob = viewModelScope.launch {
             delay(700.milliseconds)
-            search(query)
+            search()
         }
     }
 
-    fun search(query: String) {
+    fun search() {
         when (val currentState = stateValue) {
             SearchUserState.Idle -> viewModelScope.launch {
                 handle(

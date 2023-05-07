@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
+import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserMessage
 
 @AndroidEntryPoint
 class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
@@ -37,7 +38,14 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 navController = { findNavController() },
                 onQueryChange = viewModel::updateQuery,
                 queryValue = viewModel.query,
+                onMessage = { message ->
+                    when (message) {
+                        SearchUserMessage.Clear -> viewModel.updateQuery("")
+                        SearchUserMessage.SearchRequested -> viewModel.search()
+                    }
+                },
             )
         }
     }
+
 }

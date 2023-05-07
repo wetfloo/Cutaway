@@ -5,6 +5,9 @@
     <string name="navigation_close">Close</string>
     <string name="navigation_go_back">Go back</string>
 
+    <!-- General UI -->
+    <string name="ui_search">Search</string>
+
     <!-- Host drawer -->
     <string name="host_drawer_menu_description">Drawer menu</string>
 
