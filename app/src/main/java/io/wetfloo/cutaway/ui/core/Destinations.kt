@@ -3,7 +3,7 @@ package io.wetfloo.cutaway.ui.core
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.ui.component.DrawerMenuItem
 
-val destinations: List<DrawerMenuItem> by lazy(LazyThreadSafetyMode.PUBLICATION) {
+val destinations: List<DrawerMenuItem> by lazy {
     listOf(
         DrawerMenuItem(
             R.id.profileFragment,
