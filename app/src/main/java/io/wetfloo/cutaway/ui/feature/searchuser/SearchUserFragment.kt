@@ -41,8 +41,13 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 onMessage = { message ->
                     when (message) {
                         SearchUserMessage.SearchRequested -> viewModel.search()
+
                         is SearchUserMessage.DeleteHistoryItem -> {
                             viewModel.deleteHistoryItem(message.item)
+                        }
+
+                        is SearchUserMessage.FoundUserClicked -> {
+                            // TODO: implement navigation here
                         }
                     }
                 },

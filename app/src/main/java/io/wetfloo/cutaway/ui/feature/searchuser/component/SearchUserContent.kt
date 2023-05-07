@@ -3,6 +3,7 @@ package io.wetfloo.cutaway.ui.feature.searchuser.component
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.data.model.searchuser.FoundUser
 import io.wetfloo.cutaway.ui.component.BoxLoadingIndicator
 import io.wetfloo.cutaway.ui.component.NiceTextField
 import io.wetfloo.cutaway.ui.component.SpacerSized
@@ -43,6 +45,7 @@ fun SearchUserContent(
     modifier: Modifier = Modifier,
     requestFocusOnStart: Boolean = true,
     onSearchRequested: () -> Unit,
+    onItemClicked: (FoundUser) -> Unit,
     onQueryChange: (String) -> Unit,
     queryValue: String,
     state: SearchUserState,
@@ -122,7 +125,8 @@ fun SearchUserContent(
                                     user = user,
                                     modifier = Modifier
                                         .sizeIn(minHeight = dimensionResource(R.dimen.list_item_min_height))
-                                        .fillMaxWidth(),
+                                        .fillMaxWidth()
+                                        .clickable { onItemClicked(user) },
                                 )
                             }
                         }

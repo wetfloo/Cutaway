@@ -143,6 +143,9 @@ fun SearchUserScreen(
                                     onSearchRequested = {
                                         onMessage(SearchUserMessage.SearchRequested)
                                     },
+                                    onItemClicked = { user ->
+                                        onMessage(SearchUserMessage.FoundUserClicked(user))
+                                    },
                                 )
                             }
 
