@@ -66,6 +66,12 @@ fun SearchUserScreen(
                     }
             }
 
+            fun scrollToPage(index: Int) {
+                coroutineScope.launch {
+                    pagerState.animateScrollToPage(index)
+                }
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -86,11 +92,7 @@ fun SearchUserScreen(
                     titles.forEachIndexed { index, title ->
                         Tab(
                             selected = pagerState.currentPage == index,
-                            onClick = {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(index)
-                                }
-                            },
+                            onClick = { scrollToPage(index) },
                             text = {
                                 Text(
                                     text = title,
@@ -131,6 +133,10 @@ fun SearchUserScreen(
                                 SearchHistoryContent(
                                     modifier = Modifier
                                         .fillMaxSize(),
+                                    onItemClick = { history ->
+                                        onQueryChange(history.query)
+                                        scrollToPage(SearchPagerTab.SEARCH.ordinal)
+                                    },
                                     state = searchHistoryState,
                                 )
                             }
