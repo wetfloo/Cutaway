@@ -1,6 +1,7 @@
 package io.wetfloo.cutaway.ui.feature.searchuser.component
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,10 @@ fun SearchUserItem(
     user: FoundUser,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier = modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+    ) {
         Row(
             modifier = Modifier
                 .padding(horizontal = dimensionResource(R.dimen.default_padding)),

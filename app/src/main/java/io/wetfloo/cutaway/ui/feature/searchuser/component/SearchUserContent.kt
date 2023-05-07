@@ -124,9 +124,11 @@ fun SearchUserContent(
                                 SearchUserItem(
                                     user = user,
                                     modifier = Modifier
-                                        .sizeIn(minHeight = dimensionResource(R.dimen.list_item_min_height))
                                         .fillMaxWidth()
-                                        .clickable { onItemClicked(user) },
+                                        .sizeIn(minHeight = dimensionResource(R.dimen.list_item_min_height))
+                                        .clickable {
+                                            onItemClicked(user)
+                                        },
                                 )
                             }
                         }
