@@ -3,6 +3,7 @@
 plugins {
     id("cutaway.android.application")
     id("cutaway.android.hilt")
+    id("cutaway.android.room")
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.android.safeargs)
 }

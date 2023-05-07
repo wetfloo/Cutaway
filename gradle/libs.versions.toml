@@ -61,7 +61,7 @@ kotlinx-coroutines-gms = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-pl
 material-material = { module = "com.google.android.material:material", version = "1.8.0" }
 
 # Room
-room-room = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 # Kotlin Extensions and Coroutines support for Room
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
@@ -192,7 +192,7 @@ ksp-gradlePlugin = { module = "com.google.devtools.ksp:com.google.devtools.ksp.g
 navigation = ["androidx-navigation-fragment-ktx", "androidx-navigation-ui-ktx"]
 lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-ktx"]
 lifecycleCompose = ["androidx-lifecycle-viewmodel-compose", "androidx-lifecycle-compose"]
-room = ["room-room", "room-ktx"]
+room = ["room-runtime", "room-ktx"]
 ktor = ["ktor-core", "ktor-cio", "ktor-negotiation", "ktor-serialization", "ktor-serialization-kotlinx-json", "ktor-websockets"]
 media3 = ["media3-ui", "media3-session", "media3-exoplayer"]
 camerax = ["camera-core", "camera-camera2", "camerax-lifecycle", "camerax-video", "camerax-view", "camerax-extensions"]
