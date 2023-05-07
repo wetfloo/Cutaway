@@ -64,7 +64,11 @@ class SearchUserViewModel @Inject constructor(
     fun updateQuery(query: String) {
         this.query = query
         autoSearchJob?.cancel()
-        if (query.isBlank()) return
+        if (query.isBlank()) {
+            // clear up any search items if search field is cleared
+            stateValue = SearchUserState.Idle
+            return
+        }
         autoSearchJob = viewModelScope.launch {
             delay(700.milliseconds)
             search()
