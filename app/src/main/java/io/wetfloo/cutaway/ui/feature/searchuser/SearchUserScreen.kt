@@ -154,6 +154,9 @@ fun SearchUserScreen(
                                         onQueryChange(history.query)
                                         scrollToPage(SearchPagerTab.SEARCH.ordinal)
                                     },
+                                    onDeleteClick = { history ->
+                                        onMessage(SearchUserMessage.DeleteHistoryItem(history))
+                                    },
                                     state = searchHistoryState,
                                 )
                             }

@@ -53,4 +53,10 @@ class FakeSearchUserRepository @Inject constructor(
         }
 
     }
+
+    override suspend fun deleteItem(item: SearchHistoryItem): Result<SearchHistoryItem, Throwable> {
+        searchDao.delete(item)
+
+        return Ok(item)
+    }
 }

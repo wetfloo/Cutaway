@@ -1,6 +1,7 @@
 package io.wetfloo.cutaway.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -34,7 +35,6 @@ interface SearchDao {
     @Update
     suspend fun update(item: SearchHistoryItem)
 
-
     @Query(
         """
             DELETE 
@@ -42,4 +42,7 @@ interface SearchDao {
         """
     )
     suspend fun clear()
+
+    @Delete
+    suspend fun delete(item: SearchHistoryItem)
 }

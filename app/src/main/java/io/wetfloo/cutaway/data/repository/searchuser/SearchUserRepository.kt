@@ -9,4 +9,5 @@ interface SearchUserRepository {
     val searchHistory: StateFlow<List<SearchHistoryItem>?>
 
     suspend fun search(query: String): Result<List<FoundUser>, Throwable>
+    suspend fun deleteItem(item: SearchHistoryItem): Result<SearchHistoryItem, Throwable>
 }

@@ -9,10 +9,12 @@ import androidx.lifecycle.viewmodel.compose.saveable
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapError
+import com.github.michaelbull.result.onFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.handleStateResult
+import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
 import io.wetfloo.cutaway.data.repository.searchuser.SearchUserRepository
 import io.wetfloo.cutaway.misc.utils.savedastate.StateSaver
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
@@ -95,11 +97,20 @@ class SearchUserViewModel @Inject constructor(
         }
     }
 
+    fun deleteHistoryItem(item: SearchHistoryItem) {
+        viewModelScope.launch {
+            searchUserRepository
+                .deleteItem(item)
+                .mapError { genericError }
+                .onFailure { _error.send(it) }
+        }
+    }
+
     private suspend fun searchForUser(query: String): Result<SearchUserState.Found, UiError> =
         searchUserRepository
             .search(query)
             .map(SearchUserState::Found)
-            .mapError { UiError.Res(R.string.search_user_failure_generic) }
+            .mapError { genericError }
 
     private suspend fun handle(
         query: String,
@@ -114,4 +125,7 @@ class SearchUserViewModel @Inject constructor(
             searchForUser(query)
         }
     }
+
+    private val genericError
+        get() = UiError.Res(R.string.search_user_failure_generic)
 }

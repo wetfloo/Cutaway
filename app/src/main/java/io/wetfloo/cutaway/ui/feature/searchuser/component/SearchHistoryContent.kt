@@ -19,6 +19,7 @@ import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
 fun SearchHistoryContent(
     modifier: Modifier = Modifier,
     onItemClick: (SearchHistoryItem) -> Unit,
+    onDeleteClick: (SearchHistoryItem) -> Unit,
     state: SearchHistoryState,
 ) {
     Box(
@@ -37,6 +38,7 @@ fun SearchHistoryContent(
                     items(items = state.data) { history ->
                         SearchHistoryItem(
                             history = history,
+                            onDeleteClick = { onDeleteClick(history) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp)

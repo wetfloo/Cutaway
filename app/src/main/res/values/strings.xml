@@ -50,4 +50,5 @@
     <string name="search_user_failure_generic">Something went wrong during the search…</string>
     <string name="search_user_tab_search">Search</string>
     <string name="search_user_tab_history">History</string>
+    <string name="search_user_delete_history_item_description">Delete this item</string>
 </resources>
