@@ -80,6 +80,15 @@ fun SearchUserScreen(
                 }
             }
 
+            LaunchedEffect(pagerState.currentPage) {
+                val currentTab = SearchPagerTab.values()[pagerState.currentPage]
+                when (currentTab.keyboardVisibilityAction) {
+                    KeyboardVisibilityAction.SHOW -> keyboardController?.show()
+                    KeyboardVisibilityAction.HIDE -> keyboardController?.hide()
+                    KeyboardVisibilityAction.IDLE -> Unit
+                }
+            }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -119,15 +128,6 @@ fun SearchUserScreen(
                         .fillMaxSize(),
                     pageSize = PageSize.Fill,
                 ) { index ->
-                    LaunchedEffect(pagerState.currentPage) {
-                        val currentTab = SearchPagerTab.values()[pagerState.currentPage]
-                        when (currentTab.keyboardVisibilityAction) {
-                            KeyboardVisibilityAction.SHOW -> keyboardController?.show()
-                            KeyboardVisibilityAction.HIDE -> keyboardController?.hide()
-                            KeyboardVisibilityAction.IDLE -> Unit
-                        }
-                    }
-
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
