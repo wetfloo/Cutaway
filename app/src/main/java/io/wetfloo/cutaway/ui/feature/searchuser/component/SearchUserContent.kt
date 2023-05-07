@@ -67,7 +67,7 @@ fun SearchUserContent(
             modifier = Modifier
                 .focusRequester(focusRequester)
                 .fillMaxWidth()
-                .padding(horizontal = dimensionResource(R.dimen.default_padding_horizontal))
+                .padding(horizontal = dimensionResource(R.dimen.default_padding))
                 .sizeIn(maxWidth = 400.dp),
             placeholder = {
                 Text(text = stringResource(R.string.ui_search))

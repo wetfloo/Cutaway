@@ -74,8 +74,8 @@ fun ProfileDetailedInformationScreen(
                 .fillMaxSize()
                 .padding(scaffoldPaddingValues)
                 .padding(
-                    horizontal = dimensionResource(R.dimen.default_padding_horizontal),
-                    vertical = dimensionResource(R.dimen.default_padding_vertical),
+                    horizontal = dimensionResource(R.dimen.default_padding),
+                    vertical = dimensionResource(R.dimen.default_padding),
                 ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

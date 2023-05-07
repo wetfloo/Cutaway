@@ -67,9 +67,7 @@ fun AuthScreen(
             Column(
                 modifier = Modifier
                     .padding(scaffoldPaddingValues)
-                    .padding(
-                        horizontal = dimensionResource(R.dimen.default_padding_horizontal),
-                    )
+                    .padding(horizontal = dimensionResource(R.dimen.default_padding))
                     .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
             ) {

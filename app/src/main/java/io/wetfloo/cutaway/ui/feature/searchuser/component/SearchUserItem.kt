@@ -21,7 +21,7 @@ fun SearchUserItem(
     Box(modifier = modifier) {
         Row(
             modifier = Modifier
-                .padding(dimensionResource(R.dimen.default_padding_horizontal)),
+                .padding(dimensionResource(R.dimen.default_padding)),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
