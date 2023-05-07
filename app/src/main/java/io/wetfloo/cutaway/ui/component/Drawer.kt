@@ -32,7 +32,6 @@ fun Drawer(
         modifier = modifier,
         content = content,
         drawerState = drawerState,
-        gesturesEnabled = false,
         drawerContent = {
             ModalDrawerSheet {
                 destinations.forEachInBetween(
