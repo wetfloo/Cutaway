@@ -48,4 +48,6 @@
     <!-- Search user -->
     <string name="search_user_destination_name">Search for user</string>
     <string name="search_user_failure_generic">Something went wrong during the search…</string>
+    <string name="search_user_tab_search">Search</string>
+    <string name="search_user_tab_history">History</string>
 </resources>

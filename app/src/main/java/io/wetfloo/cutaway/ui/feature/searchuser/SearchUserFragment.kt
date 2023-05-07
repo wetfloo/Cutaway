@@ -40,7 +40,6 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 queryValue = viewModel.query,
                 onMessage = { message ->
                     when (message) {
-                        SearchUserMessage.Clear -> viewModel.updateQuery("")
                         SearchUserMessage.SearchRequested -> viewModel.search()
                     }
                 },

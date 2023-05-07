@@ -33,7 +33,7 @@ class FakeSearchUserRepository @Inject constructor(
     override suspend fun search(query: String): Result<List<FoundUser>, Throwable> {
         updateExistingOrInsert(query)
         delay(3.seconds)
-        val list = (0..5).map {
+        val list = (0..100).map {
             FoundUser.demo
         }
         return Ok(list)

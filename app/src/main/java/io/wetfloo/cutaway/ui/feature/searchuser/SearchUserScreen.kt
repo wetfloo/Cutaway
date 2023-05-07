@@ -1,45 +1,42 @@
 package io.wetfloo.cutaway.ui.feature.searchuser
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
-import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchUserItem
+import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchHistoryContent
+import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchUserContent
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
+import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchPagerTab
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserMessage
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun SearchUserScreen(
     state: SearchUserState,
@@ -58,79 +55,92 @@ fun SearchUserScreen(
                 SnackbarHost(hostState = snackbarHostState)
             },
         ) { scaffoldPaddingValues ->
+            val context = LocalContext.current
+            val coroutineScope = rememberCoroutineScope()
+            val pagerState = rememberPagerState()
+            val titles = remember {
+                SearchPagerTab
+                    .values()
+                    .map { tab ->
+                        context.getString(tab.stringRes)
+                    }
+            }
+
             Column(
                 modifier = Modifier
+                    .fillMaxSize()
                     .padding(scaffoldPaddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                TextField(
-                    value = queryValue,
-                    onValueChange = onQueryChange,
-                    maxLines = 1,
-                    placeholder = {
-                        Text(text = stringResource(R.string.ui_search))
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = null,
+                TabRow(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    selectedTabIndex = pagerState.currentPage,
+                    indicator = { tabPositions ->
+                        TabRowDefaults.Indicator(
+                            modifier = Modifier.tabIndicatorOffset(
+                                tabPositions[pagerState.currentPage],
+                            ),
                         )
                     },
-                    trailingIcon = {
-                        AnimatedVisibility(
-                            visible = queryValue.isNotBlank(),
-                            enter = fadeIn(),
-                            exit = fadeOut(),
-                        ) {
-                            IconButton(
-                                onClick = { onMessage(SearchUserMessage.Clear) },
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Close,
-                                    contentDescription = null,
-                                )
-                            }
-                        }
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Search,
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            onMessage(SearchUserMessage.SearchRequested)
-                        },
-                    ),
-                )
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .imePadding(),
                 ) {
-                    when (state) {
-                        is SearchUserState.Found -> {
-                            Column {
-                                LazyColumn(
-                                    modifier = Modifier
-                                        .weight(1f),
-                                ) {
-                                    items(items = state.users) { user ->
-                                        SearchUserItem(user = user)
-                                    }
+                    titles.forEachIndexed { index, title ->
+                        Tab(
+                            selected = pagerState.currentPage == index,
+                            onClick = {
+                                coroutineScope.launch {
+                                    pagerState.animateScrollToPage(index)
                                 }
-                            }
-                        }
-
-                        SearchUserState.Idle -> Unit
-
-                        SearchUserState.Loading -> CircularProgressIndicator(
-                            modifier = Modifier
-                                .align(Alignment.Center),
+                            },
+                            text = {
+                                Text(
+                                    text = title,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            },
                         )
                     }
                 }
+
+                HorizontalPager(
+                    state = pagerState,
+                    pageCount = titles.count(),
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    pageSize = PageSize.Fill,
+                ) { index ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                    ) {
+                        when (index) {
+                            SearchPagerTab.SEARCH.ordinal -> {
+                                SearchUserContent(
+                                    onQueryChange = onQueryChange,
+                                    queryValue = queryValue,
+                                    state = state,
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    onSearchRequested = {
+                                        onMessage(SearchUserMessage.SearchRequested)
+                                    },
+                                )
+                            }
+
+                            SearchPagerTab.HISTORY.ordinal -> {
+                                SearchHistoryContent(
+                                    modifier = Modifier
+                                        .fillMaxSize(),
+                                    state = searchHistoryState,
+                                )
+                            }
+
+                            else -> error("Illegal page index")
+                        }
+                    }
+                }
             }
+
         }
     }
 }
