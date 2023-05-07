@@ -5,4 +5,5 @@
     <dimen name="card_spacing_internal">12dp</dimen>
     <dimen name="default_card_spacing_vertical_external">16dp</dimen>
     <dimen name="list_item_min_height">24dp</dimen>
+    <dimen name="max_bar_width">400dp</dimen>
 </resources>

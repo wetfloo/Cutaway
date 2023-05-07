@@ -87,10 +87,7 @@ fun ProfileDetailedInformationScreen(
                 contentDescription = stringResource(R.string.profile_image_description),
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .sizeIn(
-                        maxHeight = 300.dp,
-                        maxWidth = 300.dp,
-                    )
+                    .sizeIn(maxWidth = dimensionResource(R.dimen.max_bar_width))
                     .fillMaxWidth()
                     .aspectRatio(1f)
                     .clip(RoundedCornerShape(percent = 100)),
