@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -41,7 +41,7 @@ fun SearchHistoryContent(
                             onDeleteClick = { onDeleteClick(history) },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(8.dp)
+                                .sizeIn(minHeight = 24.dp)
                                 .clickable {
                                     onItemClick(history)
                                 },
