@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -125,7 +126,7 @@ fun SearchUserContent(
                                     user = user,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .sizeIn(minHeight = dimensionResource(R.dimen.list_item_min_height))
+                                        .requiredHeightIn(min = dimensionResource(R.dimen.list_item_min_height))
                                         .clickable {
                                             onItemClicked(user)
                                         },

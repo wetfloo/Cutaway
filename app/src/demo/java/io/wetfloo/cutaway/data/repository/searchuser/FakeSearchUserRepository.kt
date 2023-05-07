@@ -12,13 +12,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 class FakeSearchUserRepository @Inject constructor(
     private val searchDao: SearchDao,
-    dispatchers: DispatcherProvider,
+    private val dispatchers: DispatcherProvider,
 ) : SearchUserRepository {
     private val coroutineScope = dispatchers.default.supervisor()
 
@@ -32,10 +33,13 @@ class FakeSearchUserRepository @Inject constructor(
 
     override suspend fun search(query: String): Result<List<FoundUser>, Throwable> {
         updateExistingOrInsert(query)
-        delay(3.seconds)
-        val list = (0..100).map {
-            FoundUser.demo
+        delay(0.seconds)
+        val list = withContext(dispatchers.default) {
+            (0..100).map {
+                FoundUser.demo
+            }
         }
+
         return Ok(list)
     }
 
