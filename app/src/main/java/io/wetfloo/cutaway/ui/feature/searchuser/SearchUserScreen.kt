@@ -16,10 +16,13 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavController
@@ -27,6 +30,7 @@ import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
+import io.wetfloo.cutaway.ui.core.model.KeyboardVisibilityAction
 import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchHistoryContent
 import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchUserContent
 import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
@@ -36,7 +40,10 @@ import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 fun SearchUserScreen(
     state: SearchUserState,
@@ -58,6 +65,7 @@ fun SearchUserScreen(
             val context = LocalContext.current
             val coroutineScope = rememberCoroutineScope()
             val pagerState = rememberPagerState()
+            val keyboardController = LocalSoftwareKeyboardController.current
             val titles = remember {
                 SearchPagerTab
                     .values()
@@ -111,6 +119,15 @@ fun SearchUserScreen(
                         .fillMaxSize(),
                     pageSize = PageSize.Fill,
                 ) { index ->
+                    LaunchedEffect(pagerState.currentPage) {
+                        val currentTab = SearchPagerTab.values()[pagerState.currentPage]
+                        when (currentTab.keyboardVisibilityAction) {
+                            KeyboardVisibilityAction.SHOW -> keyboardController?.show()
+                            KeyboardVisibilityAction.HIDE -> keyboardController?.hide()
+                            KeyboardVisibilityAction.IDLE -> Unit
+                        }
+                    }
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
