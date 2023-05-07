@@ -18,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
+import io.wetfloo.cutaway.ui.component.NiceTextField
 import io.wetfloo.cutaway.ui.feature.auth.state.AuthScreenMessage
 import io.wetfloo.cutaway.ui.feature.auth.state.AuthState
 import kotlinx.coroutines.delay
@@ -78,7 +78,7 @@ fun AuthScreen(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    TextField(
+                    NiceTextField(
                         value = loginValue,
                         onValueChange = onLoginChange,
                         placeholder = {
@@ -92,7 +92,7 @@ fun AuthScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    TextField(
+                    NiceTextField(
                         value = passwordValue,
                         onValueChange = onPasswordChange,
                         placeholder = {
