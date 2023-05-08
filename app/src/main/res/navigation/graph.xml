@@ -19,6 +19,11 @@
         android:id="@+id/profileFragment"
         android:name="io.wetfloo.cutaway.ui.feature.profile.ProfileFragment"
         android:label="ProfileFragment">
+        <argument
+            android:name="id"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_profileFragment_to_qrGeneratorFragment"
             app:destination="@id/qrGeneratorFragment" />

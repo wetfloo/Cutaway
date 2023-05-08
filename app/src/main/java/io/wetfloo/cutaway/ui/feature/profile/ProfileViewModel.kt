@@ -34,34 +34,43 @@ class ProfileViewModel @Inject constructor(
     private val _error: Channel<UiError> = Channel()
     val error = _error.receiveAsFlow()
 
-    fun load() {
+    fun load(id: String?) {
         when (val currentState = stateValue) {
             is ProfileState.Ready -> viewModelScope.launch {
-                handle(loadingValue = currentState.copy(isUpdating = true))
+                handle(
+                    loadingValue = currentState.copy(isUpdating = true),
+                    id = id,
+                )
             }
 
             ProfileState.Idle -> viewModelScope.launch {
-                handle(loadingValue = ProfileState.Loading)
+                handle(
+                    loadingValue = ProfileState.Loading,
+                    id = id,
+                )
             }
 
             ProfileState.Loading -> return
         }
     }
 
-    private suspend fun updateProfile(): Result<ProfileState.Ready, UiError> =
+    private suspend fun updateProfile(id: String?): Result<ProfileState.Ready, UiError> =
         profileRepository
-            .loadProfileInformation()
+            .loadProfileInformation(id = id)
             .map(ProfileState::Ready)
             .mapError { UiError.Res(R.string.profile_failure_load) }
 
-    private suspend fun handle(loadingValue: ProfileState) {
+    private suspend fun handle(
+        loadingValue: ProfileState,
+        id: String?,
+    ) {
         handleStateResult(
             previousValue = stateValue,
             loadingValue = loadingValue,
             valueReceiver = { stateValue = it },
             errorReceiver = _error::send,
         ) {
-            updateProfile()
+            updateProfile(id = id)
         }
     }
 
