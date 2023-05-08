@@ -106,6 +106,12 @@ class SearchUserViewModel @Inject constructor(
         }
     }
 
+    fun clearHistory() {
+        viewModelScope.launch {
+            searchUserRepository.clearHistory()
+        }
+    }
+
     private suspend fun searchForUser(query: String): Result<SearchUserState.Found, UiError> =
         searchUserRepository
             .search(query)

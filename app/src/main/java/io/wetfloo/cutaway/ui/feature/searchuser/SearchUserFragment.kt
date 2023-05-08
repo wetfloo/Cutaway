@@ -42,6 +42,8 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                     when (message) {
                         SearchUserMessage.SearchRequested -> viewModel.search()
 
+                        SearchUserMessage.ClearHistory -> viewModel.clearHistory()
+
                         is SearchUserMessage.DeleteHistoryItem -> {
                             viewModel.deleteHistoryItem(message.item)
                         }

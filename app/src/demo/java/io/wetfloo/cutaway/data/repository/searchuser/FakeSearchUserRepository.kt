@@ -2,7 +2,9 @@ package io.wetfloo.cutaway.data.repository.searchuser
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.map
 import io.wetfloo.cutaway.core.common.DispatcherProvider
+import io.wetfloo.cutaway.core.common.runSuspendCatching
 import io.wetfloo.cutaway.core.common.supervisor
 import io.wetfloo.cutaway.data.local.dao.SearchDao
 import io.wetfloo.cutaway.data.model.searchuser.FoundUser
@@ -58,9 +60,11 @@ class FakeSearchUserRepository @Inject constructor(
 
     }
 
-    override suspend fun deleteItem(item: SearchHistoryItem): Result<SearchHistoryItem, Throwable> {
+    override suspend fun deleteItem(item: SearchHistoryItem) = runSuspendCatching {
         searchDao.delete(item)
+    }.map { item }
 
-        return Ok(item)
+    override suspend fun clearHistory() = runSuspendCatching {
+        searchDao.clear()
     }
 }
