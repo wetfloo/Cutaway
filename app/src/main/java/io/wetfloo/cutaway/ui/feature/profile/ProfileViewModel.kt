@@ -34,7 +34,10 @@ class ProfileViewModel @Inject constructor(
     private val _error: Channel<UiError> = Channel()
     val error = _error.receiveAsFlow()
 
-    fun load(id: String?) {
+    /**
+     * Reloads profile information, even if it's present
+     */
+    fun reload(id: String?) {
         when (val currentState = stateValue) {
             is ProfileState.Ready -> viewModelScope.launch {
                 handle(
@@ -54,6 +57,17 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Loads profile information for the first time,
+     * does nothing if it's already `Ready` or `Loading`
+     */
+    fun load(id: String?) {
+        when (stateValue) {
+            ProfileState.Idle -> reload(id = id)
+            ProfileState.Loading, is ProfileState.Ready -> return
+        }
+    }
+
     private suspend fun updateProfile(id: String?): Result<ProfileState.Ready, UiError> =
         profileRepository
             .loadProfileInformation(id = id)
@@ -68,7 +82,7 @@ class ProfileViewModel @Inject constructor(
             previousValue = stateValue,
             loadingValue = loadingValue,
             valueReceiver = { stateValue = it },
-            errorReceiver = _error::send,
+            errorReceiver = { _error.send(it) },
         ) {
             updateProfile(id = id)
         }

@@ -126,7 +126,7 @@ class SearchUserViewModel @Inject constructor(
             previousValue = stateValue,
             loadingValue = loadingValue,
             valueReceiver = { stateValue = it },
-            errorReceiver = _error::send,
+            errorReceiver = { _error.send(it) },
         ) {
             searchForUser(query)
         }
