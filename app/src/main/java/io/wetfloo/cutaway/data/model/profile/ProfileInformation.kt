@@ -11,6 +11,7 @@ data class ProfileInformation(
     val status: String?,
     val pictureUrl: String?,
     val pieces: List<ProfileInformationPiece>,
+    val id: String? = null,
 ) : Parcelable {
     // needed for static extensions
     companion object
