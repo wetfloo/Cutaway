@@ -161,6 +161,7 @@ fun SearchUserScreen(
                                         onMessage(SearchUserMessage.DeleteHistoryItem(history))
                                     },
                                     onClearClick = {
+                                        onQueryChange("")
                                         onMessage(SearchUserMessage.ClearHistory)
                                     },
                                     state = searchHistoryState,
