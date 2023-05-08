@@ -31,10 +31,10 @@ interface SearchDao {
     suspend fun find(query: String): SearchHistoryItem?
 
     @Insert
-    suspend fun insert(item: SearchHistoryItem)
+    suspend fun insert(item: SearchHistoryItem): Long
 
     @Update
-    suspend fun update(item: SearchHistoryItem)
+    suspend fun update(item: SearchHistoryItem): Int
 
     @Query(
         """
@@ -42,8 +42,8 @@ interface SearchDao {
             FROM SearchHistoryItem
         """
     )
-    suspend fun clear()
+    suspend fun clear(): Int
 
     @Delete
-    suspend fun delete(item: SearchHistoryItem)
+    suspend fun delete(item: SearchHistoryItem): Int
 }
