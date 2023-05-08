@@ -14,6 +14,7 @@ interface SearchDao {
         """
         SELECT * 
         FROM SearchHistoryItem
+        ORDER BY datetime(time) DESC
         """
     )
     fun observe(): Flow<List<SearchHistoryItem>>
