@@ -52,4 +52,5 @@
     <string name="search_user_tab_history">History</string>
     <string name="search_user_delete_history_item_description">Delete this item</string>
     <string name="search_user_clear_history">Clear search history</string>
+    <string name="search_user_history_empty">Nothing here yet…</string>
 </resources>

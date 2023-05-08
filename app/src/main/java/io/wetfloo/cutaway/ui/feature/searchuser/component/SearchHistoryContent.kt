@@ -1,9 +1,13 @@
 package io.wetfloo.cutaway.ui.feature.searchuser.component
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -18,6 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -43,20 +48,36 @@ fun SearchHistoryContent(
             SearchHistoryState.Idle -> Unit
             SearchHistoryState.Loading -> BoxLoadingIndicator()
             is SearchHistoryState.Ready -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                AnimatedVisibility(
+                    visible = state.data.isEmpty(),
+                    enter = fadeIn(),
+                    exit = fadeOut(),
                 ) {
-                    LazyColumn(
+                    Column(
                         modifier = Modifier
-                            .weight(1f),
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        item {
-                            AnimatedVisibility(
-                                visible = state.data.isNotEmpty(),
-                                modifier = Modifier
-                                    .padding(top = dimensionResource(R.dimen.default_padding)),
-                            ) {
+                        Text(text = stringResource(R.string.search_user_history_empty))
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = state.data.isNotEmpty(),
+                    enter = fadeIn(),
+                    exit = fadeOut(),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                    ) {
+                        LazyColumn(
+                            contentPadding = PaddingValues(top = dimensionResource(R.dimen.default_padding)),
+                            modifier = Modifier
+                                .weight(1f),
+                        ) {
+                            item {
                                 Button(
                                     onClick = onClearClick,
                                     modifier = Modifier
@@ -71,19 +92,19 @@ fun SearchHistoryContent(
                                     Text(text = stringResource(R.string.search_user_clear_history))
                                 }
                             }
-                        }
 
-                        items(items = state.data) { history ->
-                            SearchHistoryItem(
-                                history = history,
-                                onDeleteClick = { onDeleteClick(history) },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .requiredHeightIn(min = dimensionResource(R.dimen.list_item_min_height))
-                                    .clickable {
-                                        onItemClick(history)
-                                    },
-                            )
+                            items(items = state.data) { history ->
+                                SearchHistoryItem(
+                                    history = history,
+                                    onDeleteClick = { onDeleteClick(history) },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .requiredHeightIn(min = dimensionResource(R.dimen.list_item_min_height))
+                                        .clickable {
+                                            onItemClick(history)
+                                        },
+                                )
+                            }
                         }
                     }
                 }
