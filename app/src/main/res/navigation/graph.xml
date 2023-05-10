@@ -33,6 +33,7 @@
         <action
             android:id="@+id/action_profileFragment_to_profileDetailedInformationFragment"
             app:destination="@id/profileDetailedInformationFragment" />
+        <deepLink app:uri="cutaway.io/profile/{id}" />
     </fragment>
     <fragment
         android:id="@+id/qrFragment"
