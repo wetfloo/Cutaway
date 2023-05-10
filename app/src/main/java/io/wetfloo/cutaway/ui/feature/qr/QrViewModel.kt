@@ -36,12 +36,16 @@ class QrViewModel @Inject constructor() : ViewModel() {
         Log.d(TAG, logMessage)
 
         // try to get a valid url out of QR contents.
-        // if anything goes wrong, display canned error
-        val scanData = scanContents?.takeIf {
-            PatternsCompat.WEB_URL.matcher(it).matches()
+        val errorMessage = if (scanContents == null) {
+            R.string.qr_no_data
+        } else {
+            R.string.qr_parse_failed
+        }
+        val scanData = scanContents?.takeIf { contents ->
+            PatternsCompat.WEB_URL.matcher(contents).matches()
         }
         val resultEvent = scanData.toResultOr {
-            UiError.Res(R.string.qr_parse_failed)
+            UiError.Res(errorMessage)
         }.map(QrEvent::UrlScanned)
         viewModelScope.launch {
             when (resultEvent) {

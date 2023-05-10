@@ -39,6 +39,7 @@
 
     <!-- QR -->
     <string name="qr_scanner_destination_name">QR code scanner</string>
+    <string name="qr_no_data">No information scanned</string>
     <string name="qr_parse_failed">Failed to parse QR code</string>
 
     <!-- QR generator -->
