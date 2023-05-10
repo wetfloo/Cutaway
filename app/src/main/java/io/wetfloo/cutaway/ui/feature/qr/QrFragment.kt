@@ -1,8 +1,9 @@
 package io.wetfloo.cutaway.ui.feature.qr
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -52,11 +53,12 @@ class QrFragment : Fragment(R.layout.fragment_compose_base) {
                 viewModel.event.collect { qrEvent ->
                     when (qrEvent) {
                         is QrEvent.UrlScanned -> {
-                            Toast.makeText(
-                                requireContext(),
-                                qrEvent.url,
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                            Intent(
+                                /* action = */ Intent.ACTION_VIEW,
+                                /* uri = */ Uri.parse(qrEvent.url),
+                            ).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }.also(requireContext()::startActivity)
                         }
                     }
                 }
