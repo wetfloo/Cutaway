@@ -1,19 +1,19 @@
 package io.wetfloo.cutaway.ui.core
 
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.ui.component.DrawerMenuItem
+import io.wetfloo.cutaway.ui.core.model.DrawerDestination
 
-val destinations: List<DrawerMenuItem> by lazy {
-    listOf(
-        DrawerMenuItem(
+val destinations: Array<out DrawerDestination> by lazy {
+    arrayOf(
+        DrawerDestination.Identifiable(
             R.id.profileFragment,
             R.string.profile_destination_name,
         ),
-        DrawerMenuItem(
+        DrawerDestination.Identifiable(
             R.id.qrFragment,
             R.string.qr_scanner_destination_name,
         ),
-        DrawerMenuItem(
+        DrawerDestination.Identifiable(
             R.id.searchUserFragment,
             R.string.search_user_destination_name,
         )

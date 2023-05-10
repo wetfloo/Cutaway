@@ -1,7 +1,5 @@
 package io.wetfloo.cutaway.ui.component
 
-import androidx.annotation.IdRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -12,20 +10,23 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.core.common.forEachInBetween
 import io.wetfloo.cutaway.ui.core.destinations
+import io.wetfloo.cutaway.ui.core.model.DrawerDestination
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Drawer(
     modifier: Modifier = Modifier,
     drawerState: DrawerState,
-    onDestinationClick: (Int) -> Unit,
-    isActive: (Int) -> Boolean,
+    onDestinationClick: (DrawerDestination) -> Unit,
+    isDestinationActive: (DrawerDestination) -> Boolean,
     content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
@@ -34,19 +35,25 @@ fun Drawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                destinations.forEachInBetween(
+                destinations.asIterable().forEachInBetween(
                     inBetweenBlock = {
                         Spacer(Modifier.height(2.dp))
                     },
-                ) { (destinationId, textId) ->
+                ) { destination ->
+                    val isActive by remember {
+                        derivedStateOf {
+                            isDestinationActive(destination)
+                        }
+                    }
+
                     NavigationDrawerItem(
+                        selected = isActive,
                         label = {
-                            Text(stringResource(textId))
+                            Text(stringResource(destination.textId))
                         },
                         onClick = {
-                            onDestinationClick(destinationId)
+                            onDestinationClick(destination)
                         },
-                        selected = isActive(destinationId),
                         modifier = Modifier.padding(
                             start = 8.dp,
                             end = 8.dp,
@@ -58,9 +65,3 @@ fun Drawer(
         },
     )
 }
-
-@Immutable
-data class DrawerMenuItem(
-    @IdRes val destinationId: Int,
-    @StringRes val text: Int,
-)
