@@ -66,6 +66,10 @@ class QrFragment : Fragment(R.layout.fragment_compose_base) {
         }
     }
 
+    /**
+     * This is needed to prevent calls from activity contract
+     * to the [viewModel] before it's ready
+     */
     private fun scanResult(result: ScanIntentResult?) {
         viewModel.scanResult(result)
     }
