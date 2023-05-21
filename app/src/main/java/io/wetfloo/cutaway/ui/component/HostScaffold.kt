@@ -14,7 +14,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.navOptions
-import io.wetfloo.cutaway.ui.core.model.DrawerDestination
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,34 +38,24 @@ fun HostScaffold(
         modifier = modifier,
         drawerState = drawerState,
         isDestinationActive = { destination ->
-            when (destination) {
-                is DrawerDestination.Actionable -> false
-                is DrawerDestination.Identifiable -> {
-                    destination.id == activeDestinationId
-                }
-            }
+            destination.id == activeDestinationId
         },
         onDestinationClick = { destination ->
             coroutineScope.launch {
                 drawerState.close()
 
-                when (destination) {
-                    is DrawerDestination.Actionable -> destination.action()
-                    is DrawerDestination.Identifiable -> {
-                        if (destination.id != activeDestinationId) {
-                            navController().navigate(
-                                resId = destination.id,
-                                args = null,
-                                navOptions = navOptions {
-                                    activeDestinationId?.let {
-                                        popUpTo(it) {
-                                            inclusive = true
-                                        }
-                                    }
-                                },
-                            )
-                        }
-                    }
+                if (destination.id != activeDestinationId) {
+                    navController().navigate(
+                        resId = destination.id,
+                        args = null,
+                        navOptions = navOptions {
+                            activeDestinationId?.let {
+                                popUpTo(it) {
+                                    inclusive = true
+                                }
+                            }
+                        },
+                    )
                 }
             }
         },
