@@ -10,12 +10,13 @@ import androidx.navigation.ui.setupWithNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.common.lazyUnsafe
 import io.wetfloo.cutaway.databinding.FragmentBottomNavigationBinding
 
 @AndroidEntryPoint
 class BottomNavigationFragment : Fragment(R.layout.fragment_bottom_navigation) {
     private val binding by viewBinding(FragmentBottomNavigationBinding::bind)
-    private val bottomNavigationShownOnDestinationIds by lazy(LazyThreadSafetyMode.NONE) {
+    private val bottomNavigationShownOnDestinationIds by lazyUnsafe {
         setOf<Int>()
     }
     private lateinit var childNavController: NavController

@@ -1,7 +1,8 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package io.wetfloo.cutaway.ui.component
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,17 +17,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.wetfloo.cutaway.core.common.forEachInBetween
+import io.wetfloo.cutaway.ui.core.InBetween
 import io.wetfloo.cutaway.ui.core.destinations
+import io.wetfloo.cutaway.ui.core.model.DrawerAction
 import io.wetfloo.cutaway.ui.core.model.DrawerDestination
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Drawer(
     modifier: Modifier = Modifier,
     drawerState: DrawerState,
     onDestinationClick: (DrawerDestination) -> Unit,
     isDestinationActive: (DrawerDestination) -> Boolean,
+    drawerActions: List<DrawerAction> = emptyList(),
     content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
@@ -35,33 +37,63 @@ fun Drawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                destinations.asIterable().forEachInBetween(
-                    inBetweenBlock = {
-                        Spacer(Modifier.height(2.dp))
-                    },
-                ) { destination ->
+                InBetween(
+                    items = destinations.asIterable(),
+                    inBetweenBlock = { DefaultSpacer() }
+                ) { item ->
                     val isActive by remember {
                         derivedStateOf {
-                            isDestinationActive(destination)
+                            isDestinationActive(item)
                         }
                     }
 
-                    NavigationDrawerItem(
+                    DefaultNavigationItem(
                         selected = isActive,
-                        label = {
-                            Text(stringResource(destination.textId))
-                        },
+                        label = item.textId,
                         onClick = {
-                            onDestinationClick(destination)
+                            onDestinationClick(item)
                         },
-                        modifier = Modifier.padding(
-                            start = 8.dp,
-                            end = 8.dp,
-                            top = 8.dp,
-                        ),
+                    )
+                }
+
+                InBetween(
+                    items = drawerActions,
+                    inBetweenBlock = { DefaultSpacer() },
+                ) { item ->
+                    DefaultNavigationItem(
+                        selected = false,
+                        label = item.textId,
+                        onClick = {
+                            item.action()
+                        },
                     )
                 }
             }
         },
+    )
+}
+
+@Composable
+private fun DefaultSpacer() {
+    SpacerSized(h = 2.dp)
+}
+
+@Composable
+private fun DefaultNavigationItem(
+    selected: Boolean,
+    onClick: () -> Unit,
+    @StringRes label: Int,
+) {
+    NavigationDrawerItem(
+        selected = selected,
+        label = {
+            Text(stringResource(label))
+        },
+        onClick = onClick,
+        modifier = Modifier.padding(
+            start = 8.dp,
+            end = 8.dp,
+            top = 8.dp,
+        ),
     )
 }

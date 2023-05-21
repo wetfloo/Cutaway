@@ -36,6 +36,7 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                 state = state,
                 navController = { findNavController() },
                 errorFlow = viewModel.error,
+
                 onMessage = { message ->
                     when (message) {
                         ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()

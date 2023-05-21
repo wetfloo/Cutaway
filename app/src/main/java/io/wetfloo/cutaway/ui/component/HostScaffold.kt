@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.component
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.DrawerValue
@@ -12,8 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.navOptions
+import com.journeyapps.barcodescanner.ScanContract
+import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.ui.core.actions.defaultScanOptions
+import io.wetfloo.cutaway.ui.core.actions.onQr
+import io.wetfloo.cutaway.ui.core.model.DrawerAction
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,6 +33,7 @@ fun HostScaffold(
     snackbarHost: @Composable () -> Unit = {},
     content: @Composable (PaddingValues) -> Unit,
 ) {
+    val context = LocalContext.current
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val activeDestinationId by remember {
@@ -34,12 +42,27 @@ fun HostScaffold(
         }
     }
 
+    val qrScanner = rememberLauncherForActivityResult(contract = ScanContract()) { scanIntentResult ->
+        onQr(
+            context = context,
+            onError = { error ->
+                // TODO
+            },
+            result = scanIntentResult,
+        )
+    }
+    val drawerActions = remember {
+        listOf(
+            DrawerAction(textId = R.string.qr_scanner_destination_name) {
+                qrScanner.launch(defaultScanOptions)
+            }
+        )
+    }
+
     Drawer(
         modifier = modifier,
         drawerState = drawerState,
-        isDestinationActive = { destination ->
-            destination.id == activeDestinationId
-        },
+        drawerActions = drawerActions,
         onDestinationClick = { destination ->
             coroutineScope.launch {
                 drawerState.close()
@@ -58,6 +81,9 @@ fun HostScaffold(
                     )
                 }
             }
+        },
+        isDestinationActive = { destination ->
+            destination.id == activeDestinationId
         },
     ) {
         Scaffold(
