@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
      * as it relies on [NavHostFragment] being available
      */
     private fun setStartingDestination() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         val navGraph = navController.navInflater.inflate(R.navigation.graph)
 
@@ -56,4 +54,7 @@ class MainActivity : AppCompatActivity() {
         navController.graph = navGraph
         holder.isStartingDestinationSelected = true
     }
+
+    private val navHostFragment
+        get() = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 }
