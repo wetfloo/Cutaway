@@ -43,11 +43,11 @@ class AuthViewModel @Inject constructor(
     val event = _event.receiveAsFlow()
 
     var loginValue by savedStateHandle.saveable {
-        mutableStateOf("")
+        mutableStateOf("someUsername")
     }
 
     var passwordValue by savedStateHandle.saveable {
-        mutableStateOf("")
+        mutableStateOf("123456Aa_!")
     }
 
     fun logIn() {
