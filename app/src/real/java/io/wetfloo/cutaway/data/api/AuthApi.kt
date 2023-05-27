@@ -17,6 +17,5 @@ interface AuthApi {
 
     companion object {
         const val AUTH_HEADER_KEY = "Authorization"
-        fun tokenToHeader(token: String) = "Bearer $token"
     }
 }

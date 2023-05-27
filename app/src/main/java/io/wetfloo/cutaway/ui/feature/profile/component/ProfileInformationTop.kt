@@ -88,14 +88,14 @@ fun ProfileInformationTop(
 
                     SpacerSized(h = 4.dp)
 
-                    if (data.status != null) {
-                        Text(
-                            text = data.status,
-                            maxLines = 3,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+//                    if (data.status != null) {
+//                        Text(
+//                            text = data.status,
+//                            maxLines = 3,
+//                            overflow = TextOverflow.Ellipsis,
+//                            style = MaterialTheme.typography.bodyMedium,
+//                        )
+//                    }
                 }
             }
 

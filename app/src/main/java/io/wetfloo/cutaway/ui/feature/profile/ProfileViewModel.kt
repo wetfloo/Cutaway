@@ -37,20 +37,14 @@ class ProfileViewModel @Inject constructor(
     /**
      * Reloads profile information, even if it's present
      */
-    fun reload(id: String?) {
+    fun reload() {
         when (val currentState = stateValue) {
             is ProfileState.Ready -> viewModelScope.launch {
-                handle(
-                    loadingValue = currentState.copy(isUpdating = true),
-                    id = id,
-                )
+                handle(loadingValue = currentState.copy(isUpdating = true))
             }
 
             ProfileState.Idle -> viewModelScope.launch {
-                handle(
-                    loadingValue = ProfileState.Loading,
-                    id = id,
-                )
+                handle(loadingValue = ProfileState.Loading)
             }
 
             ProfileState.Loading -> return
@@ -61,30 +55,27 @@ class ProfileViewModel @Inject constructor(
      * Loads profile information for the first time,
      * does nothing if it's already `Ready` or `Loading`
      */
-    fun load(id: String?) {
+    fun load() {
         when (stateValue) {
-            ProfileState.Idle -> reload(id = id)
+            ProfileState.Idle -> reload()
             ProfileState.Loading, is ProfileState.Ready -> return
         }
     }
 
-    private suspend fun updateProfile(id: String?): Result<ProfileState.Ready, UiError> =
+    private suspend fun updateProfile(): Result<ProfileState.Ready, UiError> =
         profileRepository
-            .loadProfileInformation(id = id)
+            .loadProfileInformation()
             .map(ProfileState::Ready)
             .mapError { UiError.Res(R.string.profile_failure_load) }
 
-    private suspend fun handle(
-        loadingValue: ProfileState,
-        id: String?,
-    ) {
+    private suspend fun handle(loadingValue: ProfileState) {
         handleStateResult(
             previousValue = stateValue,
             loadingValue = loadingValue,
             valueReceiver = { stateValue = it },
             errorReceiver = { _error.send(it) },
         ) {
-            updateProfile(id = id)
+            updateProfile()
         }
     }
 

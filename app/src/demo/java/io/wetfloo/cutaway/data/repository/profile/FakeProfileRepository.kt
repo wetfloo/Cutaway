@@ -27,7 +27,7 @@ class FakeProfileRepository @Inject constructor(
         MutableStateFlow(null)
     override val state = _state.asStateFlow()
 
-    override suspend fun loadProfileInformation(id: String?) = state
+    override suspend fun loadProfileInformation() = state
         .filterNotNull()
         .first()
         .let(::Ok)

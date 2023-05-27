@@ -18,7 +18,7 @@ class AuthTokenInterceptor @Inject constructor(
         val requestWithToken = accessToken?.let { token ->
             chain.request()
                 .newBuilder()
-                .addHeader(AuthApi.AUTH_HEADER_KEY, AuthApi.tokenToHeader(token))
+                .addHeader(AuthApi.AUTH_HEADER_KEY, token)
                 .build()
         }
         return chain.proceed(requestWithToken ?: chain.request())

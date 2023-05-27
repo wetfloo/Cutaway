@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.okhttp3)
     implementation(libs.okhttp3.logging)
     implementation(libs.moshi)
+    implementation(libs.moshi.adapters)
     ksp(libs.moshi.codegen)
 
     // Detect memory leaks
