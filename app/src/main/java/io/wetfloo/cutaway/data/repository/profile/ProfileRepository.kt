@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface ProfileRepository {
     val state: StateFlow<ProfileInformation?>
 
-    suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable>
-    suspend fun loadProfiles(): Result<List<ProfileInformation>, Throwable>
+    suspend fun loadMyProfileInformation(): Result<ProfileInformation, Throwable>
+    suspend fun loadMyProfiles(): Result<List<ProfileInformation>, Throwable>
+    suspend fun loadProfileInformation(id: String): Result<ProfileInformation, Throwable>
 }

@@ -2,6 +2,7 @@ package io.wetfloo.cutaway.data.model.profile
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import io.wetfloo.cutaway.data.api.API_BASE_URL
 import io.wetfloo.cutaway.data.api.model.ProfileInformationDto
 import kotlinx.parcelize.Parcelize
 
@@ -13,6 +14,9 @@ data class ProfileInformation(
     val pieces: List<ProfileInformationPiece>,
     val id: String,
 ) : Parcelable {
+    val url
+        get() = "$API_BASE_URL/profiles/$id"
+
     // needed for static extensions
     companion object {
         fun fromDto(dto: ProfileInformationDto): ProfileInformation {

@@ -27,11 +27,20 @@
             android:id="@+id/action_profileFragment_to_profileDetailedInformationFragment"
             app:destination="@id/profileDetailedInformationFragment" />
         <deepLink app:uri="http://cutaway.io/profile/{id}" />
+        <argument
+            android:name="id"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/qrGeneratorFragment"
         android:name="io.wetfloo.cutaway.ui.feature.qrgenerator.QrGeneratorFragment"
-        android:label="QrGeneratorFragment" />
+        android:label="QrGeneratorFragment">
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/profileDetailedInformationFragment"
         android:name="io.wetfloo.cutaway.ui.feature.profiledetails.ProfileDetailedInformationFragment"

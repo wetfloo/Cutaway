@@ -1,9 +1,7 @@
 package io.wetfloo.cutaway.data.repository.profile
 
-import android.util.Log
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
-import com.github.michaelbull.result.onFailure
 import io.wetfloo.cutaway.core.common.runSuspendCatching
 import io.wetfloo.cutaway.data.api.GeneralApi
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
@@ -19,7 +17,7 @@ class RealProfileRepository @Inject constructor(
     private val _state: MutableStateFlow<ProfileInformation?> = MutableStateFlow(null)
     override val state = _state.asStateFlow()
 
-    override suspend fun loadProfileInformation(): Result<ProfileInformation, Throwable> {
+    override suspend fun loadMyProfileInformation(): Result<ProfileInformation, Throwable> {
         val preferredId = profilePreferencesStorage.prefs().selectedId
         return runSuspendCatching {
             if (preferredId != null) {
@@ -27,12 +25,16 @@ class RealProfileRepository @Inject constructor(
             } else {
                 api.loadProfiles().first()
             }
-        }.map(ProfileInformation::fromDto).onFailure { Log.w(TAG, it) }
+        }.map(ProfileInformation::fromDto)
     }
 
-    override suspend fun loadProfiles(): Result<List<ProfileInformation>, Throwable> = runSuspendCatching {
+    override suspend fun loadMyProfiles(): Result<List<ProfileInformation>, Throwable> = runSuspendCatching {
         api.loadProfiles().map(ProfileInformation::fromDto)
     }
+
+    override suspend fun loadProfileInformation(id: String): Result<ProfileInformation, Throwable> = runSuspendCatching {
+        api.loadProfileInfo(id)
+    }.map(ProfileInformation::fromDto)
 
     companion object {
         private const val TAG = "RealProfileRepository"

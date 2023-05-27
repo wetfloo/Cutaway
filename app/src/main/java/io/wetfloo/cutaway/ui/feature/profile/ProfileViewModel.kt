@@ -37,14 +37,20 @@ class ProfileViewModel @Inject constructor(
     /**
      * Reloads profile information, even if it's present
      */
-    fun reload() {
+    fun reload(profileId: String?) {
         when (val currentState = stateValue) {
             is ProfileState.Ready -> viewModelScope.launch {
-                handle(loadingValue = currentState.copy(isUpdating = true))
+                handle(
+                    loadingValue = currentState.copy(isUpdating = true),
+                    id = profileId,
+                )
             }
 
             ProfileState.Idle -> viewModelScope.launch {
-                handle(loadingValue = ProfileState.Loading)
+                handle(
+                    loadingValue = ProfileState.Loading,
+                    id = profileId,
+                )
             }
 
             ProfileState.Loading -> return
@@ -55,27 +61,36 @@ class ProfileViewModel @Inject constructor(
      * Loads profile information for the first time,
      * does nothing if it's already `Ready` or `Loading`
      */
-    fun load() {
+    fun load(profileId: String?) {
         when (stateValue) {
-            ProfileState.Idle -> reload()
+            ProfileState.Idle -> reload(profileId)
             ProfileState.Loading, is ProfileState.Ready -> return
         }
     }
 
-    private suspend fun updateProfile(): Result<ProfileState.Ready, UiError> =
-        profileRepository
-            .loadProfileInformation()
+    private suspend fun updateProfile(id: String?): Result<ProfileState.Ready, UiError> {
+        val profileInformation = if (id != null) {
+            profileRepository.loadProfileInformation(id)
+        } else {
+            profileRepository.loadMyProfileInformation()
+        }
+
+        return profileInformation
             .map(ProfileState::Ready)
             .mapError { UiError.Res(R.string.profile_failure_load) }
+    }
 
-    private suspend fun handle(loadingValue: ProfileState) {
+    private suspend fun handle(
+        loadingValue: ProfileState,
+        id: String?,
+    ) {
         handleStateResult(
             previousValue = stateValue,
             loadingValue = loadingValue,
             valueReceiver = { stateValue = it },
             errorReceiver = { _error.send(it) },
         ) {
-            updateProfile()
+            updateProfile(id)
         }
     }
 
