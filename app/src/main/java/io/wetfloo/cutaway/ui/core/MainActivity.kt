@@ -6,7 +6,7 @@ import androidx.core.view.WindowCompat
 import androidx.navigation.fragment.NavHostFragment
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.AuthPreferencesManager
+import io.wetfloo.cutaway.data.preferences.AuthPreferencesManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject

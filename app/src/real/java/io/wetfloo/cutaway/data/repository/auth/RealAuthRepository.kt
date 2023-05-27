@@ -3,9 +3,9 @@ package io.wetfloo.cutaway.data.repository.auth
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onSuccess
 import io.wetfloo.cutaway.core.common.runSuspendCatching
-import io.wetfloo.cutaway.data.AuthPreferencesManager
 import io.wetfloo.cutaway.data.api.AuthApi
 import io.wetfloo.cutaway.data.model.auth.AuthRequest
+import io.wetfloo.cutaway.data.preferences.AuthPreferencesManager
 import javax.inject.Inject
 
 class RealAuthRepository @Inject constructor(

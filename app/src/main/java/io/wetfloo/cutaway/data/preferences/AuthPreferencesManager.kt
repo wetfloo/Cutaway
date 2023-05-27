@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.data
+package io.wetfloo.cutaway.data.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore

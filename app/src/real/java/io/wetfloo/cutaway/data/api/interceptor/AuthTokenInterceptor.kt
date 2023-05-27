@@ -1,7 +1,7 @@
 package io.wetfloo.cutaway.data.api.interceptor
 
-import io.wetfloo.cutaway.data.AuthPreferencesManager
 import io.wetfloo.cutaway.data.api.AuthApi
+import io.wetfloo.cutaway.data.preferences.AuthPreferencesManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
