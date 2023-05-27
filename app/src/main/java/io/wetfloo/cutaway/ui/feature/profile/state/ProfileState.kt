@@ -13,7 +13,7 @@ sealed interface ProfileState : Parcelable {
 
     @Parcelize
     data class Ready(
-        val data: ProfileInformation,
+        val data: List<ProfileInformation>,
         val isUpdating: Boolean = false,
     ) : ProfileState
 }

@@ -70,9 +70,9 @@ class ProfileViewModel @Inject constructor(
 
     private suspend fun updateProfile(id: String?): Result<ProfileState.Ready, UiError> {
         val profileInformation = if (id != null) {
-            profileRepository.loadProfileInformation(id)
+            profileRepository.loadProfileInformation(id).map(::listOf)
         } else {
-            profileRepository.loadMyProfileInformation()
+            profileRepository.loadMyProfiles()
         }
 
         return profileInformation

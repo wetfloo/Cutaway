@@ -1,7 +1,18 @@
 package io.wetfloo.cutaway.ui.feature.profile.state
 
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
+
 sealed interface ProfileScreenMessage {
-    object EditProfile : ProfileScreenMessage
-    object ShowQrCode : ProfileScreenMessage
-    object ShowProfileDetailedInformation : ProfileScreenMessage
+
+    data class EditProfile(
+        val profile: ProfileInformation,
+    ) : ProfileScreenMessage
+
+    data class ShowQrCode(
+        val profile: ProfileInformation,
+    ) : ProfileScreenMessage
+
+    data class ShowProfileDetailedInformation(
+        val profile: ProfileInformation,
+    ) : ProfileScreenMessage
 }

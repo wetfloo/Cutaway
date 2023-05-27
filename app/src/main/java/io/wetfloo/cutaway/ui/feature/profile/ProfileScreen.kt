@@ -1,32 +1,25 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.component.SpacerSized
-import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationBlock
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
@@ -49,7 +42,7 @@ fun ProfileScreen(
                 SnackbarHost(hostState = snackbarHostState)
             },
             actions = {
-                IconButton(
+/*                IconButton(
                     onClick = {
                         onMessage(ProfileScreenMessage.EditProfile)
                     },
@@ -69,7 +62,7 @@ fun ProfileScreen(
                         imageVector = Icons.Default.QrCode2,
                         contentDescription = stringResource(R.string.profile_qr_description),
                     )
-                }
+                }*/
             },
         ) { scaffoldPaddingValues ->
             Box(
@@ -78,30 +71,30 @@ fun ProfileScreen(
                     .fillMaxSize(),
             ) {
                 when (state) {
-                    is ProfileState.Ready -> Column(
+                    is ProfileState.Ready -> LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
                             .padding(dimensionResource(R.dimen.default_padding)),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        ProfileInformationTop(
-                            data = state.data,
-                            onCardClick = {
-                                onMessage(ProfileScreenMessage.ShowProfileDetailedInformation)
+                        itemsIndexed(
+                            items = state.data,
+                            key = { _, item ->
+                                item.id
                             },
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                        )
-
-                        SpacerSized(h = dimensionResource(R.dimen.default_card_spacing_vertical_external))
-
-                        ProfileInformationBlock(
-                            headline = "Profile info headline",
-                        ) {
-                            Text(
-                                text = "This is a sample text to put content inside of ProfileInformationBlock",
+                        ) { index, item ->
+                            ProfileInformationTop(
+                                data = item,
+                                onCardClick = {
+                                    onMessage(ProfileScreenMessage.ShowProfileDetailedInformation(item))
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth(),
                             )
+
+                            if (index != state.data.lastIndex) {
+                                SpacerSized(h = 16.dp)
+                            }
                         }
                     }
 

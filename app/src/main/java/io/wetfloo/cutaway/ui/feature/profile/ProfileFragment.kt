@@ -11,11 +11,9 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
-import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
@@ -40,36 +38,26 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
 
                 onMessage = { message ->
                     when (message) {
-                        ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()
-                        ProfileScreenMessage.ShowProfileDetailedInformation -> {
-                            val data = profileData()
-                            if (data != null) {
-                                findNavController().navigate(
-                                    directions = ProfileFragmentDirections
-                                        .actionProfileFragmentToProfileDetailedInformationFragment(
-                                            profileInformation = data,
-                                        )
-                                )
-                            }
+                        is ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()
+
+                        is ProfileScreenMessage.ShowProfileDetailedInformation -> {
+                            findNavController().navigate(
+                                directions = ProfileFragmentDirections
+                                    .actionProfileFragmentToProfileDetailedInformationFragment(
+                                        profileInformation = message.profile,
+                                    )
+                            )
                         }
 
-                        ProfileScreenMessage.ShowQrCode -> {
-                            val data = profileData()
-                            if (data != null) {
-                                findNavController().navigate(
-                                    directions = ProfileFragmentDirections
-                                        .actionProfileFragmentToQrGeneratorFragment(url = data.url),
-                                )
-                            }
+                        is ProfileScreenMessage.ShowQrCode -> {
+                            findNavController().navigate(
+                                directions = ProfileFragmentDirections
+                                    .actionProfileFragmentToQrGeneratorFragment(url = message.profile.url),
+                            )
                         }
                     }
                 },
             )
         }
-    }
-
-    private fun profileData(): ProfileInformation? {
-        val profileState = viewModel.stateFlow.value
-        return (profileState as? ProfileState.Ready)?.data
     }
 }
