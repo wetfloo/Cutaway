@@ -89,6 +89,13 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.gif)
 
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
+    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.logging)
+    implementation(libs.moshi)
+    ksp(libs.moshi.codegen)
+
     // Detect memory leaks
     //    debugImplementation(libs.square.leakcanary)
 }
