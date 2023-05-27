@@ -3,14 +3,14 @@ package io.wetfloo.cutaway.data.api.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.Date
+import java.time.LocalDateTime
 
 @JsonClass(generateAdapter = true)
 data class ProfileInformationDto(
     @Json(name = "banner")
     val banner: String? = null,
     @Json(name = "created_at")
-    val createdAt: Date,
+    val createdAt: LocalDateTime,
     @Json(name = "education")
     val education: String? = null,
     @Json(name = "email")

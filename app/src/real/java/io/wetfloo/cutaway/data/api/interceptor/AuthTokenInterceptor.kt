@@ -18,9 +18,12 @@ class AuthTokenInterceptor @Inject constructor(
         val requestWithToken = accessToken?.let { token ->
             chain.request()
                 .newBuilder()
-                .addHeader(AuthApi.AUTH_HEADER_KEY, token)
+                .addHeader(AuthApi.AUTH_HEADER_KEY, token.asHeaderToken)
                 .build()
         }
         return chain.proceed(requestWithToken ?: chain.request())
     }
+
+    private val String.asHeaderToken
+        get() = "Bearer $this"
 }

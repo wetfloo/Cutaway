@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -66,14 +67,19 @@ class ProfileViewModel @Inject constructor(
         profileRepository
             .loadProfileInformation()
             .map(ProfileState::Ready)
-            .mapError { UiError.Res(R.string.profile_failure_load) }
+            .mapError {
+                Log.w(TAG, it)
+                UiError.Res(R.string.profile_failure_load)
+            }
 
     private suspend fun handle(loadingValue: ProfileState) {
         handleStateResult(
             previousValue = stateValue,
             loadingValue = loadingValue,
             valueReceiver = { stateValue = it },
-            errorReceiver = { _error.send(it) },
+            errorReceiver = {
+                _error.send(it)
+            },
         ) {
             updateProfile()
         }
@@ -83,5 +89,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             _error.send(UiError.Res(R.string.profile_edit_not_implemented_error))
         }
+    }
+
+    companion object {
+        private const val TAG = "ProfileViewModel"
     }
 }
