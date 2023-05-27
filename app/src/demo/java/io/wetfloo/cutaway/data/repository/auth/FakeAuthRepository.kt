@@ -13,7 +13,7 @@ import kotlin.time.Duration.Companion.seconds
 class FakeAuthRepository @Inject constructor(
     private val authPreferencesManager: AuthPreferencesManager,
 ) : AuthRepository {
-    override suspend fun authenticate(authRequest: AuthRequest): Result<*, Throwable> {
+    override suspend fun authenticate(authRequest: AuthRequest): Result<Unit, Throwable> {
         delay(5.seconds)
 
         val shouldSucceed = booleanWithChance(0.9)

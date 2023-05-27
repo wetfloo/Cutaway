@@ -5,7 +5,7 @@ import io.wetfloo.cutaway.data.model.auth.AuthRequest
 import javax.inject.Inject
 
 class RealAuthRepository @Inject constructor() : AuthRepository {
-    override suspend fun authenticate(authRequest: AuthRequest): Result<*, Throwable> {
-        TODO("Not yet implemented")
+    override suspend fun authenticate(authRequest: AuthRequest): Result<Unit, Throwable> {
+        TODO()
     }
 }

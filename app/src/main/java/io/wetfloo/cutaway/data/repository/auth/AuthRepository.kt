@@ -4,5 +4,5 @@ import com.github.michaelbull.result.Result
 import io.wetfloo.cutaway.data.model.auth.AuthRequest
 
 interface AuthRepository {
-    suspend fun authenticate(authRequest: AuthRequest): Result<*, Throwable>
+    suspend fun authenticate(authRequest: AuthRequest): Result<Unit, Throwable>
 }
