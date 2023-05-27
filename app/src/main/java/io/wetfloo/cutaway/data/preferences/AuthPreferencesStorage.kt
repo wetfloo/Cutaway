@@ -14,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AuthPreferencesManager @Inject constructor(
+class AuthPreferencesStorage @Inject constructor(
     @ApplicationContext context: Context,
 ) : PreferencesManager<AuthPreferences>(context) {
     override val Context.dataStore: DataStore<Preferences> by preferencesDataStore(PREFERENCES_NAME)

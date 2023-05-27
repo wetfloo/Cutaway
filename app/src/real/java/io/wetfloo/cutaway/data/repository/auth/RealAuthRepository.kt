@@ -5,12 +5,12 @@ import com.github.michaelbull.result.onSuccess
 import io.wetfloo.cutaway.core.common.runSuspendCatching
 import io.wetfloo.cutaway.data.api.AuthApi
 import io.wetfloo.cutaway.data.model.auth.AuthRequest
-import io.wetfloo.cutaway.data.preferences.AuthPreferencesManager
+import io.wetfloo.cutaway.data.preferences.AuthPreferencesStorage
 import javax.inject.Inject
 
 class RealAuthRepository @Inject constructor(
     private val authApi: AuthApi,
-    private val authPreferencesManager: AuthPreferencesManager,
+    private val authPreferencesStorage: AuthPreferencesStorage,
 ) : AuthRepository {
     override suspend fun authenticate(authRequest: AuthRequest) = runSuspendCatching {
         authApi.authenticate(
@@ -19,6 +19,6 @@ class RealAuthRepository @Inject constructor(
         )
     }.onSuccess { authResponse ->
         // this PROBABLY shouldn't fail anyway, so it's not caught
-        authPreferencesManager.setToken(authResponse.accessToken)
+        authPreferencesStorage.setToken(authResponse.accessToken)
     }.map {}
 }
