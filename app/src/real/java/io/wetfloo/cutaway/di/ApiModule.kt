@@ -9,6 +9,7 @@ import io.wetfloo.cutaway.data.api.AuthApi
 import io.wetfloo.cutaway.di.qualifier.NoAuthClient
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -21,6 +22,7 @@ class ApiModule {
     private inline fun <reified T> api(client: OkHttpClient): T = Retrofit.Builder()
         .baseUrl(API_BASE_URL)
         .client(client)
+        .addConverterFactory(MoshiConverterFactory.create())
         .build()
         .create(T::class.java)
 }
