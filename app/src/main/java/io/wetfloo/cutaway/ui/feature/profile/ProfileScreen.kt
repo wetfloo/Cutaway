@@ -41,29 +41,6 @@ fun ProfileScreen(
             snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
             },
-            actions = {
-/*                IconButton(
-                    onClick = {
-                        onMessage(ProfileScreenMessage.EditProfile)
-                    },
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = stringResource(R.string.profile_edit),
-                    )
-                }
-
-                IconButton(
-                    onClick = {
-                        onMessage(ProfileScreenMessage.ShowQrCode)
-                    },
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.QrCode2,
-                        contentDescription = stringResource(R.string.profile_qr_description),
-                    )
-                }*/
-            },
         ) { scaffoldPaddingValues ->
             Box(
                 modifier = Modifier
