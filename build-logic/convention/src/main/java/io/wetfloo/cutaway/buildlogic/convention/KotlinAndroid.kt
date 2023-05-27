@@ -40,7 +40,7 @@ internal fun Project.configureKotlinAndroid(
             jvmTarget = JavaVersion.VERSION_17.toString()
         }
 
-        packagingOptions {
+        packaging {
             resources.pickFirsts.apply {
                 add("META-INF/LICENSE-notice.*")
                 add("META-INF/LICENSE.*")
