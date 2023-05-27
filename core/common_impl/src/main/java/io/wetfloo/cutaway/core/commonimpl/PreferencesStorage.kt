@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 
 
 /**
- * Base preferences manager
+ * Base preferences storage
  */
-abstract class PreferencesManager<P> constructor(
+abstract class PreferencesStorage<P> constructor(
     protected val context: Context,
 ) {
     /**
@@ -34,6 +34,6 @@ abstract class PreferencesManager<P> constructor(
     }
 
     companion object {
-        private const val TAG = "PreferencesManager"
+        private const val TAG = "PreferencesStorage"
     }
 }
