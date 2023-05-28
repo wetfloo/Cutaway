@@ -30,7 +30,7 @@ class QrGeneratorViewModel @Inject constructor(
             }
 
             qrRenderer.renderQr(
-                content = "http://cutaway.io/profile/$profileId",
+                content = "http://cutaway.io/profileDetails/$profileId",
             ).onSuccess { bitmap ->
                 updateState {
                     it.copy(qrBitmap = bitmap)

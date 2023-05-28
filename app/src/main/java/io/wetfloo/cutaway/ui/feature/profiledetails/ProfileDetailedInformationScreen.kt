@@ -1,6 +1,7 @@
 package io.wetfloo.cutaway.ui.feature.profiledetails
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.QrCode2
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,15 +33,15 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationItem
 import io.wetfloo.cutaway.ui.feature.profiledetails.state.ProfileDetailedScreenMessage
+import io.wetfloo.cutaway.ui.feature.profiledetails.state.ProfileDetailedState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileDetailedInformationScreen(
-    data: ProfileInformation,
+    state: ProfileDetailedState,
     onMessage: (ProfileDetailedScreenMessage) -> Unit,
 ) {
     val context = LocalContext.current
@@ -48,7 +50,7 @@ fun ProfileDetailedInformationScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(data.name)
+                    Text(text = stringResource(R.string.profile_detail_destination_name))
                 },
                 navigationIcon = {
                     IconButton(
@@ -65,7 +67,13 @@ fun ProfileDetailedInformationScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            onMessage(ProfileDetailedScreenMessage.ShowQrCode(data))
+                            when (state) {
+                                is ProfileDetailedState.Ready -> {
+                                    onMessage(ProfileDetailedScreenMessage.ShowQrCode(state.profileInformation))
+                                }
+
+                                ProfileDetailedState.Idle, ProfileDetailedState.Loading -> Unit
+                            }
                         },
                     ) {
                         Icon(
@@ -87,57 +95,73 @@ fun ProfileDetailedInformationScreen(
                 ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .crossfade(true)
-                    .data(data.pictureUrl)
-                    .fallback(R.drawable.no_image_available)
-                    .build(),
-                contentDescription = stringResource(R.string.profile_image_description),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .sizeIn(maxWidth = dimensionResource(R.dimen.max_bar_width))
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(percent = 100)),
-            )
 
-            if (data.pieces.isNotEmpty()) {
-                DefaultDivider(
+            when (state) {
+                ProfileDetailedState.Idle -> Unit
+                ProfileDetailedState.Loading -> Box(
                     modifier = Modifier
-                        .padding(vertical = 24.dp),
-                )
-            }
-
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                itemsIndexed(
-                    items = data.pieces,
-                    key = { _, item ->
-                        item.hashCode()
-                    }
-                ) { index, item ->
-                    ProfileInformationItem(
+                        .fillMaxSize(),
+                ) {
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        piece = item,
-                        onClick = {
-                            Toast.makeText(
-                                context,
-                                "Profile info piece clicked", // TODO
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        },
+                            .align(Alignment.Center),
+                    )
+                }
+
+                is ProfileDetailedState.Ready -> {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .crossfade(true)
+                            .data(state.profileInformation.pictureUrl)
+                            .fallback(R.drawable.no_image_available)
+                            .build(),
+                        contentDescription = stringResource(R.string.profile_image_description),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .sizeIn(maxWidth = dimensionResource(R.dimen.max_bar_width))
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .clip(RoundedCornerShape(percent = 100)),
                     )
 
-                    if (index != data.pieces.lastIndex) {
+                    if (state.profileInformation.pieces.isNotEmpty()) {
                         DefaultDivider(
                             modifier = Modifier
-                                .padding(vertical = 8.dp)
-                                .sizeIn(maxWidth = 120.dp),
+                                .padding(vertical = 24.dp),
                         )
+                    }
+
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                    ) {
+                        itemsIndexed(
+                            items = state.profileInformation.pieces,
+                            key = { _, item ->
+                                item.hashCode()
+                            }
+                        ) { index, item ->
+                            ProfileInformationItem(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                piece = item,
+                                onClick = {
+                                    Toast.makeText(
+                                        context,
+                                        "Profile info piece clicked", // TODO
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                },
+                            )
+
+                            if (index != state.profileInformation.pieces.lastIndex) {
+                                DefaultDivider(
+                                    modifier = Modifier
+                                        .padding(vertical = 8.dp)
+                                        .sizeIn(maxWidth = 120.dp),
+                                )
+                            }
+                        }
                     }
                 }
             }

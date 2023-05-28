@@ -29,6 +29,9 @@
     </string>
     <string name="profile_failure_load">Failed to load Profile</string>
 
+    <!-- Profile detailed information -->
+    <string name="profile_detail_destination_name">Profile information</string>
+
     <!-- Profile info pieces -->
     <string name="piece_education">Education</string>
     <string name="piece_work">Work place</string>
