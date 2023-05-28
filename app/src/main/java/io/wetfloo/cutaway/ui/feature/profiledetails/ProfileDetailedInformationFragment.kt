@@ -26,6 +26,12 @@ class ProfileDetailedInformationFragment : Fragment(R.layout.fragment_compose_ba
                 onMessage = { message ->
                     when (message) {
                         ProfileDetailedScreenMessage.GoBack -> findNavController().popBackStack()
+                        is ProfileDetailedScreenMessage.ShowQrCode -> findNavController().navigate(
+                            directions = ProfileDetailedInformationFragmentDirections
+                                .actionProfileDetailedInformationFragmentToQrGeneratorFragment(
+                                    profileId = args.profileInformation.id,
+                                ),
+                        )
                     }
                 }
             )

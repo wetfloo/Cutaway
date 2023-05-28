@@ -48,6 +48,9 @@
         <argument
             android:name="profileInformation"
             app:argType="io.wetfloo.cutaway.data.model.profile.ProfileInformation" />
+        <action
+            android:id="@+id/action_profileDetailedInformationFragment_to_qrGeneratorFragment"
+            app:destination="@id/qrGeneratorFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchUserFragment"

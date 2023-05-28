@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -60,7 +61,19 @@ fun ProfileDetailedInformationScreen(
                             contentDescription = stringResource(R.string.navigation_close),
                         )
                     }
-                }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            onMessage(ProfileDetailedScreenMessage.ShowQrCode(data))
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.QrCode2,
+                            contentDescription = null,
+                        )
+                    }
+                },
             )
         },
     ) { scaffoldPaddingValues ->
