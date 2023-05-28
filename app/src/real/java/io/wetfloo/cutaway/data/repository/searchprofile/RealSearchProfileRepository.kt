@@ -18,7 +18,7 @@ class RealSearchProfileRepository @Inject constructor() : SearchProfileRepositor
         TODO("Not yet implemented")
     }
 
-    override suspend fun clearHistory(): Result<*, Throwable> {
+    override suspend fun clearHistory(): Result<Unit, Throwable> {
         TODO("Not yet implemented")
     }
 }

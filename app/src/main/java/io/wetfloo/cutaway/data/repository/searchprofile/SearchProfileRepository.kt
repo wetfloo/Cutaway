@@ -10,5 +10,5 @@ interface SearchProfileRepository {
 
     suspend fun search(query: String): Result<List<FoundUser>, Throwable>
     suspend fun deleteItem(item: SearchHistoryItem): Result<SearchHistoryItem, Throwable>
-    suspend fun clearHistory(): Result<*, Throwable>
+    suspend fun clearHistory(): Result<Unit, Throwable>
 }
