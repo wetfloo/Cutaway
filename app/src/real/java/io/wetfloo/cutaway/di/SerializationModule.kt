@@ -1,12 +1,11 @@
 package io.wetfloo.cutaway.di
 
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import io.wetfloo.cutaway.data.api.adapter.LocalDateTimeAdapter
-import io.wetfloo.cutaway.data.api.adapter.ProfileLinkTypeAdapter
 import io.wetfloo.cutaway.data.model.profile.ProfileLinkType
 import java.time.LocalDateTime
 
@@ -15,10 +14,14 @@ import java.time.LocalDateTime
 class SerializationModule {
     @Provides
     fun moshi(
-        localDateTimeAdapter: LocalDateTimeAdapter,
-        profileLinkTypeAdapter: ProfileLinkTypeAdapter,
+        localDateTimeAdapter: JsonAdapter<LocalDateTime>,
+        profileLinkTypeAdapter: JsonAdapter<ProfileLinkType>,
     ): Moshi = Moshi.Builder()
-        .add(LocalDateTime::class.java, localDateTimeAdapter)
-        .add(ProfileLinkType::class.java, profileLinkTypeAdapter)
+        .addAdapter(localDateTimeAdapter)
+        .addAdapter(profileLinkTypeAdapter)
         .build()
+
+    private inline fun <reified T> Moshi.Builder.addAdapter(
+        adapter: JsonAdapter<T>,
+    ): Moshi.Builder = add(T::class.java, adapter)
 }
