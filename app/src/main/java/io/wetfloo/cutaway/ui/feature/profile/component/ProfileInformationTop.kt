@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -66,10 +67,7 @@ fun ProfileInformationTop(
                     contentDescription = stringResource(R.string.profile_image_description),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .sizeIn(
-                            maxWidth = 100.dp,
-                            maxHeight = 100.dp,
-                        )
+                        .size(100.dp)
                         .aspectRatio(1f)
                         .clip(RoundedCornerShape(percent = 100)),
                 )
@@ -86,26 +84,8 @@ fun ProfileInformationTop(
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.headlineMedium,
                     )
-
-                    SpacerSized(h = 4.dp)
-
-//                    if (data.status != null) {
-//                        Text(
-//                            text = data.status,
-//                            maxLines = 3,
-//                            overflow = TextOverflow.Ellipsis,
-//                            style = MaterialTheme.typography.bodyMedium,
-//                        )
-//                    }
                 }
             }
-
-            DefaultDivider(
-                modifier = Modifier
-                    .padding(
-                        vertical = dimensionResource(R.dimen.divider_spacing),
-                    ),
-            )
 
             informationPiecesPinned.forEachInBetween(
                 inBetweenBlock = {
