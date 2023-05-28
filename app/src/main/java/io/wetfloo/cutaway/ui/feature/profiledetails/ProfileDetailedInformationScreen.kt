@@ -78,6 +78,7 @@ fun ProfileDetailedInformationScreen(
                 model = ImageRequest.Builder(LocalContext.current)
                     .crossfade(true)
                     .data(data.pictureUrl)
+                    .fallback(R.drawable.no_image_available)
                     .build(),
                 contentDescription = stringResource(R.string.profile_image_description),
                 contentScale = ContentScale.Crop,
