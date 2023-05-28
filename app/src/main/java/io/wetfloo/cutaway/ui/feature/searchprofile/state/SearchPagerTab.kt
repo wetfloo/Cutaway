@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser.state
+package io.wetfloo.cutaway.ui.feature.searchprofile.state
 
 import androidx.annotation.StringRes
 import io.wetfloo.cutaway.R
@@ -9,11 +9,11 @@ enum class SearchPagerTab(
     val keyboardVisibilityAction: KeyboardVisibilityAction,
 ) {
     SEARCH(
-        stringRes = R.string.search_user_tab_search,
+        stringRes = R.string.search_profile_tab_search,
         keyboardVisibilityAction = KeyboardVisibilityAction.SHOW,
     ),
     HISTORY(
-        stringRes = R.string.search_user_tab_history,
+        stringRes = R.string.search_profile_tab_history,
         keyboardVisibilityAction = KeyboardVisibilityAction.HIDE,
     ),
 }

@@ -54,6 +54,6 @@
     </fragment>
     <fragment
         android:id="@+id/searchUserFragment"
-        android:name="io.wetfloo.cutaway.ui.feature.searchuser.SearchUserFragment"
+        android:name="io.wetfloo.cutaway.ui.feature.searchprofile.SearchProfileFragment"
         android:label="SearchUserFragment" />
 </navigation>

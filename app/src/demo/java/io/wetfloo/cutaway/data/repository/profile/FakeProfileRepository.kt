@@ -1,6 +1,8 @@
 package io.wetfloo.cutaway.data.repository.profile
 
 import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.map
 import io.wetfloo.cutaway.core.common.DispatcherProvider
 import io.wetfloo.cutaway.core.common.supervisor
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
@@ -23,11 +25,12 @@ class FakeProfileRepository @Inject constructor(
 ) : ProfileRepository {
     private val coroutineScope = dispatchers.default.supervisor()
 
-    private val _state: MutableStateFlow<ProfileInformation?> =
-        MutableStateFlow(null)
+    private val _state: MutableStateFlow<List<ProfileInformation>?> = MutableStateFlow(null)
     override val state = _state.asStateFlow()
 
-    override suspend fun loadProfileInformation() = state
+    override suspend fun loadProfileInformation(id: String) = loadMyProfiles().map { it.first() }
+
+    override suspend fun loadMyProfiles(): Result<List<ProfileInformation>, Throwable> = state
         .filterNotNull()
         .first()
         .let(::Ok)
@@ -35,7 +38,9 @@ class FakeProfileRepository @Inject constructor(
     init {
         coroutineScope.launch {
             delay(5.seconds)
-            _state.value = ProfileInformation.demo
+            _state.value = (0..5).map {
+                ProfileInformation.demo
+            }
         }
     }
 }

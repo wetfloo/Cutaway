@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.data.model.searchuser
+package io.wetfloo.cutaway.data.model.searchprofile
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

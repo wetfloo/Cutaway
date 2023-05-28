@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser.component
+package io.wetfloo.cutaway.ui.feature.searchprofile.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -35,21 +35,21 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.searchuser.FoundUser
+import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
 import io.wetfloo.cutaway.ui.component.BoxLoadingIndicator
 import io.wetfloo.cutaway.ui.component.NiceTextField
 import io.wetfloo.cutaway.ui.component.SpacerSized
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchProfileState
 
 @Composable
-fun SearchUserContent(
+fun SearchProfileContent(
     modifier: Modifier = Modifier,
     requestFocusOnStart: Boolean = true,
     onSearchRequested: () -> Unit,
     onItemClicked: (FoundUser) -> Unit,
     onQueryChange: (String) -> Unit,
     queryValue: String,
-    state: SearchUserState,
+    state: SearchProfileState,
 ) {
     val focusRequester = remember { FocusRequester() }
 
@@ -115,14 +115,14 @@ fun SearchUserContent(
                 .imePadding(),
         ) {
             when (state) {
-                is SearchUserState.Found -> {
+                is SearchProfileState.Found -> {
                     Column {
                         LazyColumn(
                             modifier = Modifier
                                 .fillMaxSize(),
                         ) {
                             items(items = state.users) { user ->
-                                SearchUserItem(
+                                SearchProfileItem(
                                     user = user,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -136,9 +136,9 @@ fun SearchUserContent(
                     }
                 }
 
-                SearchUserState.Idle -> Unit
+                SearchProfileState.Idle -> Unit
 
-                SearchUserState.Loading -> BoxLoadingIndicator()
+                SearchProfileState.Loading -> BoxLoadingIndicator()
             }
         }
     }

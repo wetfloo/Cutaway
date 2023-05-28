@@ -1,6 +1,6 @@
-package io.wetfloo.cutaway.ui.feature.searchuser.state
+package io.wetfloo.cutaway.ui.feature.searchprofile.state
 
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 
 sealed interface SearchHistoryState {
     object Idle : SearchHistoryState

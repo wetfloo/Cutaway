@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser
+package io.wetfloo.cutaway.ui.feature.searchprofile
 
 import android.os.Bundle
 import android.view.View
@@ -12,12 +12,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserMessage
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchProfileMessage
 
 @AndroidEntryPoint
-class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
+class SearchProfileFragment : Fragment(R.layout.fragment_compose_base) {
     private val binding by viewBinding(FragmentComposeBaseBinding::bind)
-    private val viewModel: SearchUserViewModel by viewModels()
+    private val viewModel: SearchProfileViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,7 +31,7 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 .searchHistoryState
                 .collectAsStateWithLifecycle()
 
-            SearchUserScreen(
+            SearchProfileScreen(
                 state = state,
                 searchHistoryState = searchHistoryState,
                 errorFlow = viewModel.error,
@@ -40,15 +40,15 @@ class SearchUserFragment : Fragment(R.layout.fragment_compose_base) {
                 queryValue = viewModel.query,
                 onMessage = { message ->
                     when (message) {
-                        SearchUserMessage.SearchRequested -> viewModel.search()
+                        SearchProfileMessage.SearchRequested -> viewModel.search()
 
-                        SearchUserMessage.ClearHistory -> viewModel.clearHistory()
+                        SearchProfileMessage.ClearHistory -> viewModel.clearHistory()
 
-                        is SearchUserMessage.DeleteHistoryItem -> {
+                        is SearchProfileMessage.DeleteHistoryItem -> {
                             viewModel.deleteHistoryItem(message.item)
                         }
 
-                        is SearchUserMessage.FoundUserClicked -> {
+                        is SearchProfileMessage.FoundProfileClicked -> {
                             // TODO: implement navigation here
                         }
                     }

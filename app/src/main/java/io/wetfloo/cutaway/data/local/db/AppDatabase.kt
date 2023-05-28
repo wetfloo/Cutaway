@@ -4,7 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.wetfloo.cutaway.data.local.dao.SearchDao
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 
 @Database(
     version = 1,

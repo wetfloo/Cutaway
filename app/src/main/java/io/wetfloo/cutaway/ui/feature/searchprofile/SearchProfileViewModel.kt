@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser
+package io.wetfloo.cutaway.ui.feature.searchprofile
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -14,11 +14,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.handleStateResult
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
-import io.wetfloo.cutaway.data.repository.searchuser.SearchUserRepository
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
+import io.wetfloo.cutaway.data.repository.searchprofile.SearchProfileRepository
 import io.wetfloo.cutaway.misc.utils.savedastate.StateSaver
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchHistoryState
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchProfileState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -33,19 +33,19 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(SavedStateHandleSaveableApi::class)
 @HiltViewModel
-class SearchUserViewModel @Inject constructor(
-    private val searchUserRepository: SearchUserRepository,
+class SearchProfileViewModel @Inject constructor(
+    private val searchProfileRepository: SearchProfileRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-    private val stateSaver = StateSaver<SearchUserState>(
+    private val stateSaver = StateSaver<SearchProfileState>(
         savedStateHandle = savedStateHandle,
         key = "SEARCH_USER_STATE",
-        defaultState = SearchUserState.Idle,
+        defaultState = SearchProfileState.Idle,
     )
     private var stateValue by stateSaver
     val stateFlow = stateSaver.state
 
-    val searchHistoryState: StateFlow<SearchHistoryState> = searchUserRepository
+    val searchHistoryState: StateFlow<SearchHistoryState> = searchProfileRepository
         .searchHistory
         .map { searchHistoryItems ->
             searchHistoryItems?.let(SearchHistoryState::Ready) ?: SearchHistoryState.Loading
@@ -68,7 +68,7 @@ class SearchUserViewModel @Inject constructor(
         autoSearchJob?.cancel()
         if (query.isBlank()) {
             // clear up any search items if search field is cleared
-            stateValue = SearchUserState.Idle
+            stateValue = SearchProfileState.Idle
             return
         }
         autoSearchJob = viewModelScope.launch {
@@ -79,16 +79,16 @@ class SearchUserViewModel @Inject constructor(
 
     fun search() {
         when (val currentState = stateValue) {
-            SearchUserState.Idle -> viewModelScope.launch {
+            SearchProfileState.Idle -> viewModelScope.launch {
                 handle(
                     query = query,
-                    loadingValue = SearchUserState.Loading,
+                    loadingValue = SearchProfileState.Loading,
                 )
             }
 
-            SearchUserState.Loading -> return
+            SearchProfileState.Loading -> return
 
-            is SearchUserState.Found -> viewModelScope.launch {
+            is SearchProfileState.Found -> viewModelScope.launch {
                 handle(
                     query = query,
                     loadingValue = currentState.copy(isLoading = true),
@@ -99,7 +99,7 @@ class SearchUserViewModel @Inject constructor(
 
     fun deleteHistoryItem(item: SearchHistoryItem) {
         viewModelScope.launch {
-            searchUserRepository
+            searchProfileRepository
                 .deleteItem(item)
                 .mapError { genericError }
                 .onFailure { _error.send(it) }
@@ -108,19 +108,19 @@ class SearchUserViewModel @Inject constructor(
 
     fun clearHistory() {
         viewModelScope.launch {
-            searchUserRepository.clearHistory()
+            searchProfileRepository.clearHistory()
         }
     }
 
-    private suspend fun searchForUser(query: String): Result<SearchUserState.Found, UiError> =
-        searchUserRepository
+    private suspend fun searchForUser(query: String): Result<SearchProfileState.Found, UiError> =
+        searchProfileRepository
             .search(query)
-            .map(SearchUserState::Found)
+            .map(SearchProfileState::Found)
             .mapError { genericError }
 
     private suspend fun handle(
         query: String,
-        loadingValue: SearchUserState,
+        loadingValue: SearchProfileState,
     ) {
         handleStateResult(
             previousValue = stateValue,
@@ -133,5 +133,5 @@ class SearchUserViewModel @Inject constructor(
     }
 
     private val genericError
-        get() = UiError.Res(R.string.search_user_failure_generic)
+        get() = UiError.Res(R.string.search_profile_failure_generic)
 }

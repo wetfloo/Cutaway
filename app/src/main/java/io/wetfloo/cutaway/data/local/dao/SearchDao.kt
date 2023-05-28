@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao

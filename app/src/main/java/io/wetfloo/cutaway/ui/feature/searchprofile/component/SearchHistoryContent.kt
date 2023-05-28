@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser.component
+package io.wetfloo.cutaway.ui.feature.searchprofile.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -27,9 +27,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 import io.wetfloo.cutaway.ui.component.BoxLoadingIndicator
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchHistoryState
 
 @Composable
 fun SearchHistoryContent(
@@ -59,7 +59,7 @@ fun SearchHistoryContent(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Text(text = stringResource(R.string.search_user_history_empty))
+                        Text(text = stringResource(R.string.search_profile_history_empty))
                     }
                 }
 
@@ -89,7 +89,7 @@ fun SearchHistoryContent(
                                         imageVector = Icons.Default.Clear,
                                         contentDescription = null,
                                     )
-                                    Text(text = stringResource(R.string.search_user_clear_history))
+                                    Text(text = stringResource(R.string.search_profile_clear_history))
                                 }
                             }
 

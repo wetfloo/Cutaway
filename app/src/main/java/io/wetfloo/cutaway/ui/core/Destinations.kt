@@ -11,7 +11,7 @@ val destinations: Array<DrawerDestination> by lazyUnsafe {
             id = R.id.profileFragment,
         ),
         DrawerDestination(
-            textId = R.string.search_user_destination_name,
+            textId = R.string.search_profile_destination_name,
             id = R.id.searchUserFragment,
         ),
     )

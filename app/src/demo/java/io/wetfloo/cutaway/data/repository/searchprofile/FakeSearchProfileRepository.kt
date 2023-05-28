@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.data.repository.searchuser
+package io.wetfloo.cutaway.data.repository.searchprofile
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -7,8 +7,8 @@ import io.wetfloo.cutaway.core.common.DispatcherProvider
 import io.wetfloo.cutaway.core.common.runSuspendCatching
 import io.wetfloo.cutaway.core.common.supervisor
 import io.wetfloo.cutaway.data.local.dao.SearchDao
-import io.wetfloo.cutaway.data.model.searchuser.FoundUser
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 import io.wetfloo.cutaway.misc.utils.demo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,10 +19,10 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
-class FakeSearchUserRepository @Inject constructor(
+class FakeSearchProfileRepository @Inject constructor(
     private val searchDao: SearchDao,
     private val dispatchers: DispatcherProvider,
-) : SearchUserRepository {
+) : SearchProfileRepository {
     private val coroutineScope = dispatchers.default.supervisor()
 
     override val searchHistory: StateFlow<List<SearchHistoryItem>?> = searchDao

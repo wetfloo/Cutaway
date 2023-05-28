@@ -1,12 +1,12 @@
-package io.wetfloo.cutaway.data.repository.searchuser
+package io.wetfloo.cutaway.data.repository.searchprofile
 
 import com.github.michaelbull.result.Result
-import io.wetfloo.cutaway.data.model.searchuser.FoundUser
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
-class RealSearchUserRepository @Inject constructor() : SearchUserRepository {
+class RealSearchProfileRepository @Inject constructor() : SearchProfileRepository {
     override val searchHistory: StateFlow<List<SearchHistoryItem>?>
         get() = TODO("Not yet implemented")
 

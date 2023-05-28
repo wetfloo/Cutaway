@@ -51,12 +51,12 @@
     <string name="qr_generator_destination_name">Profile QR code</string>
     <string name="qr_generator_descripion">QR code for your profile</string>
 
-    <!-- Search user -->
-    <string name="search_user_destination_name">Search for user</string>
-    <string name="search_user_failure_generic">Something went wrong during the search…</string>
-    <string name="search_user_tab_search">Search</string>
-    <string name="search_user_tab_history">History</string>
-    <string name="search_user_delete_history_item_description">Delete this item</string>
-    <string name="search_user_clear_history">Clear search history</string>
-    <string name="search_user_history_empty">Nothing here yet…</string>
+    <!-- Search profile -->
+    <string name="search_profile_destination_name">Search for user</string>
+    <string name="search_profile_failure_generic">Something went wrong during the search…</string>
+    <string name="search_profile_tab_search">Search</string>
+    <string name="search_profile_tab_history">History</string>
+    <string name="search_profile_delete_history_item_description">Delete this item</string>
+    <string name="search_profile_clear_history">Clear search history</string>
+    <string name="search_profile_history_empty">Nothing here yet…</string>
 </resources>

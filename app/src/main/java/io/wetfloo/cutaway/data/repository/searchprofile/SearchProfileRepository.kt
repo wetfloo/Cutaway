@@ -1,11 +1,11 @@
-package io.wetfloo.cutaway.data.repository.searchuser
+package io.wetfloo.cutaway.data.repository.searchprofile
 
 import com.github.michaelbull.result.Result
-import io.wetfloo.cutaway.data.model.searchuser.FoundUser
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
+import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
 import kotlinx.coroutines.flow.StateFlow
 
-interface SearchUserRepository {
+interface SearchProfileRepository {
     val searchHistory: StateFlow<List<SearchHistoryItem>?>
 
     suspend fun search(query: String): Result<List<FoundUser>, Throwable>

@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.searchuser
+package io.wetfloo.cutaway.ui.feature.searchprofile
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
@@ -31,12 +31,12 @@ import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.core.model.KeyboardVisibilityAction
-import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchHistoryContent
-import io.wetfloo.cutaway.ui.feature.searchuser.component.SearchUserContent
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchHistoryState
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchPagerTab
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserMessage
-import io.wetfloo.cutaway.ui.feature.searchuser.state.SearchUserState
+import io.wetfloo.cutaway.ui.feature.searchprofile.component.SearchHistoryContent
+import io.wetfloo.cutaway.ui.feature.searchprofile.component.SearchProfileContent
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchHistoryState
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchPagerTab
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchProfileMessage
+import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchProfileState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -45,19 +45,19 @@ import kotlinx.coroutines.launch
     ExperimentalComposeUiApi::class
 )
 @Composable
-fun SearchUserScreen(
-    state: SearchUserState,
+fun SearchProfileScreen(
+    state: SearchProfileState,
     searchHistoryState: SearchHistoryState,
     errorFlow: Flow<UiError>,
     navController: () -> NavController,
-    onMessage: (SearchUserMessage) -> Unit,
+    onMessage: (SearchProfileMessage) -> Unit,
     onQueryChange: (String) -> Unit,
     queryValue: String,
 ) {
     EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
         HostScaffold(
             navController = navController,
-            title = stringResource(R.string.search_user_destination_name),
+            title = stringResource(R.string.search_profile_destination_name),
             snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
             },
@@ -134,17 +134,17 @@ fun SearchUserScreen(
                     ) {
                         when (index) {
                             SearchPagerTab.SEARCH.ordinal -> {
-                                SearchUserContent(
+                                SearchProfileContent(
                                     onQueryChange = onQueryChange,
                                     queryValue = queryValue,
                                     state = state,
                                     modifier = Modifier
                                         .fillMaxSize(),
                                     onSearchRequested = {
-                                        onMessage(SearchUserMessage.SearchRequested)
+                                        onMessage(SearchProfileMessage.SearchRequested)
                                     },
                                     onItemClicked = { user ->
-                                        onMessage(SearchUserMessage.FoundUserClicked(user))
+                                        onMessage(SearchProfileMessage.FoundProfileClicked(user))
                                     },
                                 )
                             }
@@ -158,11 +158,11 @@ fun SearchUserScreen(
                                         scrollToPage(SearchPagerTab.SEARCH.ordinal)
                                     },
                                     onDeleteClick = { history ->
-                                        onMessage(SearchUserMessage.DeleteHistoryItem(history))
+                                        onMessage(SearchProfileMessage.DeleteHistoryItem(history))
                                     },
                                     onClearClick = {
                                         onQueryChange("")
-                                        onMessage(SearchUserMessage.ClearHistory)
+                                        onMessage(SearchProfileMessage.ClearHistory)
                                     },
                                     state = searchHistoryState,
                                 )

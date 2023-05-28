@@ -8,8 +8,9 @@ import io.wetfloo.cutaway.data.repository.auth.AuthRepository
 import io.wetfloo.cutaway.data.repository.auth.FakeAuthRepository
 import io.wetfloo.cutaway.data.repository.profile.FakeProfileRepository
 import io.wetfloo.cutaway.data.repository.profile.ProfileRepository
-import io.wetfloo.cutaway.data.repository.searchuser.FakeSearchUserRepository
-import io.wetfloo.cutaway.data.repository.searchuser.SearchUserRepository
+import io.wetfloo.cutaway.data.repository.searchprofile.FakeSearchProfileRepository
+import io.wetfloo.cutaway.data.repository.searchprofile.SearchProfileRepository
+import io.wetfloo.cutaway.data.repository.searchprofile.SearchUserRepository
 import javax.inject.Singleton
 
 @Module
@@ -24,5 +25,5 @@ interface FakeRepositoriesModule {
     fun authRepository(impl: FakeAuthRepository): AuthRepository
 
     @Binds
-    fun searchUserRepository(impl: FakeSearchUserRepository): SearchUserRepository
+    fun searchUserRepository(impl: FakeSearchProfileRepository): SearchProfileRepository
 }

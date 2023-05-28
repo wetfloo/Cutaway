@@ -1,27 +1,22 @@
-package io.wetfloo.cutaway.ui.feature.searchuser.component
+package io.wetfloo.cutaway.ui.feature.searchprofile.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.searchuser.SearchHistoryItem
+import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
 
 @Composable
-fun SearchHistoryItem(
-    history: SearchHistoryItem,
-    onDeleteClick: () -> Unit,
+fun SearchProfileItem(
+    user: FoundUser,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -34,18 +29,12 @@ fun SearchHistoryItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = history.query,
+                text = user.name,
                 maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
             )
 
             Spacer(modifier = Modifier.weight(1f))
-
-            IconButton(onClick = onDeleteClick) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = stringResource(R.string.search_user_delete_history_item_description),
-                )
-            }
         }
     }
 }
