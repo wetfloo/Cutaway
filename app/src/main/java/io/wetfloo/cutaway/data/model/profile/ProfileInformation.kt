@@ -19,6 +19,9 @@ data class ProfileInformation(
 
     // needed for static extensions
     companion object {
+        private val String.pictureUrl
+            get() = "$API_BASE_URL/images/$this"
+
         fun fromDto(dto: ProfileInformationDto): ProfileInformation {
             fun MutableList<ProfileInformationPiece>.addInfoPiece(
                 value: String?,
@@ -50,7 +53,7 @@ data class ProfileInformation(
 
             return ProfileInformation(
                 id = dto.id,
-                pictureUrl = dto.profilePicture,
+                pictureUrl = dto.profilePicture?.pictureUrl,
                 name = name,
                 pieces = pieces,
             )
