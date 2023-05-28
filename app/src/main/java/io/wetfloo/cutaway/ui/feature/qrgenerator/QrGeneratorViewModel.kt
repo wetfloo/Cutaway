@@ -27,25 +27,19 @@ class QrGeneratorViewModel @Inject constructor(
     fun generateQr(content: String = RICKROLL_URL) {
         viewModelScope.launch {
             updateState {
-                it.copy(
-                    isLoading = true,
-                )
+                it.copy(isLoading = true)
             }
 
             qrRenderer.renderQr(
                 content = content,
             ).onSuccess { bitmap ->
                 updateState {
-                    it.copy(
-                        qrBitmap = bitmap,
-                    )
+                    it.copy(qrBitmap = bitmap)
                 }
             }
 
             updateState {
-                it.copy(
-                    isLoading = false,
-                )
+                it.copy(isLoading = false)
             }
 
             feedbacker.feedback()
