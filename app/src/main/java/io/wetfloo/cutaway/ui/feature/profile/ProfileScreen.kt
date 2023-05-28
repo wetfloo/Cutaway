@@ -72,6 +72,9 @@ fun ProfileScreen(
                                 onCardClick = {
                                     onMessage(ProfileScreenMessage.ShowProfileDetailedInformation(item))
                                 },
+                                onQrClick = {
+                                    onMessage(ProfileScreenMessage.ShowQrCode(item))
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth(),
                             )
