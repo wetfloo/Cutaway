@@ -52,7 +52,7 @@
     <string name="qr_generator_descripion">QR code for your profile</string>
 
     <!-- Search profile -->
-    <string name="search_profile_destination_name">Search for user</string>
+    <string name="search_profile_destination_name">Search for profile</string>
     <string name="search_profile_failure_generic">Something went wrong during the search…</string>
     <string name="search_profile_tab_search">Search</string>
     <string name="search_profile_tab_history">History</string>
