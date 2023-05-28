@@ -102,10 +102,12 @@ fun ProfileDetailedInformationScreen(
                     .clip(RoundedCornerShape(percent = 100)),
             )
 
-            DefaultDivider(
-                modifier = Modifier
-                    .padding(vertical = 24.dp),
-            )
+            if (data.pieces.isNotEmpty()) {
+                DefaultDivider(
+                    modifier = Modifier
+                        .padding(vertical = 24.dp),
+                )
+            }
 
             LazyColumn(
                 modifier = Modifier
