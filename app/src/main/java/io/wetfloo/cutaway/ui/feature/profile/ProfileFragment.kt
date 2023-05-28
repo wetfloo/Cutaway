@@ -52,7 +52,7 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                         is ProfileScreenMessage.ShowQrCode -> {
                             findNavController().navigate(
                                 directions = ProfileFragmentDirections
-                                    .actionProfileFragmentToQrGeneratorFragment(url = message.profile.url),
+                                    .actionProfileFragmentToQrGeneratorFragment(profileId = message.profile.id),
                             )
                         }
                     }

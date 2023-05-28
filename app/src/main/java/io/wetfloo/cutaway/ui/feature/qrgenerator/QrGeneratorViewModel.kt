@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.wetfloo.cutaway.core.common.RICKROLL_URL
 import io.wetfloo.cutaway.misc.Feedbacker
 import io.wetfloo.cutaway.misc.QrRenderer
 import io.wetfloo.cutaway.ui.feature.qrgenerator.state.QrGeneratorState
@@ -24,14 +23,14 @@ class QrGeneratorViewModel @Inject constructor(
     )
     val qrGeneratorState = _qrGeneratorState.asStateFlow()
 
-    fun generateQr(content: String = RICKROLL_URL) {
+    fun generateQr(profileId: String) {
         viewModelScope.launch {
             updateState {
                 it.copy(isLoading = true)
             }
 
             qrRenderer.renderQr(
-                content = content,
+                content = "http://cutaway.io/profile/$profileId",
             ).onSuccess { bitmap ->
                 updateState {
                     it.copy(qrBitmap = bitmap)

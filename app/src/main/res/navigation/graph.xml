@@ -38,7 +38,7 @@
         android:name="io.wetfloo.cutaway.ui.feature.qrgenerator.QrGeneratorFragment"
         android:label="QrGeneratorFragment">
         <argument
-            android:name="url"
+            android:name="profileId"
             app:argType="string" />
     </fragment>
     <fragment
