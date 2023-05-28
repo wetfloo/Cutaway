@@ -1,8 +1,14 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -11,8 +17,10 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
@@ -42,16 +50,15 @@ fun ProfileScreen(
                 SnackbarHost(hostState = snackbarHostState)
             },
         ) { scaffoldPaddingValues ->
-            Box(
+            Column(
                 modifier = Modifier
-                    .padding(scaffoldPaddingValues)
                     .fillMaxSize(),
             ) {
                 when (state) {
                     is ProfileState.Ready -> LazyColumn(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(dimensionResource(R.dimen.default_padding)),
+                            .fillMaxSize(),
+                        contentPadding = contentWindowPaddings(scaffoldPaddingValues),
                         horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         itemsIndexed(
@@ -77,12 +84,36 @@ fun ProfileScreen(
 
                     ProfileState.Idle -> Unit
 
-                    ProfileState.Loading -> CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                    )
+                    ProfileState.Loading -> {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(scaffoldPaddingValues),
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .padding(scaffoldPaddingValues)
+                                    .align(Alignment.Center),
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
+
+@Composable
+private fun contentWindowPaddings(
+    scaffoldPadding: PaddingValues,
+    appliedPadding: Dp = dimensionResource(R.dimen.default_padding),
+): PaddingValues = WindowInsets(
+    // without these scaffold paddings LazyColumn will ignore the app bar
+    left = appliedPadding + scaffoldPadding.calculateLeftPadding(LocalLayoutDirection.current),
+    top = appliedPadding + scaffoldPadding.calculateTopPadding(),
+    right = appliedPadding + scaffoldPadding.calculateRightPadding(LocalLayoutDirection.current),
+    bottom = appliedPadding,
+)
+    // we ignore scaffold paddings here and add navigation bar padding ourselves
+    .add(WindowInsets.navigationBars)
+    .asPaddingValues()
