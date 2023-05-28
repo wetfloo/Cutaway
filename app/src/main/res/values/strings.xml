@@ -35,6 +35,8 @@
     <string name="piece_location">Location</string>
     <string name="piece_birthday">Birthday</string>
     <string name="piece_interests">Interests</string>
+    <string name="piece_phone_number">Interests</string>
+    <string name="piece_link">Link</string>
     <string name="piece_generic">Other information</string>
 
     <!-- QR -->

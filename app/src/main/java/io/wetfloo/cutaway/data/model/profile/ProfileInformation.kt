@@ -23,12 +23,12 @@ data class ProfileInformation(
             get() = "$API_BASE_URL/images/$this"
 
         fun fromDto(dto: ProfileInformationDto): ProfileInformation {
-            fun MutableList<ProfileInformationPiece>.addInfoPiece(
+            fun MutableList<ProfileInformationPiece>.addFormedInfoPiece(
                 value: String?,
-                type: ProfileInformationPieceType,
+                type: ProfileInformationPiece.Formed.Type,
             ) {
                 if (value != null) {
-                    val piece = ProfileInformationPiece(
+                    val piece = ProfileInformationPiece.Formed(
                         value = value,
                         type = type,
                     )
@@ -41,13 +41,21 @@ data class ProfileInformation(
             } else dto.name
 
             val pieces = buildList {
-                addInfoPiece(
+                addFormedInfoPiece(
                     value = dto.education,
-                    type = ProfileInformationPieceType.EDUCATION,
+                    type = ProfileInformationPiece.Formed.Type.EDUCATION,
                 )
-                addInfoPiece(
+                addFormedInfoPiece(
                     value = dto.placeOfWork,
-                    type = ProfileInformationPieceType.WORK,
+                    type = ProfileInformationPiece.Formed.Type.WORK,
+                )
+                addFormedInfoPiece(
+                    value = dto.phoneNumber,
+                    type = ProfileInformationPiece.Formed.Type.PHONE_NUMBER,
+                )
+                dto.links.mapTo(
+                    destination = this,
+                    transform = ProfileInformationPiece.Link::fromDto,
                 )
             }
 
