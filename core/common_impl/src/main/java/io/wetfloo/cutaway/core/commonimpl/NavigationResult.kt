@@ -1,21 +1,23 @@
 package io.wetfloo.cutaway.core.commonimpl
 
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
+import kotlinx.parcelize.Parcelize
 
 /**
  * Saves some [value] retrievable by [key] into SavedStateHandle for previous Fragment to consume,
  * if such backStack entry is present.
  */
-fun <T> Fragment.setNavigationResult(
+fun <T : Parcelable> Fragment.setNavigationResult(
     key: String,
     value: T,
 ) {
     findNavController().previousBackStackEntry?.savedStateHandle?.set(
         key = key,
-        value = value,
+        value = NavigationResult.Data(value),
     )
 }
 
@@ -26,12 +28,12 @@ fun <T> Fragment.setNavigationResult(
  * Note that if [onResult] gets passed null, it generally means that
  * next Fragment decided to leave no data for caller Fragment.
  *
- * You should **never** make your UI events wait for non-null values being passed
- * to [onResult] callback, handle null values gracefully.
+ * You should **never** make your UI events wait for non-empty values being passed
+ * to [onResult] callback, handle those values gracefully.
  */
-fun <T> Fragment.getNavigationResult(
+fun <T : Parcelable> Fragment.getNavigationResult(
     key: String,
-    onResult: (T?) -> Unit,
+    onResult: (NavigationResult<T>) -> Unit,
 ) {
     /*
 
@@ -49,7 +51,7 @@ fun <T> Fragment.getNavigationResult(
     */
     val navBackStackEntry = findNavController().previousBackStackEntry
     if (navBackStackEntry == null) {
-        onResult(null)
+        onResult(NavigationResult.Empty)
         return
     }
 
@@ -57,7 +59,7 @@ fun <T> Fragment.getNavigationResult(
         // making sure that our Fragment A is in RESUMED state to trigger UI updates safely
         if (event == Lifecycle.Event.ON_RESUME) {
             // get that SavedStateHandle left there by Fragment B in Fragment A
-            val result = navBackStackEntry.savedStateHandle.get<T>(key)
+            val result: NavigationResult<T> = navBackStackEntry.savedStateHandle[key] ?: NavigationResult.Empty
             // trigger that callback
             onResult(result)
             // we don't want to data in SavedStateHandle
@@ -75,4 +77,12 @@ fun <T> Fragment.getNavigationResult(
             }
         },
     )
+}
+
+sealed interface NavigationResult<out T : Parcelable> : Parcelable {
+    @Parcelize
+    object Empty : NavigationResult<Nothing>
+
+    @Parcelize
+    data class Data<out T : Parcelable>(val value: T) : NavigationResult<T>
 }
