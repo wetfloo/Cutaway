@@ -1,11 +1,13 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
@@ -18,12 +20,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -67,37 +71,28 @@ fun ProfileScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 when (state) {
-                    is ProfileState.Ready -> LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        contentPadding = contentWindowPaddings(scaffoldPaddingValues),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        itemsIndexed(
-                            items = state.data,
-                            key = { _, item ->
-                                item.id
-                            },
-                        ) { index, item ->
-                            ProfileInformationTop(
-                                data = item,
-                                onCardClick = {
-                                    onMessage(ProfileScreenMessage.ShowProfileDetailedInformation(item))
-                                },
-                                onQrClick = {
-                                    onMessage(ProfileScreenMessage.ShowQrCode(item))
-                                },
-                                onEditClick = {
-                                    onMessage(ProfileScreenMessage.EditProfile(item))
-                                },
-                                modifier = Modifier
-                                    .fillMaxWidth(),
+                    is ProfileState.Ready -> {
+                        if (state.data.isNotEmpty()) {
+                            Profiles(
+                                scaffoldPaddingValues = scaffoldPaddingValues,
+                                state = state,
+                                onMessage = onMessage,
                             )
-
-                            if (index != state.data.lastIndex) {
-                                SpacerSized(h = 16.dp)
+                        } else {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth(.5f),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.profile_no_profiles_yet),
+                                    textAlign = TextAlign.Center,
+                                )
                             }
                         }
                     }
@@ -118,6 +113,46 @@ fun ProfileScreen(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun Profiles(
+    scaffoldPaddingValues: PaddingValues,
+    state: ProfileState.Ready,
+    onMessage: (ProfileScreenMessage) -> Unit,
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize(),
+        contentPadding = contentWindowPaddings(scaffoldPaddingValues),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        itemsIndexed(
+            items = state.data,
+            key = { _, item ->
+                item.id
+            },
+        ) { index, item ->
+            ProfileInformationTop(
+                data = item,
+                onCardClick = {
+                    onMessage(ProfileScreenMessage.ShowProfileDetailedInformation(item))
+                },
+                onQrClick = {
+                    onMessage(ProfileScreenMessage.ShowQrCode(item))
+                },
+                onEditClick = {
+                    onMessage(ProfileScreenMessage.EditProfile(item))
+                },
+                modifier = Modifier
+                    .fillMaxWidth(),
+            )
+
+            if (index != state.data.lastIndex) {
+                SpacerSized(h = 16.dp)
             }
         }
     }

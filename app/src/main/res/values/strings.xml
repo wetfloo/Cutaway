@@ -28,6 +28,10 @@
         Profile editing not implemented yet
     </string>
     <string name="profile_failure_load">Failed to load Profile</string>
+    <string name="profile_no_profiles_yet">
+        No profiles available on your account yet.\n
+        Start by tapping \"+\" icon at the top right!
+    </string>
 
     <!-- Profile detailed information -->
     <string name="profile_detail_destination_name">Profile information</string>
