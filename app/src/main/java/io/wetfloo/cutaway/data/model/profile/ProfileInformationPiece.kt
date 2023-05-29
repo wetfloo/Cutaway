@@ -3,7 +3,7 @@ package io.wetfloo.cutaway.data.model.profile
 import android.os.Parcelable
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CastForEducation
+import androidx.compose.material.icons.filled.HistoryEdu
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.runtime.Immutable
@@ -33,7 +33,7 @@ sealed interface ProfileInformationPiece : Parcelable {
         ) {
             EDUCATION(
                 headerStringRes = R.string.piece_education,
-                icon = Icons.Default.CastForEducation,
+                icon = Icons.Default.HistoryEdu,
             ),
             WORK(
                 headerStringRes = R.string.piece_work,
