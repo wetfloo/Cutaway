@@ -32,7 +32,6 @@ class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
 
             CreateEditProfileScreen(
                 state = state,
-                navController = { findNavController() },
                 errorFlow = viewModel.error,
                 title = stringResource(args.mode.nameRes),
 

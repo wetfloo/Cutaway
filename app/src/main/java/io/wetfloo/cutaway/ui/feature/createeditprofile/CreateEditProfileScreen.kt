@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileScreenMessage
@@ -25,7 +24,6 @@ import kotlinx.coroutines.flow.Flow
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreateEditProfileScreen(
-    navController: () -> NavController,
     onMessage: (CreateEditProfileScreenMessage) -> Unit,
     title: String,
     state: CreateEditProfileState,
