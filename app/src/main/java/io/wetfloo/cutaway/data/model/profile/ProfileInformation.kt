@@ -2,12 +2,14 @@ package io.wetfloo.cutaway.data.model.profile
 
 import android.os.Parcelable
 import androidx.annotation.Keep
+import androidx.compose.runtime.Immutable
 import io.wetfloo.cutaway.data.api.API_BASE_URL
 import io.wetfloo.cutaway.data.api.model.ProfileInformationDto
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Keep
+@Immutable
 data class ProfileInformation(
     val name: String,
     val pictureUrl: String?,

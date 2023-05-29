@@ -35,7 +35,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.ui.component.BoxLoadingIndicator
 import io.wetfloo.cutaway.ui.component.NiceTextField
 import io.wetfloo.cutaway.ui.component.SpacerSized
@@ -46,7 +46,7 @@ fun SearchProfileContent(
     modifier: Modifier = Modifier,
     requestFocusOnStart: Boolean = true,
     onSearchRequested: () -> Unit,
-    onItemClicked: (FoundUser) -> Unit,
+    onItemClicked: (ProfileInformation) -> Unit,
     onQueryChange: (String) -> Unit,
     queryValue: String,
     state: SearchProfileState,
@@ -121,14 +121,14 @@ fun SearchProfileContent(
                             modifier = Modifier
                                 .fillMaxSize(),
                         ) {
-                            items(items = state.users) { user ->
+                            items(items = state.profiles) { profile ->
                                 SearchProfileItem(
-                                    user = user,
+                                    profile = profile,
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .requiredHeightIn(min = dimensionResource(R.dimen.list_item_min_height))
                                         .clickable {
-                                            onItemClicked(user)
+                                            onItemClicked(profile)
                                         },
                                 )
                             }

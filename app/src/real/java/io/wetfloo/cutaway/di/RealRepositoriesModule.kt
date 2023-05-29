@@ -25,5 +25,5 @@ interface RealRepositoriesModule {
 
     @Binds
     @Singleton
-    fun searchUserRepository(impl: RealSearchProfileRepository): SearchProfileRepository
+    fun searchProfileRepository(impl: RealSearchProfileRepository): SearchProfileRepository
 }

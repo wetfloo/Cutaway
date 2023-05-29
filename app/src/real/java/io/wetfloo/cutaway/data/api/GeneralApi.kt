@@ -3,6 +3,7 @@ package io.wetfloo.cutaway.data.api
 import io.wetfloo.cutaway.data.api.model.ProfileInformationDto
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface GeneralApi {
     @GET("me/profiles")
@@ -12,4 +13,11 @@ interface GeneralApi {
     suspend fun loadProfileInfo(
         @Path("id") id: String,
     ): ProfileInformationDto
+
+    @GET("profiles/search")
+    suspend fun searchProfiles(
+        @Query("text_query") textQuery: String,
+        @Query("page") page: Int = 1,
+        @Query("size") size: Int = 9_000_000, // Paging 3 is a pain :^)
+    ): List<ProfileInformationDto>
 }

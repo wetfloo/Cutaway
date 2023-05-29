@@ -12,11 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.style.TextOverflow
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.data.model.searchprofile.FoundUser
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 
 @Composable
 fun SearchProfileItem(
-    user: FoundUser,
+    profile: ProfileInformation,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -29,7 +29,7 @@ fun SearchProfileItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = user.name,
+                text = profile.name,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

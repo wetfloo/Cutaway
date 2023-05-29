@@ -143,8 +143,8 @@ fun SearchProfileScreen(
                                     onSearchRequested = {
                                         onMessage(SearchProfileMessage.SearchRequested)
                                     },
-                                    onItemClicked = { user ->
-                                        onMessage(SearchProfileMessage.FoundProfileClicked(user))
+                                    onItemClicked = { profile ->
+                                        onMessage(SearchProfileMessage.FoundProfileClicked(profile))
                                     },
                                 )
                             }

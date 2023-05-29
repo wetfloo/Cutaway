@@ -3,6 +3,7 @@
 package io.wetfloo.cutaway.core.common
 
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.map
 import com.github.michaelbull.result.runCatching
 import com.github.michaelbull.result.throwIf
 import kotlinx.coroutines.CancellationException
@@ -34,3 +35,9 @@ suspend inline fun <V, T> T.runSuspendCatching(
     block: T.() -> V,
 ): Result<V, Throwable> = runCatching(block)
     .throwIf { it is CancellationException }
+
+/**
+ * Maps this [Result<V, E>][Result] to [Result<Unit, E>][Result],
+ * removing the value
+ */
+fun <V, E> Result<V, E>.erase() = map {}

@@ -12,7 +12,7 @@ val destinations: Array<DrawerDestination> by lazyUnsafe {
         ),
         DrawerDestination(
             textId = R.string.search_profile_destination_name,
-            id = R.id.searchUserFragment,
+            id = R.id.searchProfileFragment,
         ),
     )
 }
