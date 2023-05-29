@@ -59,4 +59,8 @@
     <string name="search_profile_delete_history_item_description">Delete this item</string>
     <string name="search_profile_clear_history">Clear search history</string>
     <string name="search_profile_history_empty">Nothing here yet…</string>
+
+    <!-- Create/edit profile -->
+    <string name="create_edit_profile_destination_name_create">Create profile</string>
+    <string name="create_edit_profile_destination_name_edit">Edit profile</string>
 </resources>
