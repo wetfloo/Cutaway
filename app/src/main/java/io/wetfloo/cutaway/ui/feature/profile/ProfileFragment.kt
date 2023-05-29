@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
+import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditMode
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 
 @AndroidEntryPoint
@@ -36,23 +37,32 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
 
                 onMessage = { message ->
                     when (message) {
-                        is ProfileScreenMessage.EditProfile -> viewModel.showEditingNotSupported()
+                        is ProfileScreenMessage.EditProfile -> findNavController().navigate(
+                            directions = ProfileFragmentDirections
+                                .actionProfileFragmentToCreateEditProfileFragment(
+                                    mode = CreateEditMode.Edit(profileInformation = message.profile),
+                                ),
+                        )
 
-                        is ProfileScreenMessage.ShowProfileDetailedInformation -> {
-                            findNavController().navigate(
-                                directions = ProfileFragmentDirections
-                                    .actionProfileFragmentToProfileDetailedInformationFragment(
-                                        profileInformation = message.profile,
-                                    )
-                            )
-                        }
+                        ProfileScreenMessage.CreateProfile -> findNavController().navigate(
+                            directions = ProfileFragmentDirections
+                                .actionProfileFragmentToCreateEditProfileFragment(
+                                    mode = CreateEditMode.Create,
+                                ),
+                        )
 
-                        is ProfileScreenMessage.ShowQrCode -> {
-                            findNavController().navigate(
-                                directions = ProfileFragmentDirections
-                                    .actionProfileFragmentToQrGeneratorFragment(profileId = message.profile.id),
-                            )
-                        }
+                        is ProfileScreenMessage.ShowProfileDetailedInformation -> findNavController().navigate(
+                            directions = ProfileFragmentDirections
+                                .actionProfileFragmentToProfileDetailedInformationFragment(
+                                    profileInformation = message.profile,
+                                )
+                        )
+
+
+                        is ProfileScreenMessage.ShowQrCode -> findNavController().navigate(
+                            directions = ProfileFragmentDirections
+                                .actionProfileFragmentToQrGeneratorFragment(profileId = message.profile.id),
+                        )
                     }
                 },
             )

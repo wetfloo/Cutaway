@@ -3,10 +3,12 @@ package io.wetfloo.cutaway.ui.feature.createeditprofile
 import android.os.Bundle
 import android.view.View
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
@@ -18,6 +20,7 @@ import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileSc
 class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
     private val binding by viewBinding(FragmentComposeBaseBinding::bind)
     private val viewModel: CreateEditProfileViewModel by viewModels()
+    private val args: CreateEditProfileFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +34,7 @@ class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
                 state = state,
                 navController = { findNavController() },
                 errorFlow = viewModel.error,
+                title = stringResource(args.mode.nameRes),
 
                 onMessage = { message ->
                     when (message) {

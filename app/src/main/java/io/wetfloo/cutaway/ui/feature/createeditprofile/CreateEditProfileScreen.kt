@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
-import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditMode
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileState
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +27,7 @@ import kotlinx.coroutines.flow.Flow
 fun CreateEditProfileScreen(
     navController: () -> NavController,
     onMessage: (CreateEditProfileScreenMessage) -> Unit,
-    mode: CreateEditMode,
+    title: String,
     state: CreateEditProfileState,
     errorFlow: Flow<UiError>,
 ) {
@@ -36,7 +35,7 @@ fun CreateEditProfileScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(mode.nameRes))
+                    Text(text = title)
                 },
                 navigationIcon = {
                     IconButton(

@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_profileFragment_to_profileDetailedInformationFragment"
             app:destination="@id/profileDetailedInformationFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_createEditProfileFragment"
+            app:destination="@id/createEditProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/qrGeneratorFragment"
@@ -59,5 +62,13 @@
         <action
             android:id="@+id/action_searchProfileFragment_to_profileDetailedInformationFragment"
             app:destination="@id/profileDetailedInformationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createEditProfileFragment"
+        android:name="io.wetfloo.cutaway.ui.feature.createeditprofile.CreateEditProfileFragment"
+        android:label="CreateEditProfileFragment">
+        <argument
+            android:name="mode"
+            app:argType="io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditMode" />
     </fragment>
 </navigation>

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
@@ -43,6 +44,7 @@ fun ProfileInformationTop(
     data: ProfileInformation,
     onCardClick: () -> Unit,
     onQrClick: () -> Unit,
+    onEditClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -124,6 +126,13 @@ fun ProfileInformationTop(
                 IconButton(onClick = onQrClick) {
                     Icon(
                         imageVector = Icons.Default.QrCode2,
+                        contentDescription = null,
+                    )
+                }
+
+                IconButton(onClick = onEditClick) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
                         contentDescription = null,
                     )
                 }

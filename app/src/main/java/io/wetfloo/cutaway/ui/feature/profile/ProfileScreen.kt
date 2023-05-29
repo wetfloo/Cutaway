@@ -75,6 +75,9 @@ fun ProfileScreen(
                                 onQrClick = {
                                     onMessage(ProfileScreenMessage.ShowQrCode(item))
                                 },
+                                onEditClick = {
+                                    onMessage(ProfileScreenMessage.EditProfile(item))
+                                },
                                 modifier = Modifier
                                     .fillMaxWidth(),
                             )
