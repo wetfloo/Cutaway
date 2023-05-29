@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
+import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileScreenMessage
 
 @AndroidEntryPoint
 class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
@@ -33,7 +34,8 @@ class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
 
                 onMessage = { message ->
                     when (message) {
-                        else -> TODO()
+                        CreateEditProfileScreenMessage.GoBack -> findNavController().popBackStack()
+                        CreateEditProfileScreenMessage.Save -> TODO()
                     }
                 }
             )
