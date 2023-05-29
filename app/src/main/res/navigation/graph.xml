@@ -55,5 +55,9 @@
     <fragment
         android:id="@+id/searchProfileFragment"
         android:name="io.wetfloo.cutaway.ui.feature.searchprofile.SearchProfileFragment"
-        android:label="SearchProfileFragment" />
+        android:label="SearchProfileFragment">
+        <action
+            android:id="@+id/action_searchProfileFragment_to_profileDetailedInformationFragment"
+            app:destination="@id/profileDetailedInformationFragment" />
+    </fragment>
 </navigation>

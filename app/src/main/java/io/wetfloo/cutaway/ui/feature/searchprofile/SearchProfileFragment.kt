@@ -48,9 +48,10 @@ class SearchProfileFragment : Fragment(R.layout.fragment_compose_base) {
                             viewModel.deleteHistoryItem(message.item)
                         }
 
-                        is SearchProfileMessage.FoundProfileClicked -> {
-                            // TODO: implement navigation here
-                        }
+                        is SearchProfileMessage.FoundProfileClicked -> findNavController().navigate(
+                            directions = SearchProfileFragmentDirections
+                                .actionSearchProfileFragmentToProfileDetailedInformationFragment(profileInformation = message.item),
+                        )
                     }
                 },
             )
