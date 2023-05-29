@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import io.wetfloo.cutaway.data.repository.auth.AuthRepository
 import io.wetfloo.cutaway.data.repository.auth.RealAuthRepository
+import io.wetfloo.cutaway.data.repository.createeditprofile.CreateEditProfileRepository
+import io.wetfloo.cutaway.data.repository.createeditprofile.RealCreateEditProfileRepository
 import io.wetfloo.cutaway.data.repository.profile.ProfileRepository
 import io.wetfloo.cutaway.data.repository.profile.RealProfileRepository
 import io.wetfloo.cutaway.data.repository.searchprofile.RealSearchProfileRepository
@@ -26,4 +28,7 @@ interface RealRepositoriesModule {
     @Binds
     @Singleton
     fun searchProfileRepository(impl: RealSearchProfileRepository): SearchProfileRepository
+
+    @Binds
+    fun createEditProfileRepository(impl: RealCreateEditProfileRepository): CreateEditProfileRepository
 }
