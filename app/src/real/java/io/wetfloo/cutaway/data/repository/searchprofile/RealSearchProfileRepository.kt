@@ -35,8 +35,8 @@ class RealSearchProfileRepository @Inject constructor(
         updateExistingOrInsert(query)
         return runSuspendCatching {
             api.searchProfiles(query.trim())
-        }.map { dtos ->
-            dtos.map(ProfileInformation::fromDto)
+        }.map { page ->
+            page.items.map(ProfileInformation::fromDto)
         }
     }
 

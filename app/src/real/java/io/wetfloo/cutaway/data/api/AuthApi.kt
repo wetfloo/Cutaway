@@ -9,10 +9,8 @@ interface AuthApi {
     @FormUrlEncoded
     @POST("login")
     suspend fun authenticate(
-        @Field(value = "username")
-        username: String,
-        @Field(value = "password")
-        password: String,
+        @Field(value = "username") username: String,
+        @Field(value = "password") password: String,
     ): AuthResponse
 
     companion object {
