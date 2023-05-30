@@ -32,6 +32,7 @@ class ProfileDetailedInformationViewModel @Inject constructor(
     }
 
     fun loadProfileInformationById(id: String) {
+        stateValue = ProfileDetailedState.Loading
         viewModelScope.launch {
             profileRepository
                 .loadProfileInformation(id)
