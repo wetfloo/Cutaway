@@ -211,6 +211,3 @@ private fun ProfileEditorItem(
         )
     }
 }
-
-private inline fun ProfileInformation.update(updater: (ProfileInformation) -> ProfileInformation) =
-    updater(this)
