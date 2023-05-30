@@ -87,7 +87,7 @@ fun ProfileInformationTop(
                         .fillMaxWidth(),
                 ) {
                     Text(
-                        text = data.name,
+                        text = data.fullName,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.headlineMedium,
