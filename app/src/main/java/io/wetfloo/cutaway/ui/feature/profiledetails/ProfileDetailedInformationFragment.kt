@@ -38,10 +38,14 @@ class ProfileDetailedInformationFragment : Fragment(R.layout.fragment_compose_ba
                         ProfileDetailedScreenMessage.GoBack -> findNavController().popBackStack()
 
                         is ProfileDetailedScreenMessage.ShowQrCode -> {
+                            val profileId = message.profile.id
+                            require(profileId != null) {
+                                "How is id null here? It shouldn't be!"
+                            }
                             findNavController().navigate(
                                 directions = ProfileDetailedInformationFragmentDirections
                                     .actionProfileDetailedInformationFragmentToQrGeneratorFragment(
-                                        profileId = message.profile.id,
+                                        profileId = profileId,
                                     ),
                             )
                         }
@@ -78,7 +82,7 @@ class ProfileDetailedInformationFragment : Fragment(R.layout.fragment_compose_ba
                 return
             }
             if (profileInformation != null) {
-                setInitialProfileInformation(profileInformation)
+                initProfile(profileInformation)
             }
         }
     }

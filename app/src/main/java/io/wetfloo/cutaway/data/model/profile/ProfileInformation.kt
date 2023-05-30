@@ -12,17 +12,41 @@ import kotlinx.parcelize.Parcelize
 @Immutable
 data class ProfileInformation(
     val name: String,
+    val lastName: String?,
     val pictureUrl: String?,
     val pieces: List<ProfileInformationPiece>,
-    val id: String,
+    val id: String?,
 ) : Parcelable {
     val url
         get() = "$API_BASE_URL/profiles/$id"
+
+    val fullName
+        get() = if (lastName != null) {
+            name + lastName
+        } else name
+
+
+    sealed interface Id : Parcelable {
+        @Parcelize
+        object Unavailable : Id
+
+        @Parcelize
+        data class Available(val value: String) : Id
+    }
 
     // needed for static extensions
     companion object {
         private val String.pictureUrl
             get() = "$API_BASE_URL/images/$this"
+
+        val empty
+            get() = ProfileInformation(
+                name = "",
+                lastName = null,
+                pictureUrl = null,
+                pieces = emptyList(),
+                id = null,
+            )
 
         fun fromDto(dto: ProfileInformationDto): ProfileInformation {
             fun MutableList<ProfileInformationPiece>.addFormedInfoPiece(
@@ -37,10 +61,6 @@ data class ProfileInformation(
                     add(piece)
                 }
             }
-
-            val name = if (dto.lastname != null) {
-                dto.name + dto.lastname
-            } else dto.name
 
             val pieces = buildList {
                 addFormedInfoPiece(
@@ -64,7 +84,8 @@ data class ProfileInformation(
             return ProfileInformation(
                 id = dto.id,
                 pictureUrl = dto.profilePicture?.pictureUrl,
-                name = name,
+                name = dto.name,
+                lastName = dto.lastname,
                 pieces = pieces,
             )
         }

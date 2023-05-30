@@ -132,8 +132,9 @@ private fun Profiles(
     ) {
         itemsIndexed(
             items = state.data,
-            key = { _, item ->
-                item.id
+            key = { index, item ->
+                // kinda hate this
+                item.id ?: index
             },
         ) { index, item ->
             ProfileInformationTop(

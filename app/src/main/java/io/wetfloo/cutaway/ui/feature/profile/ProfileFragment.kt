@@ -59,10 +59,18 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                         )
 
 
-                        is ProfileScreenMessage.ShowQrCode -> findNavController().navigate(
-                            directions = ProfileFragmentDirections
-                                .actionProfileFragmentToQrGeneratorFragment(profileId = message.profile.id),
-                        )
+                        is ProfileScreenMessage.ShowQrCode -> {
+                            val profileId = message.profile.id
+                            require(profileId != null) {
+                                "How is id null here? It shouldn't be!"
+                            }
+                            findNavController().navigate(
+                                directions = ProfileFragmentDirections
+                                    .actionProfileFragmentToQrGeneratorFragment(
+                                        profileId = profileId,
+                                    ),
+                            )
+                        }
                     }
                 },
             )
