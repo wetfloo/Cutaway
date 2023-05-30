@@ -4,6 +4,7 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onSuccess
 import io.wetfloo.cutaway.core.common.runSuspendCatching
+import io.wetfloo.cutaway.core.commonimpl.logW
 import io.wetfloo.cutaway.data.api.GeneralApi
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +28,7 @@ class RealProfileRepository @Inject constructor(
             api.loadProfileInfo(id)
         }
             .map(ProfileInformation::fromDto)
+            .logW(TAG)
             .onSuccess { _state.emit(listOf(it)) }
 
     companion object {

@@ -14,9 +14,9 @@ interface GeneralApi {
     @GET("me/profiles")
     suspend fun loadProfiles(): List<ProfileInformationDto>
 
-    @GET("me/profiles/{id}")
+    @GET("profiles/{profile_id}")
     suspend fun loadProfileInfo(
-        @Path("id") id: String,
+        @Path("profile_id") profileId: String,
     ): ProfileInformationDto
 
     @GET("profiles/search/")
