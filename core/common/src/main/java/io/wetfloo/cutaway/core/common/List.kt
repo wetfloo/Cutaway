@@ -13,3 +13,17 @@ inline fun <T> Iterable<T>.forEachInBetween(
         }
     }
 }
+
+inline fun <T> Iterable<T>.forEachInBetweenIndexed(
+    inBetweenBlock: (Int, T) -> Unit,
+    block: (Int, T) -> Unit,
+) {
+    val count = count()
+    forEachIndexed { index, item ->
+        block(index, item)
+
+        if (index != count - 1) {
+            inBetweenBlock(index, item)
+        }
+    }
+}

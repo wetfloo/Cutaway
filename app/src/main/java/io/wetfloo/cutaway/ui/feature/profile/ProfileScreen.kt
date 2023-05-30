@@ -4,13 +4,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -24,11 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import io.wetfloo.cutaway.R
@@ -36,6 +29,7 @@ import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.HostScaffold
 import io.wetfloo.cutaway.ui.component.SpacerSized
+import io.wetfloo.cutaway.ui.component.contentWindowPaddings
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
@@ -158,18 +152,3 @@ private fun Profiles(
         }
     }
 }
-
-@Composable
-private fun contentWindowPaddings(
-    scaffoldPadding: PaddingValues,
-    appliedPadding: Dp = dimensionResource(R.dimen.default_padding),
-): PaddingValues = WindowInsets(
-    // without these scaffold paddings LazyColumn will ignore the app bar
-    left = appliedPadding + scaffoldPadding.calculateLeftPadding(LocalLayoutDirection.current),
-    top = appliedPadding + scaffoldPadding.calculateTopPadding(),
-    right = appliedPadding + scaffoldPadding.calculateRightPadding(LocalLayoutDirection.current),
-    bottom = appliedPadding,
-)
-    // we ignore scaffold paddings here and add navigation bar padding ourselves
-    .add(WindowInsets.navigationBars)
-    .asPaddingValues()

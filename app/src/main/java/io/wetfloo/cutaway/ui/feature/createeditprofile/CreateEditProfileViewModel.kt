@@ -68,6 +68,9 @@ class CreateEditProfileViewModel @Inject constructor(
             "Tried to update the profile before it became available. Blazingly fast!"
         }
         val profileInformation = value.profileInformation
+        if (!profileInformation.isValid) {
+            return
+        }
 
         viewModelScope.launch {
             when (mode) {
@@ -81,6 +84,9 @@ class CreateEditProfileViewModel @Inject constructor(
             }
         }
     }
+
+    private val ProfileInformation.isValid
+        get() = name.isNotEmpty()
 
     private suspend fun Result<*, *>.handle() {
         onSuccess {
