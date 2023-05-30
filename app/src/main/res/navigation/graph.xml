@@ -43,6 +43,7 @@
         android:label="ProfileDetailedInformationFragment">
         <argument
             android:name="profileInformation"
+            android:defaultValue="@null"
             app:argType="io.wetfloo.cutaway.data.model.profile.ProfileInformation"
             app:nullable="true" />
         <argument
