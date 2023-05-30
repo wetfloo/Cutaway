@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,10 +41,12 @@ class ProfileViewModel @Inject constructor(
     fun reload() {
         when (val currentState = stateValue) {
             is ProfileState.Ready -> viewModelScope.launch {
+                Log.d(TAG, "Reloading profiles")
                 handle(loadingValue = currentState.copy(isUpdating = true))
             }
 
             ProfileState.Idle -> viewModelScope.launch {
+                Log.d(TAG, "Reloading profiles from idle")
                 handle(loadingValue = ProfileState.Loading)
             }
 

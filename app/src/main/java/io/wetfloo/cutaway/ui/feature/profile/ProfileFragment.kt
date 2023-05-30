@@ -6,14 +6,19 @@ import androidx.compose.runtime.getValue
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.observeNavigationResultData
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
+import io.wetfloo.cutaway.ui.feature.createeditprofile.CreateEditProfileFragment
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditMode
+import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileState
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
@@ -37,19 +42,23 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
 
                 onMessage = { message ->
                     when (message) {
-                        is ProfileScreenMessage.EditProfile -> findNavController().navigate(
-                            directions = ProfileFragmentDirections
-                                .actionProfileFragmentToCreateEditProfileFragment(
-                                    mode = CreateEditMode.Edit(profileInformation = message.profile),
-                                ),
-                        )
+                        is ProfileScreenMessage.EditProfile -> {
+                            findNavController().navigate(
+                                directions = ProfileFragmentDirections
+                                    .actionProfileFragmentToCreateEditProfileFragment(
+                                        mode = CreateEditMode.Edit(profileInformation = message.profile),
+                                    ),
+                            )
+                        }
 
-                        ProfileScreenMessage.CreateProfile -> findNavController().navigate(
-                            directions = ProfileFragmentDirections
-                                .actionProfileFragmentToCreateEditProfileFragment(
-                                    mode = CreateEditMode.Create,
-                                ),
-                        )
+                        ProfileScreenMessage.CreateProfile -> {
+                            findNavController().navigate(
+                                directions = ProfileFragmentDirections
+                                    .actionProfileFragmentToCreateEditProfileFragment(
+                                        mode = CreateEditMode.Create,
+                                    ),
+                            )
+                        }
 
                         is ProfileScreenMessage.ShowProfileDetailedInformation -> findNavController().navigate(
                             directions = ProfileFragmentDirections
@@ -74,6 +83,16 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                     }
                 },
             )
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            launch {
+                observeNavigationResultData<CreateEditProfileState>(
+                    key = CreateEditProfileFragment.Keys.UPDATED,
+                ) {
+                    viewModel.reload()
+                }
+            }
         }
     }
 }

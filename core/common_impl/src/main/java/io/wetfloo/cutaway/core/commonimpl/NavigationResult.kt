@@ -4,7 +4,10 @@ import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.flowWithLifecycle
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.onEach
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -79,10 +82,42 @@ fun <T : Parcelable> Fragment.getNavigationResult(
     )
 }
 
-sealed interface NavigationResult<out T : Parcelable> : Parcelable {
-    @Parcelize
-    object Empty : NavigationResult<Nothing>
+suspend inline fun <T : Parcelable> Fragment.observeNavigationResultData(
+    key: String,
+    crossinline onResult: (NavigationResult<T>) -> Unit,
+) {
+    val currentEntry = findNavController().currentBackStackEntry ?: return
+    with(currentEntry.savedStateHandle) {
+        getStateFlow<NavigationResult<T>>(
+            key = key,
+            initialValue = NavigationResult.Empty,
+        )
+            .flowWithLifecycle(
+                lifecycle = viewLifecycleOwner.lifecycle,
+                minActiveState = Lifecycle.State.RESUMED,
+            )
+            .filterIsInstance<NavigationResult.Data<T>>()
+            .onEach { result ->
+                onResult(result)
+            }
+            .onEach {
+                remove<NavigationResult<T>>(key)
+            }
+            .collect {}
+    }
+}
+
+sealed class NavigationResult<out T : Parcelable> : Parcelable {
+    inline fun onData(block: (T) -> Unit) {
+        when (this) {
+            is Data -> block(value)
+            Empty -> Unit
+        }
+    }
 
     @Parcelize
-    data class Data<out T : Parcelable>(val value: T) : NavigationResult<T>
+    object Empty : NavigationResult<Nothing>()
+
+    @Parcelize
+    data class Data<out T : Parcelable>(val value: T) : NavigationResult<T>()
 }

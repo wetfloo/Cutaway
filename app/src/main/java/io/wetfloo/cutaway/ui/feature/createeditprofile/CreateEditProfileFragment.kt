@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.setNavigationResult
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileEvent
@@ -56,10 +57,22 @@ class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.event.collect { createEditEvent ->
                     when (createEditEvent) {
-                        CreateEditProfileEvent.Saved -> findNavController().popBackStack()
+                        CreateEditProfileEvent.Saved -> {
+                            val stateValue = viewModel.stateFlow.value
+                            setNavigationResult(
+                                key = Keys.UPDATED,
+                                value = stateValue,
+                            )
+
+                            findNavController().popBackStack()
+                        }
                     }
                 }
             }
         }
+    }
+
+    object Keys {
+        const val UPDATED = "UPDATED"
     }
 }
