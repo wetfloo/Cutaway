@@ -26,6 +26,7 @@ data class ProfileInformationDto(
             val pieces = profileInformation.pieces
             return ProfileInformationDto(
                 name = profileInformation.name,
+                lastName = profileInformation.lastName,
                 createdAt = profileInformation.createdAt,
                 id = profileInformation.id ?: "",
                 education = pieces
