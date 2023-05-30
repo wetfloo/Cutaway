@@ -8,5 +8,5 @@ interface CreateEditProfileRepository {
 
     suspend fun updateProfile(profileInformation: ProfileInformation): Result<ProfileInformation, Throwable>
 
-    suspend fun deleteProfile(profileInformation: ProfileInformation): Result<Unit, Throwable>
+    suspend fun deleteProfile(profileId: String): Result<Unit, Throwable>
 }

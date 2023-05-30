@@ -6,6 +6,7 @@ import androidx.compose.runtime.Immutable
 import io.wetfloo.cutaway.data.api.API_BASE_URL
 import io.wetfloo.cutaway.data.api.model.ProfileInformationDto
 import kotlinx.parcelize.Parcelize
+import java.time.LocalDateTime
 
 @Parcelize
 @Keep
@@ -16,6 +17,7 @@ data class ProfileInformation(
     val pictureUrl: String?,
     val pieces: List<ProfileInformationPiece>,
     val id: String?,
+    val createdAt: LocalDateTime,
 ) : Parcelable {
     val url
         get() = "$API_BASE_URL/profiles/$id"
@@ -24,15 +26,6 @@ data class ProfileInformation(
         get() = if (lastName != null) {
             name + lastName
         } else name
-
-
-    sealed interface Id : Parcelable {
-        @Parcelize
-        object Unavailable : Id
-
-        @Parcelize
-        data class Available(val value: String) : Id
-    }
 
     // needed for static extensions
     companion object {
@@ -46,6 +39,7 @@ data class ProfileInformation(
                 pictureUrl = null,
                 pieces = emptyList(),
                 id = null,
+                createdAt = LocalDateTime.now(),
             )
 
         fun fromDto(dto: ProfileInformationDto): ProfileInformation {
@@ -87,6 +81,7 @@ data class ProfileInformation(
                 name = dto.name,
                 lastName = dto.lastname,
                 pieces = pieces,
+                createdAt = dto.createdAt,
             )
         }
     }

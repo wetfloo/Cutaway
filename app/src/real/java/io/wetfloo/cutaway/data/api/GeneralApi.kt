@@ -3,6 +3,7 @@ package io.wetfloo.cutaway.data.api
 import io.wetfloo.cutaway.data.api.model.ProfileInformationDto
 import io.wetfloo.cutaway.data.api.model.SearchPage
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -33,4 +34,7 @@ interface GeneralApi {
         @Body profileInformationDto: ProfileInformationDto,
         @Path("profile_id") profileId: String = profileInformationDto.id,
     )
+
+    @DELETE
+    suspend fun deleteProfile(@Path("profile_id") profileId: String)
 }

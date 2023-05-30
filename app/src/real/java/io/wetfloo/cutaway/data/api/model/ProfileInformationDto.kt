@@ -3,6 +3,8 @@ package io.wetfloo.cutaway.data.api.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
+import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
 import java.time.LocalDateTime
 
 @JsonClass(generateAdapter = true)
@@ -18,4 +20,27 @@ data class ProfileInformationDto(
     @Json(name = "phone_number") val phoneNumber: String? = null,
     @Json(name = "place_of_work") val placeOfWork: String? = null,
     @Json(name = "profile_picture") val profilePicture: String? = null,
-)
+) {
+    companion object {
+        fun fromData(profileInformation: ProfileInformation): ProfileInformationDto {
+            val pieces = profileInformation.pieces
+            return ProfileInformationDto(
+                name = profileInformation.name,
+                createdAt = profileInformation.createdAt,
+                id = profileInformation.id ?: "",
+                education = pieces
+                    .findFormedPieceValue(ProfileInformationPiece.Formed.Type.EDUCATION),
+                placeOfWork = pieces
+                    .findFormedPieceValue(ProfileInformationPiece.Formed.Type.WORK),
+                phoneNumber = pieces
+                    .findFormedPieceValue(ProfileInformationPiece.Formed.Type.PHONE_NUMBER),
+            )
+        }
+
+        private fun List<ProfileInformationPiece>.findFormedPieceValue(
+            type: ProfileInformationPiece.Formed.Type,
+        ): String? = filterIsInstance<ProfileInformationPiece.Formed>().firstOrNull { piece ->
+            piece.type == type
+        }?.value
+    }
+}

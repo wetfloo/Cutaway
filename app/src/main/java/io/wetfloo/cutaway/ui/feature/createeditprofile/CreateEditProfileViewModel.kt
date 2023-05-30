@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.DispatcherProvider
 import io.wetfloo.cutaway.core.commonimpl.UiError
+import io.wetfloo.cutaway.core.commonimpl.logW
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.data.repository.createeditprofile.CreateEditProfileRepository
 import io.wetfloo.cutaway.misc.utils.savedastate.StateSaver
@@ -88,14 +89,14 @@ class CreateEditProfileViewModel @Inject constructor(
     private val ProfileInformation.isValid
         get() = name.isNotEmpty()
 
-    private suspend fun Result<*, *>.handle() {
+    private suspend fun Result<*, Throwable>.handle() {
         onSuccess {
             _event.send(CreateEditProfileEvent.Saved)
         }.onFailure {
             _error.send(
                 UiError.Res(R.string.create_edit_profile_destination_failure_generic)
             )
-        }
+        }.logW(TAG)
     }
 
     companion object {
