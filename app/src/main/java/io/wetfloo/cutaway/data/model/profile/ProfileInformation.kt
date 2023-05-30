@@ -79,7 +79,7 @@ data class ProfileInformation(
                 id = dto.id,
                 pictureUrl = dto.profilePicture?.pictureUrl,
                 name = dto.name,
-                lastName = dto.lastname,
+                lastName = dto.lastName,
                 pieces = pieces,
                 createdAt = dto.createdAt,
             )
