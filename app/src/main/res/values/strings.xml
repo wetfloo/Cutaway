@@ -67,4 +67,5 @@
     <!-- Create/edit profile -->
     <string name="create_edit_profile_destination_name_create">Create profile</string>
     <string name="create_edit_profile_destination_name_edit">Edit profile</string>
+    <string name="create_edit_profile_destination_failure_generic">Failed to update the profile</string>
 </resources>

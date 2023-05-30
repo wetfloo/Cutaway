@@ -3,10 +3,11 @@ package io.wetfloo.cutaway.ui.feature.createeditprofile
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.SavedStateHandleSaveableApi
+import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
-import com.github.michaelbull.result.toResultOr
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.DispatcherProvider
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
@@ -21,7 +22,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-@OptIn(SavedStateHandleSaveableApi::class)
 class CreateEditProfileViewModel @Inject constructor(
     private val createEditProfileRepository: CreateEditProfileRepository,
     private val dispatchers: DispatcherProvider,
@@ -62,15 +62,33 @@ class CreateEditProfileViewModel @Inject constructor(
         stateValue = newState
     }
 
-    fun commitUpdate() {
+    fun commitUpdate(mode: CreateEditMode) {
+        val value = stateValue
+        require(value is CreateEditProfileState.Available) {
+            "Tried to update the profile before it became available. Blazingly fast!"
+        }
+        val profileInformation = value.profileInformation
+
         viewModelScope.launch {
-            Unit
-                .toResultOr {
-                    UiError.Raw("idk")
-                }
-                .onSuccess {
-                    _event.send(CreateEditProfileEvent.Saved)
-                }
+            when (mode) {
+                CreateEditMode.Create -> createEditProfileRepository
+                    .createProfile(profileInformation = profileInformation)
+                    .handle()
+
+                is CreateEditMode.Edit -> createEditProfileRepository
+                    .updateProfile(profileInformation = profileInformation)
+                    .handle()
+            }
+        }
+    }
+
+    private suspend fun Result<*, *>.handle() {
+        onSuccess {
+            _event.send(CreateEditProfileEvent.Saved)
+        }.onFailure {
+            _error.send(
+                UiError.Res(R.string.create_edit_profile_destination_failure_generic)
+            )
         }
     }
 
