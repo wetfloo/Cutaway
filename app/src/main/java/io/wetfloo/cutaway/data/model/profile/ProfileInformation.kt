@@ -24,7 +24,7 @@ data class ProfileInformation(
 
     val fullName
         get() = if (lastName != null) {
-            name + lastName
+            "$name $lastName"
         } else name
 
     // needed for static extensions
