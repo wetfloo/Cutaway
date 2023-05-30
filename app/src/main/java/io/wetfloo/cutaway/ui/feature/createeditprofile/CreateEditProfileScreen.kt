@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
+import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileState
 import kotlinx.coroutines.flow.Flow
@@ -29,37 +31,43 @@ fun CreateEditProfileScreen(
     state: CreateEditProfileState,
     errorFlow: Flow<UiError>,
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = title)
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            onMessage(CreateEditProfileScreenMessage.GoBack)
-                        },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.navigation_go_back),
-                        )
-                    }
-                },
-            )
-        },
-    ) { scaffoldPaddingValues ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(scaffoldPaddingValues)
-                .padding(
-                    horizontal = dimensionResource(R.dimen.default_padding),
-                    vertical = dimensionResource(R.dimen.default_padding),
-                ),
-        ) {
+    EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text(text = title)
+                    },
+                    navigationIcon = {
+                        IconButton(
+                            onClick = {
+                                onMessage(CreateEditProfileScreenMessage.GoBack)
+                            },
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = stringResource(R.string.navigation_go_back),
+                            )
+                        }
+                    },
+                )
+            },
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
+        ) { scaffoldPaddingValues ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(scaffoldPaddingValues)
+                    .padding(
+                        horizontal = dimensionResource(R.dimen.default_padding),
+                        vertical = dimensionResource(R.dimen.default_padding),
+                    ),
+            ) {
 
+            }
         }
     }
+
 }
