@@ -3,6 +3,7 @@ package io.wetfloo.cutaway.ui.feature.createeditprofile
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,6 +22,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -140,8 +143,17 @@ private fun ProfileEditor(
             when (piece) {
                 is ProfileInformationPiece.Formed -> {
                     ProfileEditorItem(
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         text = stringResource(piece.type.headerStringRes),
                         value = piece.value,
+                        onDelete = {
+                            onUpdate(
+                                profileInformation.copy(
+                                    pieces = profileInformation.pieces - piece,
+                                )
+                            )
+                        },
                         onValueChange = { value ->
                             onUpdate(
                                 profileInformation.copy(
@@ -188,6 +200,7 @@ private fun ProfileEditorItem(
     text: String,
     value: String,
     onValueChange: (String) -> Unit,
+    onDelete: (() -> Unit)? = null,
 ) {
     Column(
         modifier = modifier,
@@ -201,13 +214,25 @@ private fun ProfileEditorItem(
                 .padding(start = 8.dp),
         )
         SpacerSized(h = 8.dp)
-        NiceTextField(
-            value = value,
-            onValueChange = onValueChange,
-            maxLines = 1,
-            singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth(),
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            NiceTextField(
+                value = value,
+                onValueChange = onValueChange,
+                maxLines = 1,
+                singleLine = true,
+                modifier = Modifier
+                    .weight(1f),
+            )
+            if (onDelete != null) {
+                IconButton(onClick = onDelete) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = null,
+                    )
+                }
+            }
+        }
     }
 }
