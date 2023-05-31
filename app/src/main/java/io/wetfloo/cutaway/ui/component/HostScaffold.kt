@@ -4,7 +4,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -23,7 +22,6 @@ import io.wetfloo.cutaway.ui.core.actions.onQr
 import io.wetfloo.cutaway.ui.core.model.DrawerAction
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HostScaffold(
     modifier: Modifier = Modifier,
@@ -31,6 +29,7 @@ fun HostScaffold(
     title: String,
     actions: @Composable RowScope.() -> Unit = {},
     snackbarHost: @Composable () -> Unit = {},
+    onLogout: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val context = LocalContext.current
@@ -58,11 +57,20 @@ fun HostScaffold(
             }
         )
     }
+    val drawerActionsBottom = remember {
+        listOf(
+            DrawerAction(
+                textId = R.string.log_out_destination_name,
+                action = onLogout,
+            )
+        )
+    }
 
     Drawer(
         modifier = modifier,
         drawerState = drawerState,
         drawerActions = drawerActions,
+        drawerActionsBottom = drawerActionsBottom,
         onDestinationClick = { destination ->
             coroutineScope.launch {
                 drawerState.close()

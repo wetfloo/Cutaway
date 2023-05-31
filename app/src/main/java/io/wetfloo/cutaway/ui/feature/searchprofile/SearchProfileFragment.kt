@@ -10,14 +10,19 @@ import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.data.LogoutStateEventBus
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
 import io.wetfloo.cutaway.ui.feature.searchprofile.state.SearchProfileMessage
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SearchProfileFragment : Fragment(R.layout.fragment_compose_base) {
     private val binding by viewBinding(FragmentComposeBaseBinding::bind)
     private val viewModel: SearchProfileViewModel by viewModels()
+
+    @Inject
+    lateinit var logoutStateEventBus: LogoutStateEventBus
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,6 +57,8 @@ class SearchProfileFragment : Fragment(R.layout.fragment_compose_base) {
                             directions = SearchProfileFragmentDirections
                                 .actionSearchProfileFragmentToProfileDetailedInformationFragment(profileInformation = message.item),
                         )
+
+                        SearchProfileMessage.Logout -> logoutStateEventBus.sendLogoutMessage()
                     }
                 },
             )

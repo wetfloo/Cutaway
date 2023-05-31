@@ -58,14 +58,19 @@ fun ProfileScreen(
             },
             actions = {
                 IconButton(
-                    onClick = { onMessage(ProfileScreenMessage.CreateProfile) },
+                    onClick = {
+                        onMessage(ProfileScreenMessage.CreateProfile)
+                    },
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null,
                     )
                 }
-            }
+            },
+            onLogout = {
+                onMessage(ProfileScreenMessage.Logout)
+            },
         ) { scaffoldPaddingValues ->
             Column(
                 modifier = Modifier

@@ -3,6 +3,7 @@
 package io.wetfloo.cutaway.ui.component
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +30,7 @@ fun Drawer(
     onDestinationClick: (DrawerDestination) -> Unit,
     isDestinationActive: (DrawerDestination) -> Boolean,
     drawerActions: List<DrawerAction> = emptyList(),
+    drawerActionsBottom: List<DrawerAction> = emptyList(),
     content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
@@ -58,6 +60,24 @@ fun Drawer(
 
                 InBetween(
                     items = drawerActions,
+                    inBetweenBlock = { DefaultSpacer() },
+                ) { item ->
+                    DefaultNavigationItem(
+                        selected = false,
+                        label = item.textId,
+                        onClick = {
+                            item.action()
+                        },
+                    )
+                }
+
+                Spacer(
+                    modifier = Modifier
+                        .weight(1f),
+                )
+
+                InBetween(
+                    items = drawerActionsBottom,
                     inBetweenBlock = { DefaultSpacer() },
                 ) { item ->
                     DefaultNavigationItem(

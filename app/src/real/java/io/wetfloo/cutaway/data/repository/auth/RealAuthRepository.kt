@@ -1,7 +1,7 @@
 package io.wetfloo.cutaway.data.repository.auth
 
-import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onSuccess
+import io.wetfloo.cutaway.core.common.erase
 import io.wetfloo.cutaway.core.common.runSuspendCatching
 import io.wetfloo.cutaway.data.api.AuthApi
 import io.wetfloo.cutaway.data.model.auth.AuthRequest
@@ -20,5 +20,5 @@ class RealAuthRepository @Inject constructor(
     }.onSuccess { authResponse ->
         // this PROBABLY shouldn't fail anyway, so it's not caught
         authPreferencesStorage.setToken(authResponse.accessToken)
-    }.map {}
+    }.erase()
 }

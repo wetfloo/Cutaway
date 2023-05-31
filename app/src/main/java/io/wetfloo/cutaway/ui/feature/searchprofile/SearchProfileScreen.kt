@@ -61,6 +61,9 @@ fun SearchProfileScreen(
             snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
             },
+            onLogout = {
+                onMessage(SearchProfileMessage.Logout)
+            },
         ) { scaffoldPaddingValues ->
             val context = LocalContext.current
             val coroutineScope = rememberCoroutineScope()

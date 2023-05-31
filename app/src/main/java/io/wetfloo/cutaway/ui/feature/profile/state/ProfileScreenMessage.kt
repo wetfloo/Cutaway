@@ -16,4 +16,6 @@ sealed interface ProfileScreenMessage {
     data class ShowProfileDetailedInformation(
         val profile: ProfileInformation,
     ) : ProfileScreenMessage
+
+    object Logout : ProfileScreenMessage
 }

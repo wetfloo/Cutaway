@@ -12,6 +12,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.observeNavigationResultData
+import io.wetfloo.cutaway.data.LogoutStateEventBus
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
 import io.wetfloo.cutaway.ui.feature.createeditprofile.CreateEditProfileFragment
@@ -19,11 +20,15 @@ import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditMode
 import io.wetfloo.cutaway.ui.feature.createeditprofile.state.CreateEditProfileState
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
     private val binding by viewBinding(FragmentComposeBaseBinding::bind)
     private val viewModel: ProfileViewModel by viewModels()
+
+    @Inject
+    lateinit var logoutStateEventBus: LogoutStateEventBus
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,6 +85,8 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                                     ),
                             )
                         }
+
+                        ProfileScreenMessage.Logout -> logoutStateEventBus.sendLogoutMessage()
                     }
                 },
             )

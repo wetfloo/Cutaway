@@ -19,6 +19,7 @@
         Oops, couldn\'t authenticate you right now. Try again later!
     </string>
     <string name="log_in_headline">Log in 🔐</string>
+    <string name="log_out_destination_name">Log out</string>
 
     <!-- Profile -->
     <string name="profile_destination_name">Profile</string>
