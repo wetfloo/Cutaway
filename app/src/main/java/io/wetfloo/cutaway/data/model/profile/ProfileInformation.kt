@@ -14,13 +14,16 @@ import java.time.LocalDateTime
 data class ProfileInformation(
     val name: String,
     val lastName: String?,
-    val pictureUrl: String?,
+    val profilePictureId: String?,
     val pieces: List<ProfileInformationPiece>,
     val id: String?,
     val createdAt: LocalDateTime,
 ) : Parcelable {
     val url
         get() = "$API_BASE_URL/profiles/$id"
+
+    val pictureUrl: String?
+        get() = profilePictureId?.pictureUrl
 
     val fullName
         get() = if (lastName != null) {
@@ -36,7 +39,7 @@ data class ProfileInformation(
             get() = ProfileInformation(
                 name = "",
                 lastName = null,
-                pictureUrl = null,
+                profilePictureId = null,
                 pieces = emptyList(),
                 id = null,
                 createdAt = LocalDateTime.now(),
@@ -77,7 +80,7 @@ data class ProfileInformation(
 
             return ProfileInformation(
                 id = dto.id,
-                pictureUrl = dto.profilePicture?.pictureUrl,
+                profilePictureId = dto.profilePicture,
                 name = dto.name,
                 lastName = dto.lastName,
                 pieces = pieces,

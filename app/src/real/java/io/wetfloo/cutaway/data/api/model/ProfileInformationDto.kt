@@ -35,6 +35,10 @@ data class ProfileInformationDto(
                     .findFormedPieceValue(ProfileInformationPiece.Formed.Type.WORK),
                 phoneNumber = pieces
                     .findFormedPieceValue(ProfileInformationPiece.Formed.Type.PHONE_NUMBER),
+                profilePicture = profileInformation.pictureUrl,
+                links = pieces
+                    .filterIsInstance<ProfileInformationPiece.Link>()
+                    .map(LinkDto::fromData),
             )
         }
 

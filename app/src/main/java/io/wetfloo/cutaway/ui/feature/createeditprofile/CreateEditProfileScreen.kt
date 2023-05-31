@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
@@ -17,6 +19,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
@@ -32,6 +35,7 @@ import io.wetfloo.cutaway.core.common.forEachInBetweenIndexed
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
+import io.wetfloo.cutaway.data.model.profile.ProfileLinkType
 import io.wetfloo.cutaway.ui.component.EventFlowSnackbarDisplay
 import io.wetfloo.cutaway.ui.component.NiceTextField
 import io.wetfloo.cutaway.ui.component.SpacerSized
@@ -77,8 +81,9 @@ fun CreateEditProfileScreen(
                 is CreateEditProfileState.Available -> ProfileEditor(
                     profileInformation = state.profileInformation,
                     modifier = Modifier
-                        .padding(dimensionResource(R.dimen.default_padding))
-                        .padding(scaffoldPaddingValues),
+                        .padding(scaffoldPaddingValues)
+                        .padding(horizontal = dimensionResource(R.dimen.default_padding))
+                        .imePadding(),
                     onUpdate = { profileInformation ->
                         onMessage(CreateEditProfileScreenMessage.UpdateProfile(profileInformation))
                     },
@@ -105,6 +110,8 @@ private fun ProfileEditor(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
+        SpacerSized(h = dimensionResource(R.dimen.default_padding))
+
         ProfileEditorItem(
             text = "Name",
             value = profileInformation.name,
@@ -173,24 +180,83 @@ private fun ProfileEditor(
                     )
                 }
 
-                is ProfileInformationPiece.Link -> Unit
+                is ProfileInformationPiece.Link -> ProfileEditorItem(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    text = piece.title,
+                    value = piece.url,
+                    onDelete = {
+                        onUpdate(
+                            profileInformation.copy(
+                                pieces = profileInformation.pieces - piece,
+                            )
+                        )
+                    },
+                    onValueChange = { value ->
+                        onUpdate(
+                            profileInformation.copy(
+                                pieces = buildList {
+                                    addAll(profileInformation.pieces)
+                                    removeAt(index)
+                                    add(
+                                        index = index,
+                                        element = piece.copy(
+                                            url = value,
+                                        )
+                                    )
+                                }
+                            )
+                        )
+                    }
+                )
             }
         }
 
-        SpacerSized(h = 32.dp)
+        SpacerSized(h = 16.dp)
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+        ) {
+            OutlinedButton(
+                onClick = {
+                    onUpdate(
+                        profileInformation.copy(
+                            pieces = profileInformation.pieces + ProfileInformationPiece.Link(
+                                title = "My custom link",
+                                url = "",
+                                linkType = ProfileLinkType.CUSTOM,
+                            ),
+                        )
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth(.5f),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                )
+
+                Text(text = "Add link")
+            }
+        }
+
+        SpacerSized(h = 16.dp)
 
         Button(
             onClick = onCommit,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(
-                    horizontal = 16.dp,
-                ),
+                .padding(horizontal = 16.dp),
         ) {
             Text(
                 text = stringResource(R.string.create_edit_profile_commit),
             )
         }
+
+        SpacerSized(h = dimensionResource(R.dimen.default_padding))
     }
 }
 

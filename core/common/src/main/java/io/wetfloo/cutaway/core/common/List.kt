@@ -4,11 +4,11 @@ inline fun <T> Iterable<T>.forEachInBetween(
     inBetweenBlock: (T) -> Unit,
     block: (T) -> Unit,
 ) {
-    val count = count()
+    val lastIndex = count() - 1
     forEachIndexed { index, item ->
         block(item)
 
-        if (index != count - 1) {
+        if (index != lastIndex) {
             inBetweenBlock(item)
         }
     }
@@ -18,11 +18,11 @@ inline fun <T> Iterable<T>.forEachInBetweenIndexed(
     inBetweenBlock: (Int, T) -> Unit,
     block: (Int, T) -> Unit,
 ) {
-    val count = count()
+    val lastIndex = count() - 1
     forEachIndexed { index, item ->
         block(index, item)
 
-        if (index != count - 1) {
+        if (index != lastIndex) {
             inBetweenBlock(index, item)
         }
     }
