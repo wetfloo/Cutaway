@@ -1,12 +1,16 @@
 package io.wetfloo.cutaway.data.api
 
+import io.wetfloo.cutaway.data.api.model.ImageUploadResponseDto
 import io.wetfloo.cutaway.data.api.model.ProfileInformationDto
 import io.wetfloo.cutaway.data.api.model.SearchPage
+import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -37,4 +41,10 @@ interface GeneralApi {
 
     @DELETE
     suspend fun deleteProfile(@Path("profile_id") profileId: String)
+
+    @POST("images")
+    @Multipart
+    suspend fun createImage(
+        @Part file: MultipartBody.Part,
+    ): ImageUploadResponseDto
 }

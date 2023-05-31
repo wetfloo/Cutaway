@@ -46,8 +46,12 @@ class CreateEditProfileFragment : Fragment(R.layout.fragment_compose_base) {
                 onMessage = { message ->
                     when (message) {
                         CreateEditProfileScreenMessage.GoBack -> findNavController().popBackStack()
+
                         CreateEditProfileScreenMessage.Save -> viewModel.commitUpdate(args.mode)
+
                         is CreateEditProfileScreenMessage.UpdateProfile -> viewModel.updateProfile(message.profileInformation)
+
+                        is CreateEditProfileScreenMessage.ImagePicked -> viewModel.imagePicked(message.imageUri)
                     }
                 }
             )

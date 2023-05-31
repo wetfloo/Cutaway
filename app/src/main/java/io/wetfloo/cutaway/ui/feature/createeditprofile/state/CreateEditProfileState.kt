@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.feature.createeditprofile.state
 
+import android.net.Uri
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
@@ -11,5 +12,8 @@ sealed interface CreateEditProfileState : Parcelable {
     object Idle : CreateEditProfileState
 
     @Parcelize
-    data class Available(val profileInformation: ProfileInformation) : CreateEditProfileState
+    data class Available(
+        val profileInformation: ProfileInformation,
+        val pictureUri: Uri? = null,
+    ) : CreateEditProfileState
 }

@@ -1,14 +1,15 @@
 package io.wetfloo.cutaway.ui.feature.createeditprofile
 
+import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.get
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
-import io.wetfloo.cutaway.core.common.DispatcherProvider
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.logW
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
@@ -25,7 +26,6 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateEditProfileViewModel @Inject constructor(
     private val createEditProfileRepository: CreateEditProfileRepository,
-    private val dispatchers: DispatcherProvider,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val stateSaver = StateSaver<CreateEditProfileState>(
@@ -59,8 +59,22 @@ class CreateEditProfileViewModel @Inject constructor(
     }
 
     private fun writeProfile(profileInformation: ProfileInformation) {
-        val newState = CreateEditProfileState.Available(profileInformation)
+        val newState = CreateEditProfileState.Available(
+            profileInformation = profileInformation,
+        )
         stateValue = newState
+    }
+
+    fun imagePicked(uri: Uri) {
+        when (val value = stateValue) {
+            is CreateEditProfileState.Available -> {
+                stateValue = value.copy(
+                    pictureUri = uri,
+                )
+            }
+
+            CreateEditProfileState.Idle -> error("It shouldn't be possible to pick images while we're idle.")
+        }
     }
 
     fun commitUpdate(mode: CreateEditMode) {
@@ -74,13 +88,24 @@ class CreateEditProfileViewModel @Inject constructor(
         }
 
         viewModelScope.launch {
+            val profilePictureUri = (stateValue as? CreateEditProfileState.Available)?.pictureUri
+            val uploadPictureResult = if (profilePictureUri != null) {
+                createEditProfileRepository.uploadImage(profilePictureUri)
+            } else null
+            val profilePictureId = uploadPictureResult?.get()
+            val newProfileInformation = if (profilePictureId != null) {
+                profileInformation.copy(
+                    profilePictureId = profilePictureId,
+                )
+            } else profileInformation
+
             when (mode) {
                 CreateEditMode.Create -> createEditProfileRepository
-                    .createProfile(profileInformation = profileInformation)
+                    .createProfile(profileInformation = newProfileInformation)
                     .handle()
 
                 is CreateEditMode.Edit -> createEditProfileRepository
-                    .updateProfile(profileInformation = profileInformation)
+                    .updateProfile(profileInformation = newProfileInformation)
                     .handle()
             }
         }
