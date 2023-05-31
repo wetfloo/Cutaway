@@ -82,12 +82,6 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun showEditingNotSupported() {
-        viewModelScope.launch {
-            _error.send(UiError.Res(R.string.profile_edit_not_implemented_error))
-        }
-    }
-
     fun deleteProfile(profileInformation: ProfileInformation) {
         viewModelScope.launch {
             profileRepository.deleteProfile(profileInformation)
