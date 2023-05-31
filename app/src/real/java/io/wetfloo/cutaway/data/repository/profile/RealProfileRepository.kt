@@ -9,6 +9,7 @@ import io.wetfloo.cutaway.data.api.GeneralApi
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class RealProfileRepository @Inject constructor(
@@ -34,6 +35,13 @@ class RealProfileRepository @Inject constructor(
     override suspend fun deleteProfile(profileInformation: ProfileInformation) = runSuspendCatching {
         api.deleteProfile(profileInformation.id!!)
     }
+        .onSuccess {
+            _state.update { profiles ->
+                if (profiles != null) {
+                    profiles - profileInformation
+                } else null
+            }
+        }
 
     companion object {
         private const val TAG = "RealProfileRepository"
