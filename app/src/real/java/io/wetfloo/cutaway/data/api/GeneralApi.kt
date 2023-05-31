@@ -39,7 +39,7 @@ interface GeneralApi {
         @Path("profile_id") profileId: String = profileInformationDto.id,
     )
 
-    @DELETE
+    @DELETE("me/profiles/{profile_id}")
     suspend fun deleteProfile(@Path("profile_id") profileId: String)
 
     @POST("images")

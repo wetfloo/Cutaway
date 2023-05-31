@@ -31,6 +31,10 @@ class RealProfileRepository @Inject constructor(
             .logW(TAG)
             .onSuccess { _state.emit(listOf(it)) }
 
+    override suspend fun deleteProfile(profileInformation: ProfileInformation) = runSuspendCatching {
+        api.deleteProfile(profileInformation.id!!)
+    }
+
     companion object {
         private const val TAG = "RealProfileRepository"
     }

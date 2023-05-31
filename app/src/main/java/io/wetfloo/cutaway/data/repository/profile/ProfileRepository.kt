@@ -9,4 +9,5 @@ interface ProfileRepository {
 
     suspend fun loadMyProfiles(): Result<List<ProfileInformation>, Throwable>
     suspend fun loadProfileInformation(id: String): Result<ProfileInformation, Throwable>
+    suspend fun deleteProfile(profileInformation: ProfileInformation): Result<Unit, Throwable>
 }

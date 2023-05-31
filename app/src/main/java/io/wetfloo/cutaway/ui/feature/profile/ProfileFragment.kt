@@ -56,6 +56,8 @@ class ProfileFragment : Fragment(R.layout.fragment_compose_base) {
                             )
                         }
 
+                        is ProfileScreenMessage.DeleteProfile -> viewModel.deleteProfile(message.profile)
+
                         ProfileScreenMessage.CreateProfile -> {
                             findNavController().navigate(
                                 directions = ProfileFragmentDirections

@@ -169,9 +169,13 @@ private fun Profiles(
                 onEditClick = {
                     onMessage(ProfileScreenMessage.EditProfile(item))
                 },
+                onDeleteClick = {
+                    onMessage(ProfileScreenMessage.DeleteProfile(item))
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 onActivityLaunchFailed = onActivityLaunchFailed,
+                isDeleteVisible = state.data.count() > 1,
                 onInfoCopied = onInfoCopied,
             )
 

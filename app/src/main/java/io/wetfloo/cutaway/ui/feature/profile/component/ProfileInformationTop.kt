@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material3.Card
@@ -51,6 +52,8 @@ fun ProfileInformationTop(
     onQrClick: () -> Unit,
     onEditClick: () -> Unit,
     onInfoCopied: () -> Unit,
+    isDeleteVisible: Boolean,
+    onDeleteClick: () -> Unit,
     onActivityLaunchFailed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -158,6 +161,15 @@ fun ProfileInformationTop(
                         imageVector = Icons.Default.Edit,
                         contentDescription = null,
                     )
+                }
+
+                if (isDeleteVisible) {
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                        )
+                    }
                 }
             }
         }

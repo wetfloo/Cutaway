@@ -9,6 +9,10 @@ sealed interface ProfileScreenMessage {
 
     object CreateProfile : ProfileScreenMessage
 
+    data class DeleteProfile(
+        val profile: ProfileInformation,
+    ) : ProfileScreenMessage
+
     data class ShowQrCode(
         val profile: ProfileInformation,
     ) : ProfileScreenMessage

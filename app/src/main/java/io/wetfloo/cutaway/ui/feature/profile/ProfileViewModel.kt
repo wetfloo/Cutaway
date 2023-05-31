@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.handleStateResult
+import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import io.wetfloo.cutaway.data.repository.profile.ProfileRepository
 import io.wetfloo.cutaway.misc.utils.savedastate.StateSaver
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
@@ -84,6 +85,13 @@ class ProfileViewModel @Inject constructor(
     fun showEditingNotSupported() {
         viewModelScope.launch {
             _error.send(UiError.Res(R.string.profile_edit_not_implemented_error))
+        }
+    }
+
+    fun deleteProfile(profileInformation: ProfileInformation) {
+        viewModelScope.launch {
+            profileRepository.deleteProfile(profileInformation)
+            reload()
         }
     }
 
