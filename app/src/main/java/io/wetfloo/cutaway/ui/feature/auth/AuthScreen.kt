@@ -79,6 +79,13 @@ fun AuthScreen(
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    Text(
+                        text = stringResource(R.string.log_in_headline),
+                        style = MaterialTheme.typography.headlineLarge,
+                    )
+
+                    Spacer(Modifier.height(32.dp))
+
                     NiceTextField(
                         value = loginValue,
                         onValueChange = onLoginChange,
