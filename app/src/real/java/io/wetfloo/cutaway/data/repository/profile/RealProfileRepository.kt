@@ -22,19 +22,21 @@ class RealProfileRepository @Inject constructor(
         runSuspendCatching {
             api.loadProfiles().map(ProfileInformation::fromDto)
         }
+            .logW(TAG)
             .onSuccess { _state.emit(it) }
 
     override suspend fun loadProfileInformation(id: String): Result<ProfileInformation, Throwable> =
         runSuspendCatching {
             api.loadProfileInfo(id)
         }
-            .map(ProfileInformation::fromDto)
             .logW(TAG)
+            .map(ProfileInformation::fromDto)
             .onSuccess { _state.emit(listOf(it)) }
 
     override suspend fun deleteProfile(profileInformation: ProfileInformation) = runSuspendCatching {
         api.deleteProfile(profileInformation.id!!)
     }
+        .logW(TAG)
         .onSuccess {
             _state.update { profiles ->
                 if (profiles != null) {
