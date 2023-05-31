@@ -3,6 +3,7 @@ package io.wetfloo.cutaway.data.repository.profile
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.map
 import com.github.michaelbull.result.onSuccess
+import com.github.michaelbull.result.recoverIf
 import io.wetfloo.cutaway.core.common.runSuspendCatching
 import io.wetfloo.cutaway.core.commonimpl.logW
 import io.wetfloo.cutaway.data.api.GeneralApi
@@ -10,6 +11,8 @@ import io.wetfloo.cutaway.data.model.profile.ProfileInformation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import okhttp3.internal.http.HTTP_NOT_FOUND
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class RealProfileRepository @Inject constructor(
@@ -23,6 +26,13 @@ class RealProfileRepository @Inject constructor(
             api.loadProfiles().map(ProfileInformation::fromDto)
         }
             .logW(TAG)
+            .recoverIf(
+                predicate = { error ->
+                    error is HttpException && error.code() == HTTP_NOT_FOUND
+                }
+            ) {
+                emptyList()
+            }
             .onSuccess { _state.emit(it) }
 
     override suspend fun loadProfileInformation(id: String): Result<ProfileInformation, Throwable> =
