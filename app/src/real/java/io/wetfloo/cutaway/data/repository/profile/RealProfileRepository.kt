@@ -25,7 +25,6 @@ class RealProfileRepository @Inject constructor(
         runSuspendCatching {
             api.loadProfiles().map(ProfileInformation::fromDto)
         }
-            .logW(TAG)
             .recoverIf(
                 predicate = { error ->
                     error is HttpException && error.code() == HTTP_NOT_FOUND
@@ -33,6 +32,7 @@ class RealProfileRepository @Inject constructor(
             ) {
                 emptyList()
             }
+            .logW(TAG)
             .onSuccess { _state.emit(it) }
 
     override suspend fun loadProfileInformation(id: String): Result<ProfileInformation, Throwable> =
