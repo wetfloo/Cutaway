@@ -69,6 +69,8 @@
     <string name="create_edit_profile_destination_name_edit">Edit profile</string>
     <string name="create_edit_profile_destination_failure_generic">Failed to update the profile</string>
     <string name="create_edit_profile_commit">Save</string>
+    <string name="create_edit_profile_link_title">Link title (click to edit)</string>
+    <string name="create_edit_profile_title_text_field_label">Link title</string>
 
     <string name="profile_piece_interaction_copied">Copied profile information</string>
     <string name="profile_piece_interaction_failure_activity_open">Couldn\'t find a way to open the link</string>
