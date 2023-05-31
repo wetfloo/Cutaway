@@ -66,7 +66,6 @@ fun CreateEditProfileScreen(
     EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
         Scaffold(
             modifier = Modifier
-                .padding(horizontal = dimensionResource(R.dimen.default_padding))
                 .imePadding(),
             topBar = {
                 TopAppBar(
@@ -95,7 +94,8 @@ fun CreateEditProfileScreen(
                 is CreateEditProfileState.Available -> ProfileEditor(
                     profileInformation = state.profileInformation,
                     modifier = Modifier
-                        .padding(scaffoldPaddingValues),
+                        .padding(scaffoldPaddingValues)
+                        .padding(horizontal = dimensionResource(R.dimen.default_padding)),
                     onUpdate = { profileInformation ->
                         onMessage(CreateEditProfileScreenMessage.UpdateProfile(profileInformation))
                     },
