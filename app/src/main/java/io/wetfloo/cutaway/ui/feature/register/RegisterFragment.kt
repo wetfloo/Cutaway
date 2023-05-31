@@ -1,4 +1,4 @@
-package io.wetfloo.cutaway.ui.feature.auth
+package io.wetfloo.cutaway.ui.feature.register
 
 import android.os.Bundle
 import android.view.View
@@ -15,14 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.databinding.FragmentComposeBaseBinding
 import io.wetfloo.cutaway.ui.core.composify
-import io.wetfloo.cutaway.ui.feature.auth.state.AuthEvent
-import io.wetfloo.cutaway.ui.feature.auth.state.AuthScreenMessage
+import io.wetfloo.cutaway.ui.feature.register.state.RegisterEvent
+import io.wetfloo.cutaway.ui.feature.register.state.RegisterScreenMessage
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class AuthFragment : Fragment(R.layout.fragment_compose_base) {
+class RegisterFragment : Fragment(R.layout.fragment_compose_base) {
     private val binding by viewBinding(FragmentComposeBaseBinding::bind)
-    private val viewModel: AuthViewModel by viewModels()
+    private val viewModel: RegisterViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,20 +32,25 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
                 .stateFlow
                 .collectAsStateWithLifecycle()
 
-            AuthScreen(
+            RegisterScreen(
+                emailValue = viewModel.emailValue,
                 loginValue = viewModel.loginValue,
                 passwordValue = viewModel.passwordValue,
-                onLoginChange = { viewModel.loginValue = it },
-                onPasswordChange = { viewModel.passwordValue = it },
+                onEmailChange = { value ->
+                    viewModel.emailValue = value
+                },
+                onLoginChange = { value ->
+                    viewModel.loginValue = value
+                },
+                onPasswordChange = { value ->
+                    viewModel.passwordValue = value
+                },
                 state = state,
                 onMessage = { message ->
                     when (message) {
-                        AuthScreenMessage.LoginButtonClicked -> viewModel.logIn()
+                        RegisterScreenMessage.RegisterButtonClicked -> viewModel.register()
 
-                        AuthScreenMessage.GoToRegister -> findNavController().navigate(
-                            directions = AuthFragmentDirections
-                                .actionAuthFragmentToRegisterFragment(),
-                        )
+                        RegisterScreenMessage.GoToAuth -> findNavController().popBackStack()
                     }
                 },
                 errorFlow = viewModel.error,
@@ -54,12 +59,12 @@ class AuthFragment : Fragment(R.layout.fragment_compose_base) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.event.collect { authEvent ->
-                    when (authEvent) {
-                        AuthEvent.Success -> {
+                viewModel.event.collect { registerEvent ->
+                    when (registerEvent) {
+                        RegisterEvent.Success -> {
                             findNavController().navigate(
-                                directions = AuthFragmentDirections
-                                    .actionAuthFragmentToProfileFragment(),
+                                directions = RegisterFragmentDirections
+                                    .actionRegisterFragmentToProfileFragment(),
                             )
                         }
                     }

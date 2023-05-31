@@ -7,19 +7,29 @@
 
     <!-- General UI -->
     <string name="ui_search">Search</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
 
     <!-- Host drawer -->
     <string name="host_drawer_menu_description">Drawer menu</string>
 
     <!-- Auth -->
-    <string name="login">Login</string>
-    <string name="password">Password</string>
     <string name="log_in">Log in</string>
-    <string name="auth_failure_general">
+    <string name="auth_failure_generic">
         Oops, couldn\'t authenticate you right now. Try again later!
     </string>
     <string name="log_in_headline">Log in 🔐</string>
+    <string name="log_in_register_instead">Register instead</string>
     <string name="log_out_destination_name">Log out</string>
+
+    <!-- Register -->
+    <string name="register_headline">Register ✨</string>
+    <string name="register_failure_generic">
+        Oops, couldn\'t authenticate you right now. Either servers are down, or some data is invalid…
+    </string>
+    <string name="register">Register</string>
+    <string name="register_log_in_instead">Log in instead</string>
 
     <!-- Profile -->
     <string name="profile_destination_name">Profile</string>
