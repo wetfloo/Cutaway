@@ -59,10 +59,15 @@ class CreateEditProfileViewModel @Inject constructor(
     }
 
     private fun writeProfile(profileInformation: ProfileInformation) {
-        val newState = CreateEditProfileState.Available(
-            profileInformation = profileInformation,
-        )
-        stateValue = newState
+        stateValue = when (val value = stateValue) {
+            is CreateEditProfileState.Available -> value.copy(
+                profileInformation = profileInformation,
+            )
+
+            CreateEditProfileState.Idle -> CreateEditProfileState.Available(
+                profileInformation = profileInformation,
+            )
+        }
     }
 
     fun imagePicked(uri: Uri) {
