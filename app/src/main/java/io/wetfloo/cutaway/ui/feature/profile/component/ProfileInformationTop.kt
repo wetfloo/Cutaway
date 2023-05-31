@@ -1,6 +1,8 @@
 package io.wetfloo.cutaway.ui.feature.profile.component
 
-import android.widget.Toast
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,9 +28,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -36,6 +40,7 @@ import coil.request.ImageRequest
 import io.wetfloo.cutaway.R
 import io.wetfloo.cutaway.core.common.forEachInBetween
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
+import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
 import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.component.SpacerSized
 
@@ -45,9 +50,12 @@ fun ProfileInformationTop(
     onCardClick: () -> Unit,
     onQrClick: () -> Unit,
     onEditClick: () -> Unit,
+    onInfoCopied: () -> Unit,
+    onActivityLaunchFailed: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val clipboardManager = LocalClipboardManager.current
 
     val informationPiecesPinned by remember {
         derivedStateOf {
@@ -109,11 +117,26 @@ fun ProfileInformationTop(
                         .fillMaxWidth(),
                     piece = piece,
                     onClick = {
-                        Toast.makeText(
-                            context,
-                            "Profile info piece clicked", // TODO
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        when (piece) {
+                            is ProfileInformationPiece.Formed -> {
+                                clipboardManager.setText(AnnotatedString(piece.value))
+                                onInfoCopied()
+                            }
+
+                            is ProfileInformationPiece.Link -> {
+                                try {
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(piece.url),
+                                    )
+                                    context.startActivity(intent)
+                                } catch (e: ActivityNotFoundException) {
+                                    onActivityLaunchFailed()
+                                } catch (e: SecurityException) {
+                                    onActivityLaunchFailed()
+                                }
+                            }
+                        }
                     },
                 )
             }

@@ -1,6 +1,9 @@
 package io.wetfloo.cutaway.ui.feature.profiledetails
 
-import android.widget.Toast
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -19,24 +22,33 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.data.model.profile.ProfileInformationPiece
 import io.wetfloo.cutaway.ui.component.DefaultDivider
 import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationItem
 import io.wetfloo.cutaway.ui.feature.profiledetails.state.ProfileDetailedScreenMessage
 import io.wetfloo.cutaway.ui.feature.profiledetails.state.ProfileDetailedState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +57,11 @@ fun ProfileDetailedInformationScreen(
     onMessage: (ProfileDetailedScreenMessage) -> Unit,
 ) {
     val context = LocalContext.current
+    val clipboardManager = LocalClipboardManager.current
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember {
+        SnackbarHostState()
+    }
 
     Scaffold(
         topBar = {
@@ -83,6 +100,9 @@ fun ProfileDetailedInformationScreen(
                     }
                 },
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         },
     ) { scaffoldPaddingValues ->
         Column(
@@ -131,6 +151,9 @@ fun ProfileDetailedInformationScreen(
                         )
                     }
 
+                    val errorMessage = stringResource(R.string.profile_piece_interaction_failure_activity_open)
+                    val copiedMessage = stringResource(R.string.profile_piece_interaction_copied)
+
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize(),
@@ -140,17 +163,42 @@ fun ProfileDetailedInformationScreen(
                             key = { _, item ->
                                 item.hashCode()
                             }
-                        ) { index, item ->
+                        ) { index, piece ->
                             ProfileInformationItem(
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                piece = item,
+                                piece = piece,
                                 onClick = {
-                                    Toast.makeText(
-                                        context,
-                                        "Profile info piece clicked", // TODO
-                                        Toast.LENGTH_SHORT,
-                                    ).show()
+                                    when (piece) {
+                                        is ProfileInformationPiece.Formed -> {
+                                            clipboardManager.setText(AnnotatedString(piece.value))
+                                            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                                                snackbarHostState.showMessage(
+                                                    message = copiedMessage,
+                                                    coroutineScope = coroutineScope,
+                                                )
+                                            }
+                                        }
+
+                                        is ProfileInformationPiece.Link -> {
+                                            try {
+                                                val intent = Intent(
+                                                    Intent.ACTION_VIEW,
+                                                    Uri.parse(piece.url),
+                                                )
+                                                context.startActivity(intent)
+                                            } catch (e: ActivityNotFoundException) {
+                                                snackbarHostState.showMessage(
+                                                    message = errorMessage,
+                                                    coroutineScope = coroutineScope,
+                                                )
+                                                snackbarHostState.showMessage(
+                                                    message = errorMessage,
+                                                    coroutineScope = coroutineScope,
+                                                )
+                                            }
+                                        }
+                                    }
                                 },
                             )
 
@@ -166,5 +214,14 @@ fun ProfileDetailedInformationScreen(
                 }
             }
         }
+    }
+}
+
+private fun SnackbarHostState.showMessage(
+    message: String,
+    coroutineScope: CoroutineScope,
+) {
+    coroutineScope.launch {
+        showSnackbar(message = message)
     }
 }

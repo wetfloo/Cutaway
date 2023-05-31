@@ -1,5 +1,6 @@
 package io.wetfloo.cutaway.ui.feature.profile
 
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,6 +36,7 @@ import io.wetfloo.cutaway.ui.feature.profile.component.ProfileInformationTop
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileScreenMessage
 import io.wetfloo.cutaway.ui.feature.profile.state.ProfileState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProfileScreen(
@@ -42,6 +45,8 @@ fun ProfileScreen(
     state: ProfileState,
     errorFlow: Flow<UiError>,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     EventFlowSnackbarDisplay(errorFlow = errorFlow) { snackbarHostState ->
         HostScaffold(
             modifier = Modifier
@@ -67,6 +72,9 @@ fun ProfileScreen(
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                val errorMessage = stringResource(R.string.profile_piece_interaction_failure_activity_open)
+                val copiedMessage = stringResource(R.string.profile_piece_interaction_copied)
+
                 when (state) {
                     is ProfileState.Ready -> {
                         if (state.data.isNotEmpty()) {
@@ -74,6 +82,18 @@ fun ProfileScreen(
                                 scaffoldPaddingValues = scaffoldPaddingValues,
                                 state = state,
                                 onMessage = onMessage,
+                                onActivityLaunchFailed = {
+                                    coroutineScope.launch {
+                                        snackbarHostState.showSnackbar(message = errorMessage)
+                                    }
+                                },
+                                onInfoCopied = {
+                                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                                        coroutineScope.launch {
+                                            snackbarHostState.showSnackbar(message = copiedMessage)
+                                        }
+                                    }
+                                },
                             )
                         } else {
                             Column(
@@ -115,8 +135,10 @@ fun ProfileScreen(
 @Composable
 private fun Profiles(
     scaffoldPaddingValues: PaddingValues,
-    state: ProfileState.Ready,
     onMessage: (ProfileScreenMessage) -> Unit,
+    onInfoCopied: () -> Unit,
+    onActivityLaunchFailed: () -> Unit,
+    state: ProfileState.Ready,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -144,6 +166,8 @@ private fun Profiles(
                 },
                 modifier = Modifier
                     .fillMaxWidth(),
+                onActivityLaunchFailed = onActivityLaunchFailed,
+                onInfoCopied = onInfoCopied,
             )
 
             if (index != state.data.lastIndex) {
