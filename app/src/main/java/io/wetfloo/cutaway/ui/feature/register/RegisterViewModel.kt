@@ -11,6 +11,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.Res
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.logW
 import io.wetfloo.cutaway.data.model.register.RegisterRequest
@@ -69,7 +70,7 @@ class RegisterViewModel @Inject constructor(
                 .logW(TAG)
                 .mapEither(
                     success = { RegisterEvent.Success },
-                    failure = { UiError.Res(R.string.register_failure_generic) },
+                    failure = { Res(R.string.register_failure_generic) },
                 )
                 .onFailure { _error.send(it) }
                 .onSuccess { _event.send(it) }

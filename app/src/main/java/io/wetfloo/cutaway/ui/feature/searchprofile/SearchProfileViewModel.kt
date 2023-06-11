@@ -12,6 +12,7 @@ import com.github.michaelbull.result.mapError
 import com.github.michaelbull.result.onFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.Res
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.handleStateResult
 import io.wetfloo.cutaway.data.model.searchprofile.SearchHistoryItem
@@ -133,5 +134,5 @@ class SearchProfileViewModel @Inject constructor(
     }
 
     private val genericError
-        get() = UiError.Res(R.string.search_profile_failure_generic)
+        get() = Res(R.string.search_profile_failure_generic)
 }

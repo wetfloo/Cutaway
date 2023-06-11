@@ -12,6 +12,7 @@ import com.github.michaelbull.result.toResultOr
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.Res
 import io.wetfloo.cutaway.core.commonimpl.UiError
 
 
@@ -34,7 +35,7 @@ fun parseScan(result: ScanIntentResult?): Result<String, UiError> {
         PatternsCompat.WEB_URL.matcher(contents).matches()
     }
     return scanData.toResultOr {
-        UiError.Res(errorMessage)
+        Res(errorMessage)
     }
 }
 

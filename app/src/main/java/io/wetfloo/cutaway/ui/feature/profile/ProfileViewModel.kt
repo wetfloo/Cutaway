@@ -9,6 +9,7 @@ import com.github.michaelbull.result.map
 import com.github.michaelbull.result.mapError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.Res
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.core.commonimpl.handleStateResult
 import io.wetfloo.cutaway.data.model.profile.ProfileInformation
@@ -69,7 +70,7 @@ class ProfileViewModel @Inject constructor(
     private suspend fun updateProfile(): Result<ProfileState.Ready, UiError> = profileRepository
         .loadMyProfiles()
         .map(ProfileState::Ready)
-        .mapError { UiError.Res(R.string.profile_failure_load) }
+        .mapError { Res(R.string.profile_failure_load) }
 
     private suspend fun handle(loadingValue: ProfileState) {
         handleStateResult(

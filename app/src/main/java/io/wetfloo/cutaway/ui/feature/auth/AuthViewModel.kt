@@ -11,6 +11,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.wetfloo.cutaway.R
+import io.wetfloo.cutaway.core.commonimpl.Res
 import io.wetfloo.cutaway.core.commonimpl.UiError
 import io.wetfloo.cutaway.data.model.auth.AuthRequest
 import io.wetfloo.cutaway.data.repository.auth.AuthRepository
@@ -62,7 +63,7 @@ class AuthViewModel @Inject constructor(
                 .authenticate(authRequest)
                 .mapEither(
                     success = { AuthEvent.Success },
-                    failure = { UiError.Res(R.string.auth_failure_generic) },
+                    failure = { Res(R.string.auth_failure_generic) },
                 )
                 .onFailure { _error.send(it) }
                 .onSuccess { _event.send(it) }
